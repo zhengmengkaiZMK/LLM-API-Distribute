@@ -170,13 +170,13 @@ const Home = () => {
                     className={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-semi-color-text-0 leading-tight whitespace-nowrap ${isChinese ? 'tracking-wide md:tracking-wider' : ''}`}
                   >
                     <>
-                      {t('一站式OpenClaw模型服务')}
+                      {t('统一的大模型接口网关服务')}
                       <br />
-                      <span className='shine-text'>{t('官方接口，稳定可靠，高性价比')}</span>
+                      <span className='shine-text'>{t('一个接口使用全球AI能力')}</span>
                     </>
                   </h1>
                   <p className='text-base md:text-lg lg:text-xl text-semi-color-text-1 mt-4 md:mt-6 max-w-3xl whitespace-nowrap'>
-                    {t('支持最新的GPT-5.4和Claude-Opus-4.6模型接口')}
+                    {t('提供GPT、Gemini、Claude等大模型便捷接入，安全可控，价格更优')}
                   </p>
                   {/* BASE URL 与端点选择 */}
                   <div className='flex flex-col md:flex-row items-center justify-center gap-4 w-full mt-4 md:mt-6 max-w-md'>
@@ -246,7 +246,7 @@ const Home = () => {
                           className='flex items-center !rounded-3xl px-6 py-2'
                           icon={<IconFile />}
                         >
-                          {t('文档')}
+                          {t('查看文档')}
                         </Button>
                       </Link>
                     )
