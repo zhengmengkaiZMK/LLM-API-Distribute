@@ -240,7 +240,7 @@ const Home = () => {
                     </Button>
                   ) : (
                     docsLink && (
-                      <Link to='/document'>
+                      <a href='https://lingtrue.apifox.cn' target='_blank' rel='noopener noreferrer'>
                         <Button
                           size={isMobile ? 'default' : 'large'}
                           className='flex items-center !rounded-3xl px-6 py-2'
@@ -248,7 +248,7 @@ const Home = () => {
                         >
                           {t('查看文档')}
                         </Button>
-                      </Link>
+                      </a>
                     )
                   )}
                 </div>

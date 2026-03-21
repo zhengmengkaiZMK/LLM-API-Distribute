@@ -49,21 +49,12 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
         itemKey: 'pricing',
         to: '/pricing',
       },
-      ...(docsLink
-        ? [
-            {
-              text: t('文档'),
-              itemKey: 'docs',
-              to: '/document',
-            },
-          ]
-        : [
-            {
-              text: t('文档'),
-              itemKey: 'docs',
-              to: '/document',
-            },
-          ]),
+      {
+        text: t('文档'),
+        itemKey: 'docs',
+        isExternal: true,
+        externalLink: 'https://lingtrue.apifox.cn',
+      },
       {
         text: t('关于我们'),
         itemKey: 'about',
