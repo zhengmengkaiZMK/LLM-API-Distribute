@@ -982,3 +982,69 @@ html.dark .with-pastel-balls::before {
 .semi-datepicker-range-input {
   border-radius: 10px !important;
 }
+
+/* ==================== 为什么选择 LingTrue - 深色模式适配 ==================== */
+html.dark .why-lingtrue h2,
+html.dark .why-lingtrue h3,
+html.dark .why-lingtrue p,
+html.dark .why-lingtrue span,
+html.dark .why-lingtrue div {
+  color: #ffffff !important;
+}
+
+html.dark .why-lingtrue .text-semi-color-text-2,
+html.dark .why-lingtrue .text-semi-color-text-1,
+html.dark .why-lingtrue .text-semi-color-text-3 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+html.dark .why-lingtrue .text-emerald-700 {
+  color: #6ee7b7 !important;
+}
+
+html.dark .why-lingtrue .text-cyan-700 {
+  color: #67e8f9 !important;
+}
+
+html.dark .why-lingtrue .text-purple-700 {
+  color: #c4b5fd !important;
+}
+
+html.dark .why-lingtrue .text-emerald-600 {
+  color: #6ee7b7 !important;
+}
+
+html.dark .why-lingtrue .text-red-500 {
+  color: #fca5a5 !important;
+}
+
+html.dark .why-lingtrue .text-emerald-500 {
+  color: #6ee7b7 !important;
+}
+
+/* 深色模式下卡片背景调暗 */
+html.dark .why-lingtrue .why-card-green {
+  background: linear-gradient(135deg, #1a2e2a 0%, #1e3330 50%, #1c2d33 100%) !important;
+  border-color: rgba(110, 231, 183, 0.15) !important;
+}
+
+html.dark .why-lingtrue .why-card-cyan {
+  background: linear-gradient(135deg, #1a2a30 0%, #1c2e2d 50%, #1e2a35 100%) !important;
+  border-color: rgba(103, 232, 249, 0.15) !important;
+}
+
+html.dark .why-lingtrue .why-card-purple {
+  background: linear-gradient(135deg, #261e35 0%, #2a1e30 50%, #2d1e2d 100%) !important;
+  border-color: rgba(196, 181, 253, 0.15) !important;
+}
+
+html.dark .why-lingtrue .why-card-dark {
+  background: linear-gradient(135deg, #1a1f2e 0%, #161b28 100%) !important;
+  border-color: rgba(148, 163, 184, 0.15) !important;
+}
+
+/* 深色模式下卡片内部代码块背景 */
+html.dark .why-lingtrue .bg-semi-color-bg-0\/70 {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}

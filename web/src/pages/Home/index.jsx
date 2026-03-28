@@ -367,7 +367,7 @@ const Home = () => {
           </div>
 
           {/* 为什么选择 LingTrue */}
-          <div className='w-full px-4 sm:px-6 md:px-8 lg:px-12 py-8 md:py-10 lg:py-12'>
+          <div className='why-lingtrue w-full px-4 sm:px-6 md:px-8 lg:px-12 py-8 md:py-10 lg:py-12'>
             <div className='max-w-6xl mx-auto'>
               {/* 标题区 */}
               <div className='text-center mb-10 md:mb-14'>
@@ -385,7 +385,7 @@ const Home = () => {
                 {/* 左列 */}
                 <div className='flex flex-col gap-4 md:gap-5'>
                   {/* 稳定的模型请求 */}
-                  <div className='group rounded-2xl border border-semi-color-border p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:border-green-300 hover:-translate-y-0.5'
+                  <div className='why-card-green group rounded-2xl border border-semi-color-border p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:border-green-300 hover:-translate-y-0.5'
                     style={{ background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #f0f9ff 100%)' }}>
                     <h3 className='text-lg sm:text-xl font-bold text-emerald-700 mb-2'>
                       {t('稳定的模型请求')}
@@ -406,7 +406,7 @@ const Home = () => {
                   </div>
 
                   {/* 一个控制台 全面掌控 */}
-                  <div className='group rounded-2xl border border-semi-color-border p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:border-cyan-300 hover:-translate-y-0.5'
+                  <div className='why-card-cyan group rounded-2xl border border-semi-color-border p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:border-cyan-300 hover:-translate-y-0.5'
                     style={{ background: 'linear-gradient(135deg, #ecfeff 0%, #f0fdfa 50%, #eff6ff 100%)' }}>
                     <h3 className='text-lg sm:text-xl font-bold text-cyan-700 mb-2'>
                       {t('一个控制台，全面掌控')}
@@ -436,7 +436,7 @@ const Home = () => {
                 {/* 右列 */}
                 <div className='flex flex-col gap-4 md:gap-5'>
                   {/* 接入顶级 AI 模型 */}
-                  <div className='group rounded-2xl border border-gray-700 p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:shadow-gray-800/30 hover:-translate-y-0.5'
+                  <div className='why-card-dark group rounded-2xl border border-gray-700 p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:shadow-gray-800/30 hover:-translate-y-0.5'
                     style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', color: '#ffffff' }}>
                     <h3 className='text-lg sm:text-xl font-bold mb-2' style={{ color: '#ffffff' }}>
                       {t('接入顶级 AI 模型')}
@@ -456,7 +456,7 @@ const Home = () => {
                   </div>
 
                   {/* 始终支付最合理价格 */}
-                  <div className='group rounded-2xl border border-semi-color-border p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:-translate-y-0.5'
+                  <div className='why-card-purple group rounded-2xl border border-semi-color-border p-6 sm:p-8 transition-all duration-300 hover:shadow-lg hover:border-purple-300 hover:-translate-y-0.5'
                     style={{ background: 'linear-gradient(135deg, #faf5ff 0%, #fdf2f8 50%, #fce7f3 100%)' }}>
                     <h3 className='text-lg sm:text-xl font-bold text-purple-700 mb-2'>
                       {t('始终支付最合理价格')}
