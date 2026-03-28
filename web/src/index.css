@@ -749,7 +749,6 @@ html.dark .sbg-variant-green {
 
 .blur-ball-indigo {
   background: #6366f1;
-  /* indigo-500 */
   top: 40px;
   left: 50%;
   transform: translateX(-50%);
@@ -758,19 +757,31 @@ html.dark .sbg-variant-green {
 
 .blur-ball-teal {
   background: #14b8a6;
-  /* teal-400 */
   top: 200px;
   left: 30%;
   opacity: 0.4;
 }
 
-/* 浅色主题下让模糊球更柔和 */
 html:not(.dark) .blur-ball-indigo {
   opacity: 0.25;
 }
 
 html:not(.dark) .blur-ball-teal {
   opacity: 0.2;
+}
+
+/* ==================== Hero 右侧卡片浮动动画 ==================== */
+@keyframes hero-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.hero-float-card {
+  animation: hero-float 3.5s ease-in-out infinite;
 }
 
 /* ==================== 卡片马卡龙模糊球（类封装） ==================== */
