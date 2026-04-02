@@ -234,7 +234,7 @@ const Home = () => {
 
                   {/* 描述文字 */}
                   <p className='text-sm sm:text-base md:text-lg text-semi-color-text-2 leading-relaxed mb-6 md:mb-8 max-w-lg'>
-                    {t('以超低的价格运行Claude、GPT、Gemini等顶级模型，为生产级工作提供 99.9% 可靠性')}
+                    {t('以超低的价格运行Claude、GPT、Gemini等顶级模型，为生产级工作提供 99.8% 可靠性')}
                   </p>
 
                   {/* URL 输入框 */}

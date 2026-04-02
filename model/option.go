@@ -63,6 +63,8 @@ func InitOptionMap() {
 	common.OptionMap["SMTPToken"] = ""
 	common.OptionMap["SMTPSSLEnabled"] = strconv.FormatBool(common.SMTPSSLEnabled)
 	common.OptionMap["Notice"] = ""
+	common.OptionMap["FirstLoginPopupEnabled"] = "false" // 新用户首次登录弹窗是否启用
+	common.OptionMap["FirstLoginPopup"] = ""             // 新用户首次登录弹窗内容
 	common.OptionMap["About"] = ""
 	common.OptionMap["HomePageContent"] = ""
 	common.OptionMap["Footer"] = common.Footer

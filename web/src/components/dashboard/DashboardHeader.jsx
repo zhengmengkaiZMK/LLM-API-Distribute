@@ -41,7 +41,7 @@ const DashboardHeader = ({
           {getGreeting}
         </h2>
         <div className='flex items-center gap-3'>
-          <span className='hidden md:inline text-sm text-gray-500 whitespace-nowrap'>问题咨询&amp;最新通知加QQ群：1003288957</span>
+          <span className='hidden md:inline text-sm font-bold whitespace-nowrap' style={{ color: 'red' }}>问题咨询&amp;最新通知加QQ群：1003288957</span>
           <Button
             type='tertiary'
             icon={<Search size={16} />}
@@ -57,7 +57,7 @@ const DashboardHeader = ({
           />
         </div>
       </div>
-      <p className='md:hidden text-sm text-gray-500 mt-2'>问题咨询&amp;最新通知加QQ群：1003288957</p>
+      <p className='md:hidden text-sm font-bold mt-2' style={{ color: 'red' }}>问题咨询&amp;最新通知加QQ群：1003288957</p>
     </div>
   );
 };

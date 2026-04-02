@@ -27,6 +27,7 @@ import {
   Modal,
   Space,
   Card,
+  Switch,
 } from '@douyinfe/semi-ui';
 import { API, showError, showSuccess, timestamp2string } from '../../helpers';
 import { marked } from 'marked';
@@ -41,6 +42,8 @@ const OtherSetting = () => {
   const { t } = useTranslation();
   let [inputs, setInputs] = useState({
     Notice: '',
+    FirstLoginPopupEnabled: false,
+    FirstLoginPopup: '',
     [LEGAL_USER_AGREEMENT_KEY]: '',
     [LEGAL_PRIVACY_POLICY_KEY]: '',
     SystemName: '',
@@ -74,6 +77,8 @@ const OtherSetting = () => {
 
   const [loadingInput, setLoadingInput] = useState({
     Notice: false,
+    FirstLoginPopupEnabled: false,
+    FirstLoginPopup: false,
     [LEGAL_USER_AGREEMENT_KEY]: false,
     [LEGAL_PRIVACY_POLICY_KEY]: false,
     SystemName: false,
@@ -101,6 +106,33 @@ const OtherSetting = () => {
       showError(t('公告更新失败'));
     } finally {
       setLoadingInput((loadingInput) => ({ ...loadingInput, Notice: false }));
+    }
+  };
+  // 通用设置 - FirstLoginPopup
+  const submitFirstLoginPopup = async () => {
+    try {
+      setLoadingInput((loadingInput) => ({ ...loadingInput, FirstLoginPopup: true }));
+      await updateOption('FirstLoginPopup', inputs.FirstLoginPopup);
+      showSuccess(t('新用户弹窗内容已更新'));
+    } catch (error) {
+      console.error(t('新用户弹窗内容更新失败'), error);
+      showError(t('新用户弹窗内容更新失败'));
+    } finally {
+      setLoadingInput((loadingInput) => ({ ...loadingInput, FirstLoginPopup: false }));
+    }
+  };
+  // 通用设置 - FirstLoginPopupEnabled
+  const handleFirstLoginPopupEnabledChange = async (checked) => {
+    try {
+      setLoadingInput((loadingInput) => ({ ...loadingInput, FirstLoginPopupEnabled: true }));
+      await updateOption('FirstLoginPopupEnabled', String(checked));
+      setInputs((inputs) => ({ ...inputs, FirstLoginPopupEnabled: checked }));
+      showSuccess(checked ? t('新用户弹窗已启用') : t('新用户弹窗已禁用'));
+    } catch (error) {
+      console.error(t('新用户弹窗设置失败'), error);
+      showError(t('新用户弹窗设置失败'));
+    } finally {
+      setLoadingInput((loadingInput) => ({ ...loadingInput, FirstLoginPopupEnabled: false }));
     }
   };
   // 通用设置 - UserAgreement
@@ -285,7 +317,12 @@ const OtherSetting = () => {
       let newInputs = {};
       data.forEach((item) => {
         if (item.key in inputs) {
-          newInputs[item.key] = item.value;
+          // 对于布尔类型的选项，需要转换
+          if (item.key === 'FirstLoginPopupEnabled') {
+            newInputs[item.key] = item.value === 'true';
+          } else {
+            newInputs[item.key] = item.value;
+          }
         }
       });
       setInputs(newInputs);
@@ -374,6 +411,34 @@ const OtherSetting = () => {
               />
               <Button onClick={submitNotice} loading={loadingInput['Notice']}>
                 {t('设置公告')}
+              </Button>
+              <Form.Slot label={t('启用新用户首次登录弹窗')}>
+                <Switch
+                  checked={inputs.FirstLoginPopupEnabled}
+                  checkedText={t('是')}
+                  uncheckedText={t('否')}
+                  loading={loadingInput['FirstLoginPopupEnabled']}
+                  onChange={handleFirstLoginPopupEnabledChange}
+                />
+                <div style={{ marginTop: 4, color: 'var(--semi-color-text-2)', fontSize: 12 }}>
+                  {t('启用后，新用户首次进入控制台时会显示弹窗')}
+                </div>
+              </Form.Slot>
+              <Form.TextArea
+                label={t('新用户首次登录弹窗')}
+                placeholder={t(
+                  '在此输入新用户首次登录时显示的弹窗内容，支持 Markdown & HTML 代码。留空则不显示弹窗。',
+                )}
+                field={'FirstLoginPopup'}
+                onChange={handleInputChange}
+                style={{ fontFamily: 'JetBrains Mono, Consolas' }}
+                autosize={{ minRows: 6, maxRows: 12 }}
+                helpText={t(
+                  '此弹窗仅在新用户首次进入控制台时显示一次',
+                )}
+              />
+              <Button onClick={submitFirstLoginPopup} loading={loadingInput['FirstLoginPopup']}>
+                {t('设置新用户弹窗')}
               </Button>
               <Form.TextArea
                 label={t('用户协议')}

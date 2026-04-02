@@ -1187,3 +1187,26 @@ func UpdateUserSetting(c *gin.Context) {
 
 	common.ApiSuccessI18n(c, i18n.MsgSettingSaved, nil)
 }
+
+// MarkFirstLoginPopupShown 标记首次登录弹窗已显示
+func MarkFirstLoginPopupShown(c *gin.Context) {
+	userId := c.GetInt("id")
+	user, err := model.GetUserById(userId, true)
+	if err != nil {
+		common.ApiError(c, err)
+		return
+	}
+
+	// 获取现有设置并更新首次登录弹窗标记
+	settings := user.GetSetting()
+	settings.FirstLoginPopupShown = true
+
+	// 更新用户设置
+	user.SetSetting(settings)
+	if err := user.Update(false); err != nil {
+		common.ApiErrorI18n(c, i18n.MsgUpdateFailed)
+		return
+	}
+
+	common.ApiSuccess(c, nil)
+}

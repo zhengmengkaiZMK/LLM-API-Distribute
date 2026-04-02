@@ -177,6 +177,20 @@ func GetNotice(c *gin.Context) {
 	return
 }
 
+// GetFirstLoginPopup 获取首次登录弹窗内容（需要用户登录）
+func GetFirstLoginPopup(c *gin.Context) {
+	common.OptionMapRWMutex.RLock()
+	defer common.OptionMapRWMutex.RUnlock()
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": "",
+		"data": gin.H{
+			"enabled": common.OptionMap["FirstLoginPopupEnabled"] == "true",
+			"content": common.OptionMap["FirstLoginPopup"],
+		},
+	})
+}
+
 func GetAbout(c *gin.Context) {
 	common.OptionMapRWMutex.RLock()
 	defer common.OptionMapRWMutex.RUnlock()

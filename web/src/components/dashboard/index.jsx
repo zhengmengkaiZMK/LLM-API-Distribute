@@ -17,8 +17,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
-import React, { useContext, useEffect } from 'react';
-import { getRelativeTime } from '../../helpers';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
+import { getRelativeTime, API } from '../../helpers';
 import { UserContext } from '../../context/User';
 import { StatusContext } from '../../context/Status';
 
@@ -30,10 +30,12 @@ import AnnouncementsPanel from './AnnouncementsPanel';
 import FaqPanel from './FaqPanel';
 import UptimePanel from './UptimePanel';
 import SearchModal from './modals/SearchModal';
+import FirstLoginModal from '../layout/FirstLoginModal';
 
 import { useDashboardData } from '../../hooks/dashboard/useDashboardData';
 import { useDashboardStats } from '../../hooks/dashboard/useDashboardStats';
 import { useDashboardCharts } from '../../hooks/dashboard/useDashboardCharts';
+import { useIsMobile } from '../../hooks/common/useIsMobile';
 
 import {
   CHART_CONFIG,
@@ -56,6 +58,10 @@ const Dashboard = () => {
   // ========== Context ==========
   const [userState, userDispatch] = useContext(UserContext);
   const [statusState, statusDispatch] = useContext(StatusContext);
+  const isMobile = useIsMobile();
+
+  // ========== 首次登录弹窗状态 ==========
+  const [firstLoginModalVisible, setFirstLoginModalVisible] = useState(false);
 
   // ========== 主要数据管理 ==========
   const dashboardData = useDashboardData(userState, userDispatch, statusState);
@@ -138,8 +144,52 @@ const Dashboard = () => {
     initChart();
   }, []);
 
+  // ========== 首次登录弹窗检查 ==========
+  const checkFirstLoginPopup = useCallback(async () => {
+    try {
+      // 获取用户设置，检查是否已显示过首次登录弹窗
+      const userRes = await API.get('/api/user/self');
+      if (userRes.data.success) {
+        const userSetting = userRes.data.data.setting;
+        let settingObj = {};
+        if (userSetting) {
+          try {
+            settingObj = typeof userSetting === 'string' ? JSON.parse(userSetting) : userSetting;
+          } catch (e) {
+            settingObj = {};
+          }
+        }
+        
+        // 如果未显示过首次登录弹窗，检查是否启用弹窗并有弹窗内容
+        if (!settingObj.first_login_popup_shown) {
+          const popupRes = await API.get('/api/first_login_popup');
+          if (popupRes.data.success && popupRes.data.data) {
+            const { enabled, content } = popupRes.data.data;
+            // 只有当弹窗启用且内容不为空时才显示
+            if (enabled && content && content.trim() !== '') {
+              setFirstLoginModalVisible(true);
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error('检查首次登录弹窗失败:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkFirstLoginPopup();
+  }, [checkFirstLoginPopup]);
+
   return (
     <div className='h-full'>
+      {/* 首次登录弹窗 */}
+      <FirstLoginModal
+        visible={firstLoginModalVisible}
+        onClose={() => setFirstLoginModalVisible(false)}
+        isMobile={isMobile}
+      />
+
       <DashboardHeader
         getGreeting={dashboardData.getGreeting}
         greetingVisible={dashboardData.greetingVisible}
