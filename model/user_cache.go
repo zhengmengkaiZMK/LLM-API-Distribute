@@ -222,6 +222,11 @@ func updateUserSettingCache(userId int, setting string) error {
 	return common.RedisHSetField(getUserCacheKey(userId), "Setting", setting)
 }
 
+// UpdateUserSettingCache 更新用户设置缓存（导出供外部调用）
+func UpdateUserSettingCache(userId int, setting string) error {
+	return updateUserSettingCache(userId, setting)
+}
+
 // GetUserLanguage returns the user's language preference from cache
 // Uses the existing GetUserCache mechanism for efficiency
 func GetUserLanguage(userId int) string {

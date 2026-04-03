@@ -1201,12 +1201,21 @@ func MarkFirstLoginPopupShown(c *gin.Context) {
 	settings := user.GetSetting()
 	settings.FirstLoginPopupShown = true
 
-	// 更新用户设置
-	user.SetSetting(settings)
-	if err := user.Update(false); err != nil {
+	// 序列化设置
+	settingBytes, err := json.Marshal(settings)
+	if err != nil {
 		common.ApiErrorI18n(c, i18n.MsgUpdateFailed)
 		return
 	}
+
+	// 直接更新 Setting 字段，避免 Update 方法中的 DB.First 覆盖
+	if err := model.DB.Model(&model.User{}).Where("id = ?", userId).Update("setting", string(settingBytes)).Error; err != nil {
+		common.ApiErrorI18n(c, i18n.MsgUpdateFailed)
+		return
+	}
+
+	// 更新缓存
+	model.UpdateUserSettingCache(userId, string(settingBytes))
 
 	common.ApiSuccess(c, nil)
 }
