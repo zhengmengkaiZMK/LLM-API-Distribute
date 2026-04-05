@@ -160,12 +160,13 @@ const Dashboard = () => {
           }
         }
         
-        // 如果未显示过首次登录弹窗，检查是否启用弹窗并有弹窗内容
-        if (!settingObj.first_login_popup_shown) {
+        // 检查今天是否已显示过弹窗
+        const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+        const lastShown = settingObj.first_login_popup_last_shown || '';
+        if (lastShown !== today) {
           const popupRes = await API.get('/api/first_login_popup');
           if (popupRes.data.success && popupRes.data.data) {
             const { enabled, content } = popupRes.data.data;
-            // 只有当弹窗启用且内容不为空时才显示
             if (enabled && content && content.trim() !== '') {
               setFirstLoginModalVisible(true);
             }

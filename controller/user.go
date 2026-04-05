@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/dto"
@@ -1197,9 +1198,9 @@ func MarkFirstLoginPopupShown(c *gin.Context) {
 		return
 	}
 
-	// 获取现有设置并更新首次登录弹窗标记
+	// 获取现有设置并更新弹窗最后显示日期为今天
 	settings := user.GetSetting()
-	settings.FirstLoginPopupShown = true
+	settings.FirstLoginPopupLastShown = time.Now().Format("2006-01-02")
 
 	// 序列化设置
 	settingBytes, err := json.Marshal(settings)
