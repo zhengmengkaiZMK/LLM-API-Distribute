@@ -17,11 +17,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Button, Modal, Empty } from '@douyinfe/semi-ui';
 import { useTranslation } from 'react-i18next';
 import { API, showError } from '../../helpers';
 import { marked } from 'marked';
+import { UserContext } from '../../context/User';
 import {
   IllustrationNoContent,
   IllustrationNoContentDark,
@@ -36,6 +37,7 @@ const FirstLoginModal = ({ visible, onClose, isMobile }) => {
   const { t } = useTranslation();
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
+  const [userState] = useContext(UserContext);
 
   // 获取首次登录弹窗内容
   const fetchContent = async () => {
@@ -61,18 +63,18 @@ const FirstLoginModal = ({ visible, onClose, isMobile }) => {
     }
   };
 
-  // 标记弹窗已显示
-  const markAsShown = async () => {
-    try {
-      await API.post('/api/user/self/first_login_popup_shown');
-    } catch (error) {
-      console.error('标记首次登录弹窗已显示失败:', error);
+  // 标记弹窗已显示（写入 localStorage）
+  const markAsShown = () => {
+    const userId = userState?.user?.id;
+    if (userId) {
+      const today = new Date().toISOString().slice(0, 10);
+      localStorage.setItem(`popup_last_shown_${userId}`, today);
     }
   };
 
   // 关闭弹窗并标记已显示
-  const handleClose = async () => {
-    await markAsShown();
+  const handleClose = () => {
+    markAsShown();
     onClose();
   };
 

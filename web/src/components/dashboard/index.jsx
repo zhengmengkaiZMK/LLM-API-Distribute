@@ -144,39 +144,30 @@ const Dashboard = () => {
     initChart();
   }, []);
 
-  // ========== 首次登录弹窗检查 ==========
+  // ========== 每日弹窗检查 ==========
   const checkFirstLoginPopup = useCallback(async () => {
     try {
-      // 获取用户设置，检查是否已显示过首次登录弹窗
-      const userRes = await API.get('/api/user/self');
-      if (userRes.data.success) {
-        const userSetting = userRes.data.data.setting;
-        let settingObj = {};
-        if (userSetting) {
-          try {
-            settingObj = typeof userSetting === 'string' ? JSON.parse(userSetting) : userSetting;
-          } catch (e) {
-            settingObj = {};
-          }
-        }
-        
-        // 检查今天是否已显示过弹窗
-        const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-        const lastShown = settingObj.first_login_popup_last_shown || '';
-        if (lastShown !== today) {
-          const popupRes = await API.get('/api/first_login_popup');
-          if (popupRes.data.success && popupRes.data.data) {
-            const { enabled, content } = popupRes.data.data;
-            if (enabled && content && content.trim() !== '') {
-              setFirstLoginModalVisible(true);
-            }
-          }
+      // 使用 localStorage 记录每个用户今天是否已弹过
+      const userId = userState?.user?.id;
+      if (!userId) return;
+
+      const storageKey = `popup_last_shown_${userId}`;
+      const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+      const lastShown = localStorage.getItem(storageKey) || '';
+
+      if (lastShown === today) return; // 今天已弹过，跳过
+
+      const popupRes = await API.get('/api/first_login_popup');
+      if (popupRes.data.success && popupRes.data.data) {
+        const { enabled, content } = popupRes.data.data;
+        if (enabled && content && content.trim() !== '') {
+          setFirstLoginModalVisible(true);
         }
       }
     } catch (error) {
-      console.error('检查首次登录弹窗失败:', error);
+      console.error('检查弹窗失败:', error);
     }
-  }, []);
+  }, [userState?.user?.id]);
 
   useEffect(() => {
     checkFirstLoginPopup();

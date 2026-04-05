@@ -9,7 +9,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/dto"
@@ -1189,34 +1188,7 @@ func UpdateUserSetting(c *gin.Context) {
 	common.ApiSuccessI18n(c, i18n.MsgSettingSaved, nil)
 }
 
-// MarkFirstLoginPopupShown 标记首次登录弹窗已显示
+// MarkFirstLoginPopupShown 标记首次登录弹窗已显示（已弃用，弹窗状态改为前端 localStorage 管理）
 func MarkFirstLoginPopupShown(c *gin.Context) {
-	userId := c.GetInt("id")
-	user, err := model.GetUserById(userId, true)
-	if err != nil {
-		common.ApiError(c, err)
-		return
-	}
-
-	// 获取现有设置并更新弹窗最后显示日期为今天
-	settings := user.GetSetting()
-	settings.FirstLoginPopupLastShown = time.Now().Format("2006-01-02")
-
-	// 序列化设置
-	settingBytes, err := json.Marshal(settings)
-	if err != nil {
-		common.ApiErrorI18n(c, i18n.MsgUpdateFailed)
-		return
-	}
-
-	// 直接更新 Setting 字段，避免 Update 方法中的 DB.First 覆盖
-	if err := model.DB.Model(&model.User{}).Where("id = ?", userId).Update("setting", string(settingBytes)).Error; err != nil {
-		common.ApiErrorI18n(c, i18n.MsgUpdateFailed)
-		return
-	}
-
-	// 更新缓存
-	model.UpdateUserSettingCache(userId, string(settingBytes))
-
 	common.ApiSuccess(c, nil)
 }
