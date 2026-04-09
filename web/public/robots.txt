@@ -1,3 +1,53 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /console/
+Disallow: /setup
+Disallow: /oauth/
+Disallow: /chat2link
+Disallow: /forbidden
+
+# AI 搜索引擎爬虫 — 明确允许
+User-agent: GPTBot
+Allow: /
+Disallow: /console/
+Disallow: /setup
+Disallow: /oauth/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /console/
+Disallow: /setup
+Disallow: /oauth/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /console/
+Disallow: /setup
+Disallow: /oauth/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /console/
+Disallow: /setup
+Disallow: /oauth/
+
+User-agent: Anthropic-AI
+Allow: /
+Disallow: /console/
+Disallow: /setup
+Disallow: /oauth/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /console/
+Disallow: /setup
+Disallow: /oauth/
+
+User-agent: Cohere-AI
+Allow: /
+Disallow: /console/
+Disallow: /setup
+Disallow: /oauth/
+
+Sitemap: https://www.lingtrue.com/sitemap.xml

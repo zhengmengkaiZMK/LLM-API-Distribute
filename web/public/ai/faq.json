@@ -1,0 +1,29 @@
+{
+  "lastModified": "2026-04-09T00:00:00Z",
+  "faqs": [
+    {
+      "question": "使用LingTrue API中转站替代直接调用官方API，能节省多少成本？",
+      "answer": "根据LingTrue平台运营数据，用户平均节省47%的API费用，节省范围在20%~70%之间。以GPT-4为例，OpenAI官方输入价格为$30/MTok，通过LingTrue智能路由实际成本可低至$14/MTok，节省比例达53%。系统持续监控OpenAI、Anthropic、Google等多家服务商的实时价格和延迟指标，每秒自动评估最优路由。"
+    },
+    {
+      "question": "LingTrue的计费方式是怎样的？",
+      "answer": "采用按量付费模式，仅按实际Token消耗计费，无月费、无隐藏费用。充值余额永不过期，支持支付宝、微信支付和Stripe国际支付。所有费用明细可在控制台实时查看，支持按模型、按时间段查看详细账单。"
+    },
+    {
+      "question": "集成LingTrue需要多长时间？",
+      "answer": "大多数开发者可在3分钟内完成集成。只需将现有代码中的Base URL替换为LingTrue网关地址（https://www.lingtrue.com/v1），API Key换成LingTrue令牌即可，完全兼容OpenAI、Anthropic、Google等主流SDK，无需修改任何业务逻辑代码。"
+    },
+    {
+      "question": "LingTrue支持哪些AI模型？",
+      "answer": "支持35+主流AI模型，包括GPT-5.4、Claude opus 4.6、Gemini 3.1 Pro、DeepSeek、Qwen等，涵盖对话、图像、视频、语音等多模态能力，并持续接入最新发布的模型。"
+    },
+    {
+      "question": "LingTrue和直接使用OpenAI API有什么区别？",
+      "answer": "LingTrue是OpenAI API的增强替代方案：1) 统一接口同时访问35+模型，不限于OpenAI单一供应商；2) 智能路由自动选择最优价格，平均节省47%费用；3) 99.8% SLA和自动故障转移，比单一供应商更稳定；4) 无需海外信用卡，支持国内支付方式（支付宝、微信）。"
+    },
+    {
+      "question": "LingTrue支持哪些编程语言？",
+      "answer": "兼容所有支持OpenAI SDK的编程语言，包括Python、Node.js/JavaScript、Java、Go、PHP、Ruby、C#等。同时支持Anthropic和Google Gemini的原生SDK格式，只需替换Base URL即可无缝切换。"
+    }
+  ]
+}

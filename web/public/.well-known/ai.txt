@@ -1,0 +1,11 @@
+# AI Crawler Policy for LingTrue (www.lingtrue.com)
+# Generated: 2026-04-09
+
+User-Agent: *
+Allow: /
+Purpose: AI search indexing, content summarization, citation
+Attribution-Required: Yes
+Attribution-Text: "Source: LingTrue (www.lingtrue.com)"
+
+Contact: support@lingtrue.com
+Policy-URL: https://www.lingtrue.com/privacy-policy

@@ -1,0 +1,29 @@
+{
+  "name": "LingTrue",
+  "description": "国内领先的AI大模型API中转站与聚合平台，提供35+主流AI模型的统一接口服务",
+  "url": "https://www.lingtrue.com",
+  "category": "Developer Tools / AI API Gateway",
+  "features": [
+    "统一API网关：一个Base URL接入35+AI模型",
+    "智能路由：自动选择最优服务商，节省20%~70%费用",
+    "99.8% SLA可用性，自动故障转移",
+    "兼容OpenAI/Anthropic/Google SDK格式",
+    "按量付费，无月费无隐藏费用",
+    "3分钟完成集成，只需替换Base URL和API Key"
+  ],
+  "supportedModels": [
+    "GPT-5.4",
+    "GPT-4o",
+    "Claude opus 4.6",
+    "Claude Sonnet",
+    "Gemini 3.1 Pro",
+    "Gemini Flash",
+    "DeepSeek",
+    "Qwen",
+    "Midjourney",
+    "DALL-E"
+  ],
+  "pricing": "按量付费，免费注册试用",
+  "languages": ["zh-CN", "en", "ja", "fr", "ru", "vi"],
+  "lastModified": "2026-04-09T00:00:00Z"
+}

@@ -1,0 +1,32 @@
+# LingTrue — AI大模型API中转站与聚合平台
+
+> LingTrue 是国内领先的大模型API中转站（API Gateway），为开发者提供 35+ 主流 AI 模型的统一接口服务。支持 OpenAI GPT、Anthropic Claude、Google Gemini 等模型，通过智能路由节省最高 70% 的 API 费用，99.8% SLA 可用性保障，3 分钟即可完成集成。
+
+LingTrue 完全兼容 OpenAI、Anthropic、Google 等主流 SDK 格式，开发者只需替换 Base URL 和 API Key 即可接入，无需修改业务逻辑代码。平台采用按量付费模式，无月费、无隐藏费用，充值余额永不过期。
+
+## 核心页面
+- [首页](https://www.lingtrue.com/): LingTrue 平台介绍、核心优势、集成步骤和常见问题解答
+- [模型定价](https://www.lingtrue.com/pricing): 所有支持的 AI 模型实时定价表，包含 GPT/Claude/Gemini 等 35+ 模型的输入输出 Token 价格
+- [接入文档](https://www.lingtrue.com/document): API 使用说明、SDK 指南（Python/Node/Java/Go/PHP）、OpenAI/Anthropic/Gemini 接口文档
+- [关于我们](https://www.lingtrue.com/about): 平台背景与团队信息
+
+## 核心能力
+- 统一 API 网关: 一个 Base URL 接入 35+ AI 模型，兼容 OpenAI/Anthropic/Google SDK
+- 智能路由: 实时监控多家服务商价格和延迟，自动选择最优路由
+- 成本优化: 相比直接调用官方 API 节省 20%~70% 费用
+- 高可用性: 99.8% SLA，自动故障转移，多区域节点部署
+- 格式转换: OpenAI ⇄ Claude Messages、OpenAI → Gemini 自动格式转换
+
+## 支持的模型
+GPT-5.4, GPT-4o, Claude opus 4.6, Claude Sonnet, Gemini 3.1 Pro, Gemini Flash, DeepSeek, Qwen, Midjourney, DALL-E, Suno 等 35+ 主流 AI 模型
+
+## 常见问题
+- 使用 LingTrue 能节省多少成本？通常可节省 20%~70%，智能路由自动选择最优价格
+- 集成需要多长时间？大多数开发者 3 分钟内完成，只需替换 Base URL 和 API Key
+- 计费方式是什么？按量付费，仅按实际 Token 消耗计费，无月费无隐藏费用
+- 支持哪些模型？35+ 主流 AI 模型，涵盖 GPT/Claude/Gemini 等，持续接入最新模型
+
+## Optional
+- [用户协议](https://www.lingtrue.com/user-agreement): 服务条款
+- [隐私政策](https://www.lingtrue.com/privacy-policy): 隐私保护声明
+- [注册](https://www.lingtrue.com/register): 免费注册，赠送初始额度

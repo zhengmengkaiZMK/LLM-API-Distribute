@@ -126,22 +126,22 @@ const Home = () => {
     {
       num: '01',
       question: t('使用 LingTrue 替代直接调用官方 API，我能节省多少成本？'),
-      answer: t('LingTrue 用户通常可以在 AI API 成本上节省 20%~70%。我们的智能路由系统会持续监控 OpenAI、Anthropic、Google 等多家服务商的实时价格。例如，同样是 OpenAI GPT-4 请求，官方价格可能是 0.03 美元，而通过我们的路由，当其他服务商提供更优价格时，你的成本可能低至 0.014 美元。具体节省比例会取决于你的使用模式和所选模型。'),
+      answer: t('根据 LingTrue 平台运营数据，用户在 AI API 成本上平均节省 47%，节省范围在 20%~70% 之间。以 GPT-4 为例，OpenAI 官方输入价格为 $30/MTok，而通过 LingTrue 智能路由，实际成本可低至 $14/MTok，节省比例达 53%。系统持续监控 OpenAI、Anthropic、Google 等多家服务商的实时价格和延迟指标，每秒自动评估最优路由，确保稳定低延迟不掺水。'),
     },
     {
       num: '02',
       question: t('LingTrue 的计费方式是怎样的？有没有隐藏费用？'),
-      answer: t('我们采用按量付费模式，仅按实际 Token 消耗计费，无月费、无隐藏费用。充值余额永不过期，支持多种支付方式。所有费用明细可在控制台实时查看。'),
+      answer: t('LingTrue 采用按量付费模式，仅按实际 Token 消耗计费，无月费、无隐藏费用。充值余额永不过期，支持支付宝、微信支付和 Stripe 国际支付。所有费用明细可在控制台实时查看，支持按模型、按时间段查看详细账单。'),
     },
     {
       num: '03',
       question: t('把 LingTrue 集成到现有应用里需要多长时间？'),
-      answer: t('大多数开发者可以在 3 分钟内完成集成。你只需将现有代码中的 Base URL 替换为我们的网关地址https://www.lingtrue.com/v1，API Key 换成我们生成的令牌密钥即可，无需修改任何业务逻辑代码。我们完全兼容 OpenAI、Anthropic、Google 等主流 SDK 格式。'),
+      answer: t('大多数开发者可以在 3 分钟内完成集成。只需将现有代码中的 Base URL 替换为 LingTrue 网关地址（https://www.lingtrue.com/v1），API Key 换成 LingTrue 令牌密钥即可，无需修改任何业务逻辑代码。完全兼容 OpenAI、Anthropic、Google 等主流 SDK 格式。'),
     },
     {
       num: '04',
       question: t('LingTrue 当前支持哪些 AI 模型和服务商？'),
-      answer: t('我们支持 35+ 主流 AI 模型，涵盖Claude opus 4.6、GPT 5.4、Gemini 3.1 pro等。并持续接入最新发布的模型。'),
+      answer: t('LingTrue 支持 35+ 主流 AI 模型，涵盖 Claude opus 4.6、GPT 5.4、Gemini 3.1 Pro、DeepSeek、Qwen 等顶级大模型，覆盖对话、图像、视频、语音等多模态能力，并持续接入最新发布的模型。'),
     },
   ];
 
@@ -568,12 +568,48 @@ const Home = () => {
               </div>
             </div>
           </div>
+          {/* SEO 内部链接与 CTA 区域 */}
+          <div className='w-full px-4 sm:px-6 md:px-8 lg:px-12 py-8 md:py-10 lg:py-12 border-t border-semi-color-border'>
+            <div className='max-w-6xl mx-auto'>
+              <div className='text-center mb-8'>
+                <h2 className='text-xl sm:text-2xl md:text-3xl font-bold text-semi-color-text-0 mb-3'>
+                  {t('开始使用 LingTrue')}
+                </h2>
+                <p className='text-sm sm:text-base text-semi-color-text-2 max-w-2xl mx-auto'>
+                  {t('国内领先的AI大模型API中转站，支持ChatGPT、Claude、Gemini等35+模型，智能路由低价稳定接入')}
+                </p>
+              </div>
+              <div className='grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6'>
+                <Link to='/pricing' className='group flex flex-col items-center p-4 sm:p-5 rounded-2xl border border-semi-color-border bg-semi-color-bg-0 hover:shadow-md hover:border-blue-300 transition-all duration-300 no-underline'>
+                  <span className='text-2xl mb-2'>💰</span>
+                  <span className='text-sm sm:text-base font-semibold text-semi-color-text-0 group-hover:text-blue-600 transition-colors'>{t('模型定价')}</span>
+                  <span className='text-xs text-semi-color-text-2 mt-1 text-center'>{t('GPT/Claude/Gemini API价格对比')}</span>
+                </Link>
+                <Link to='/document' className='group flex flex-col items-center p-4 sm:p-5 rounded-2xl border border-semi-color-border bg-semi-color-bg-0 hover:shadow-md hover:border-blue-300 transition-all duration-300 no-underline'>
+                  <span className='text-2xl mb-2'>📖</span>
+                  <span className='text-sm sm:text-base font-semibold text-semi-color-text-0 group-hover:text-blue-600 transition-colors'>{t('接入文档')}</span>
+                  <span className='text-xs text-semi-color-text-2 mt-1 text-center'>{t('3分钟完成API集成')}</span>
+                </Link>
+                <Link to='/about' className='group flex flex-col items-center p-4 sm:p-5 rounded-2xl border border-semi-color-border bg-semi-color-bg-0 hover:shadow-md hover:border-blue-300 transition-all duration-300 no-underline'>
+                  <span className='text-2xl mb-2'>🏢</span>
+                  <span className='text-sm sm:text-base font-semibold text-semi-color-text-0 group-hover:text-blue-600 transition-colors'>{t('关于我们')}</span>
+                  <span className='text-xs text-semi-color-text-2 mt-1 text-center'>{t('了解 LingTrue 平台')}</span>
+                </Link>
+                <Link to='/register' className='group flex flex-col items-center p-4 sm:p-5 rounded-2xl border border-semi-color-border bg-semi-color-bg-0 hover:shadow-md hover:border-blue-300 transition-all duration-300 no-underline'>
+                  <span className='text-2xl mb-2'>🚀</span>
+                  <span className='text-sm sm:text-base font-semibold text-semi-color-text-0 group-hover:text-blue-600 transition-colors'>{t('免费注册')}</span>
+                  <span className='text-xs text-semi-color-text-2 mt-1 text-center'>{t('赠送免费额度，立即体验')}</span>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <div className='overflow-x-hidden w-full'>
           {homePageContent.startsWith('https://') ? (
             <iframe
               src={homePageContent}
+              title='首页内容'
               className='w-full h-screen border-none'
             />
           ) : (
