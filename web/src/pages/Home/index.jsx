@@ -585,11 +585,11 @@ const Home = () => {
                   <span className='text-sm sm:text-base font-semibold text-semi-color-text-0 group-hover:text-blue-600 transition-colors'>{t('模型定价')}</span>
                   <span className='text-xs text-semi-color-text-2 mt-1 text-center'>{t('GPT/Claude/Gemini API价格对比')}</span>
                 </Link>
-                <Link to='/document' className='group flex flex-col items-center p-4 sm:p-5 rounded-2xl border border-semi-color-border bg-semi-color-bg-0 hover:shadow-md hover:border-blue-300 transition-all duration-300 no-underline'>
+                <a href='https://lingtrue.apifox.cn/' target='_blank' rel='noopener noreferrer' className='group flex flex-col items-center p-4 sm:p-5 rounded-2xl border border-semi-color-border bg-semi-color-bg-0 hover:shadow-md hover:border-blue-300 transition-all duration-300 no-underline'>
                   <span className='text-2xl mb-2'>📖</span>
                   <span className='text-sm sm:text-base font-semibold text-semi-color-text-0 group-hover:text-blue-600 transition-colors'>{t('接入文档')}</span>
                   <span className='text-xs text-semi-color-text-2 mt-1 text-center'>{t('3分钟完成API集成')}</span>
-                </Link>
+                </a>
                 <Link to='/about' className='group flex flex-col items-center p-4 sm:p-5 rounded-2xl border border-semi-color-border bg-semi-color-bg-0 hover:shadow-md hover:border-blue-300 transition-all duration-300 no-underline'>
                   <span className='text-2xl mb-2'>🏢</span>
                   <span className='text-sm sm:text-base font-semibold text-semi-color-text-0 group-hover:text-blue-600 transition-colors'>{t('关于我们')}</span>
