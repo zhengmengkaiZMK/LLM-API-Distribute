@@ -124,6 +124,19 @@ const SubscriptionPlansCard = ({
         plan_id: selectedPlan.plan.id,
       });
       if (res.data?.message === 'success') {
+        // GA4 事件埋点：Stripe 订阅支付发起成功
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'purchase_subscription', {
+            event_category: 'subscription',
+            event_label: 'stripe',
+            payment_type: 'stripe',
+            plan_id: selectedPlan?.plan?.id,
+            plan_title: selectedPlan?.plan?.title,
+            value: parseFloat(selectedPlan?.plan?.price_amount || 0),
+            currency: selectedPlan?.plan?.price_currency || 'USD',
+          });
+        }
+
         window.open(res.data.data?.pay_link, '_blank');
         showSuccess(t('已打开支付页面'));
         closeBuy();
@@ -152,6 +165,19 @@ const SubscriptionPlansCard = ({
         plan_id: selectedPlan.plan.id,
       });
       if (res.data?.message === 'success') {
+        // GA4 事件埋点：Creem 订阅支付发起成功
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'purchase_subscription', {
+            event_category: 'subscription',
+            event_label: 'creem',
+            payment_type: 'creem',
+            plan_id: selectedPlan?.plan?.id,
+            plan_title: selectedPlan?.plan?.title,
+            value: parseFloat(selectedPlan?.plan?.price_amount || 0),
+            currency: selectedPlan?.plan?.price_currency || 'USD',
+          });
+        }
+
         window.open(res.data.data?.checkout_url, '_blank');
         showSuccess(t('已打开支付页面'));
         closeBuy();
@@ -181,6 +207,19 @@ const SubscriptionPlansCard = ({
         payment_method: selectedEpayMethod,
       });
       if (res.data?.message === 'success') {
+        // GA4 事件埋点：易支付订阅支付发起成功
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'purchase_subscription', {
+            event_category: 'subscription',
+            event_label: selectedEpayMethod,
+            payment_type: selectedEpayMethod,
+            plan_id: selectedPlan?.plan?.id,
+            plan_title: selectedPlan?.plan?.title,
+            value: parseFloat(selectedPlan?.plan?.price_amount || 0),
+            currency: selectedPlan?.plan?.price_currency || 'CNY',
+          });
+        }
+
         submitEpayForm({ url: res.data.url, params: res.data.data });
         showSuccess(t('已发起支付'));
         closeBuy();

@@ -44,6 +44,16 @@ const TopUp = () => {
   const [userState, userDispatch] = useContext(UserContext);
   const [statusState] = useContext(StatusContext);
 
+  // GA4 事件埋点：用户进入钱包管理页面
+  useEffect(() => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'view_wallet', {
+        event_category: 'wallet',
+        event_label: 'page_view',
+      });
+    }
+  }, []);
+
   const [redemptionCode, setRedemptionCode] = useState('');
   const [amount, setAmount] = useState(0.0);
   const [minTopUp, setMinTopUp] = useState(statusState?.status?.min_topup || 1);
@@ -117,6 +127,15 @@ const TopUp = () => {
       });
       const { success, message, data } = res.data;
       if (success) {
+        // GA4 事件埋点：兑换码充值成功
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'redeem_code', {
+            event_category: 'wallet',
+            event_label: 'redemption',
+            value: data,
+          });
+        }
+
         showSuccess(t('兑换成功！'));
         Modal.success({
           title: t('兑换成功！'),
@@ -162,6 +181,15 @@ const TopUp = () => {
       }
     }
 
+    // GA4 事件埋点：用户选择支付方式
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'select_payment_method', {
+        event_category: 'wallet',
+        event_label: payment,
+        payment_type: payment,
+      });
+    }
+
     setPayWay(payment);
     setPaymentLoading(true);
     try {
@@ -200,6 +228,18 @@ const TopUp = () => {
       showError('充值数量不能小于' + minTopUp);
       return;
     }
+
+    // GA4 事件埋点：用户确认付款
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'begin_checkout', {
+        event_category: 'wallet',
+        event_label: payWay,
+        payment_type: payWay,
+        value: parseFloat(topUpCount),
+        currency: 'CNY',
+      });
+    }
+
     setConfirmLoading(true);
     try {
       let res;
@@ -220,6 +260,18 @@ const TopUp = () => {
       if (res !== undefined) {
         const { message, data } = res.data;
         if (message === 'success') {
+          // GA4 事件埋点：支付发起成功
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'purchase', {
+              event_category: 'wallet',
+              event_label: payWay,
+              payment_type: payWay,
+              value: parseFloat(amount),
+              currency: 'CNY',
+              topup_count: parseInt(topUpCount),
+            });
+          }
+
           if (payWay === 'stripe') {
             // Stripe 支付回调处理
             window.open(data.pay_link, '_blank');
@@ -292,6 +344,19 @@ const TopUp = () => {
       if (res !== undefined) {
         const { message, data } = res.data;
         if (message === 'success') {
+          // GA4 事件埋点：Creem 支付发起成功
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'purchase_creem', {
+              event_category: 'wallet',
+              event_label: 'creem',
+              payment_type: 'creem',
+              product_id: selectedCreemProduct?.productId,
+              product_name: selectedCreemProduct?.name,
+              value: parseFloat(selectedCreemProduct?.price || 0),
+              currency: selectedCreemProduct?.currency || 'USD',
+            });
+          }
+
           processCreemCallback(data);
         } else {
           const errorMsg =
