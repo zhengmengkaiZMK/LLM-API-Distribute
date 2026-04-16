@@ -90,7 +90,7 @@ func SetApiRouter(router *gin.Engine) {
 				selfRoute.POST("/stripe/pay", middleware.CriticalRateLimit(), controller.RequestStripePay)
 				selfRoute.POST("/stripe/amount", controller.RequestStripeAmount)
 				selfRoute.POST("/creem/pay", middleware.CriticalRateLimit(), controller.RequestCreemPay)
-				selfRoute.POST("/aff_transfer", controller.TransferAffQuota)
+				selfRoute.POST("/aff_transfer", middleware.CriticalRateLimit(), controller.TransferAffQuota)
 				selfRoute.PUT("/setting", controller.UpdateUserSetting)
 			selfRoute.POST("/first_login_popup_shown", controller.MarkFirstLoginPopupShown)
 

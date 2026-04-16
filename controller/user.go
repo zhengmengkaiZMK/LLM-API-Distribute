@@ -332,11 +332,17 @@ func TransferAffQuota(c *gin.Context) {
 		common.ApiError(c, err)
 		return
 	}
+	affQuotaBefore := user.AffQuota
+	quotaBefore := user.Quota
 	err = user.TransferAffQuotaToQuota(tran.Quota)
 	if err != nil {
 		common.ApiErrorI18n(c, i18n.MsgUserTransferFailed, map[string]any{"Error": err.Error()})
 		return
 	}
+	model.RecordLog(id, model.LogTypeTopup, fmt.Sprintf("用户将邀请额度转移为可用额度 %s（邀请额度: %s → %s，可用额度: %s → %s）",
+		logger.LogQuota(tran.Quota),
+		logger.LogQuota(affQuotaBefore), logger.LogQuota(affQuotaBefore-tran.Quota),
+		logger.LogQuota(quotaBefore), logger.LogQuota(quotaBefore+tran.Quota)))
 	common.ApiSuccessI18n(c, i18n.MsgUserTransferSuccess, nil)
 }
 

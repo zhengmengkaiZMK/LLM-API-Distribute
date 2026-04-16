@@ -37,11 +37,7 @@ func generateCreemSignature(payload string, secret string) string {
 // 验证Creem webhook签名
 func verifyCreemSignature(payload string, signature string, secret string) bool {
 	if secret == "" {
-		log.Printf("Creem webhook secret not set")
-		if setting.CreemTestMode {
-			log.Printf("Skip Creem webhook sign verify in test mode")
-			return true
-		}
+		log.Printf("Creem webhook secret not set, rejecting webhook request")
 		return false
 	}
 
