@@ -80,11 +80,6 @@ const OperationSetting = () => {
     'checkin_setting.min_quota': 1000,
     'checkin_setting.max_quota': 10000,
 
-    /* 弹窗充值设置 */
-    'promo_popup_setting.enabled': false,
-    'promo_popup_setting.amount': 100,
-    'promo_popup_setting.discount': 1.0,
-
     /* 令牌设置 */
     'token_setting.max_user_tokens': 1000,
   });

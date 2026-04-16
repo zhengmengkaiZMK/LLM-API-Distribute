@@ -31,8 +31,6 @@ import FaqPanel from './FaqPanel';
 import UptimePanel from './UptimePanel';
 import SearchModal from './modals/SearchModal';
 import FirstLoginModal from '../layout/FirstLoginModal';
-import usePromoPopup from '../PromoPopup/usePromoPopup';
-import PromoRechargeModal from '../PromoPopup/PromoRechargeModal';
 
 import { useDashboardData } from '../../hooks/dashboard/useDashboardData';
 import { useDashboardStats } from '../../hooks/dashboard/useDashboardStats';
@@ -64,9 +62,6 @@ const Dashboard = () => {
 
   // ========== 首次登录弹窗状态 ==========
   const [firstLoginModalVisible, setFirstLoginModalVisible] = useState(false);
-
-  // ========== 弹窗充值促销状态 ==========
-  const promo = usePromoPopup();
 
   // ========== 主要数据管理 ==========
   const dashboardData = useDashboardData(userState, userDispatch, statusState);
@@ -161,8 +156,6 @@ const Dashboard = () => {
       const lastShown = localStorage.getItem(storageKey) || '';
 
       if (lastShown === today) {
-        // 今天已弹过首次登录弹窗，直接检查低余额促销弹窗
-        promo.checkAndShow(false);
         return;
       }
 
@@ -171,12 +164,9 @@ const Dashboard = () => {
         const { enabled, content } = popupRes.data.data;
         if (enabled && content && content.trim() !== '') {
           setFirstLoginModalVisible(true);
-          // 首次登录弹窗的 onClose 回调会触发 promo.checkAndShow(true)
           return;
         }
       }
-      // 首次登录弹窗未启用或无内容，直接检查低余额促销弹窗
-      promo.checkAndShow(false);
     } catch (error) {
       console.error('检查弹窗失败:', error);
     }
@@ -193,17 +183,8 @@ const Dashboard = () => {
         visible={firstLoginModalVisible}
         onClose={() => {
           setFirstLoginModalVisible(false);
-          // 首次登录弹窗关闭后，检查是否需要展示促销弹窗
-          promo.checkAndShow(true);
         }}
         isMobile={isMobile}
-      />
-
-      {/* 弹窗充值促销 */}
-      <PromoRechargeModal
-        visible={promo.visible}
-        config={promo.config}
-        onClose={promo.close}
       />
 
       <DashboardHeader
