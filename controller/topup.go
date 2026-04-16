@@ -287,6 +287,11 @@ func EpayNotify(c *gin.Context) {
 			log.Printf("易支付回调未找到订单: %v", verifyInfo)
 			return
 		}
+		// 安全校验：防止 stripe/creem/waffo 订单被易支付回调串用
+		if topUp.PaymentMethod == PaymentMethodStripe || topUp.PaymentMethod == PaymentMethodCreem || topUp.PaymentMethod == "waffo" {
+			log.Printf("易支付回调拒绝：订单支付方式不匹配，订单方式=%s，订单号=%s", topUp.PaymentMethod, verifyInfo.ServiceTradeNo)
+			return
+		}
 		if topUp.Status == "pending" {
 			topUp.Status = "success"
 			err := topUp.Update()
