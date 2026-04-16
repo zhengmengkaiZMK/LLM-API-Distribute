@@ -156,6 +156,7 @@ const About = () => {
           {about.startsWith('https://') ? (
             <iframe
               src={about}
+              title='关于我们'
               style={{ width: '100%', height: '100vh', border: 'none' }}
             />
           ) : (

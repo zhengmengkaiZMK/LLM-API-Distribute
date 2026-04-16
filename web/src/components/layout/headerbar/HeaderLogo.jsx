@@ -43,7 +43,7 @@ const HeaderLogo = ({
         <SkeletonWrapper loading={isLoading || !logoLoaded} type='image' />
         <img
           src={logo}
-          alt='logo'
+          alt='LingTrue - AI大模型API中转站'
           className={`absolute inset-0 w-full h-full transition-all duration-200 group-hover:scale-110 rounded-full ${!isLoading && logoLoaded ? 'opacity-100' : 'opacity-0'}`}
         />
       </div>

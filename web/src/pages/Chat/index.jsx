@@ -56,6 +56,7 @@ const ChatPage = () => {
   return !isLoading && iframeSrc ? (
     <iframe
       src={iframeSrc}
+      title='AI 聊天窗口'
       style={{
         width: '100%',
         height: 'calc(100vh - 64px)',

@@ -94,6 +94,10 @@ func SetApiRouter(router *gin.Engine) {
 				selfRoute.PUT("/setting", controller.UpdateUserSetting)
 			selfRoute.POST("/first_login_popup_shown", controller.MarkFirstLoginPopupShown)
 
+				// Promo popup routes
+				selfRoute.GET("/promo_popup/config", controller.GetPromoPopupConfig)
+				selfRoute.POST("/promo_pay", middleware.CriticalRateLimit(), controller.RequestPromoPay)
+
 				// 2FA routes
 				selfRoute.GET("/2fa/status", controller.Get2FAStatus)
 				selfRoute.POST("/2fa/setup", controller.Setup2FA)

@@ -262,7 +262,7 @@ export default function SettingsPaymentGatewayCreem(props) {
         <Form.Section text={t('Creem 设置')}>
           <Text>
             {t('Creem 介绍')}
-            <a href='https://creem.io' target='_blank' rel='noreferrer'>
+            <a href='https://creem.io' target='_blank' rel='noopener noreferrer'>
               Creem Official Site
             </a>
             <br />
