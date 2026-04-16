@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/logger"
 	"github.com/QuantumNous/new-api/model"
 	"github.com/QuantumNous/new-api/service"
 	"github.com/QuantumNous/new-api/setting"
@@ -263,33 +264,52 @@ func EpayNotify(c *gin.Context) {
 		return
 	}
 	verifyInfo, err := client.Verify(params)
-	if err != nil || !verifyInfo.VerifyStatus {
-		_, _ = c.Writer.Write([]byte("fail"))
+	if err == nil && verifyInfo.VerifyStatus {
+		_, err := c.Writer.Write([]byte("success"))
+		if err != nil {
+			log.Println("易支付回调写入失败")
+		}
+	} else {
+		_, err := c.Writer.Write([]byte("fail"))
+		if err != nil {
+			log.Println("易支付回调写入失败")
+		}
 		log.Println("易支付回调签名验证失败")
 		return
 	}
 
-	if verifyInfo.TradeStatus != epay.StatusTradeSuccess {
+	if verifyInfo.TradeStatus == epay.StatusTradeSuccess {
+		log.Println(verifyInfo)
+		LockOrder(verifyInfo.ServiceTradeNo)
+		defer UnlockOrder(verifyInfo.ServiceTradeNo)
+		topUp := model.GetTopUpByTradeNo(verifyInfo.ServiceTradeNo)
+		if topUp == nil {
+			log.Printf("易支付回调未找到订单: %v", verifyInfo)
+			return
+		}
+		if topUp.Status == "pending" {
+			topUp.Status = "success"
+			err := topUp.Update()
+			if err != nil {
+				log.Printf("易支付回调更新订单失败: %v", topUp)
+				return
+			}
+			//user, _ := model.GetUserById(topUp.UserId, false)
+			//user.Quota += topUp.Amount * 500000
+			dAmount := decimal.NewFromInt(int64(topUp.Amount))
+			dQuotaPerUnit := decimal.NewFromFloat(common.QuotaPerUnit)
+			quotaToAdd := int(dAmount.Mul(dQuotaPerUnit).IntPart())
+			err = model.IncreaseUserQuota(topUp.UserId, quotaToAdd, true)
+			if err != nil {
+				log.Printf("易支付回调更新用户失败: %v", topUp)
+				return
+			}
+			log.Printf("易支付回调更新用户成功 %v", topUp)
+			model.RecordLog(topUp.UserId, model.LogTypeTopup, fmt.Sprintf("使用在线充值成功，充值金额: %v，支付金额：%f", logger.LogQuota(quotaToAdd), topUp.Money))
+		}
+	} else {
 		log.Printf("易支付异常回调: %v", verifyInfo)
-		_, _ = c.Writer.Write([]byte("fail"))
-		return
 	}
-
-	log.Println(verifyInfo)
-	LockOrder(verifyInfo.ServiceTradeNo)
-	defer UnlockOrder(verifyInfo.ServiceTradeNo)
-
-	// 使用数据库事务原子完成：订单状态校验 + 更新 + 用户加款
-	err = model.RechargeEpay(verifyInfo.ServiceTradeNo)
-	if err != nil {
-		log.Printf("易支付回调充值失败: %s, 订单号: %s", err.Error(), verifyInfo.ServiceTradeNo)
-		_, _ = c.Writer.Write([]byte("fail"))
-		return
-	}
-
-	// 业务逻辑全部成功后，才告知支付网关 success
-	_, _ = c.Writer.Write([]byte("success"))
-	log.Printf("易支付回调处理成功, 订单号: %s", verifyInfo.ServiceTradeNo)
 }
 
 func RequestAmount(c *gin.Context) {

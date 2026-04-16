@@ -155,16 +155,13 @@ const Dashboard = () => {
       const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
       const lastShown = localStorage.getItem(storageKey) || '';
 
-      if (lastShown === today) {
-        return;
-      }
+      if (lastShown === today) return; // 今天已弹过，跳过
 
       const popupRes = await API.get('/api/first_login_popup');
       if (popupRes.data.success && popupRes.data.data) {
         const { enabled, content } = popupRes.data.data;
         if (enabled && content && content.trim() !== '') {
           setFirstLoginModalVisible(true);
-          return;
         }
       }
     } catch (error) {
@@ -181,9 +178,7 @@ const Dashboard = () => {
       {/* 首次登录弹窗 */}
       <FirstLoginModal
         visible={firstLoginModalVisible}
-        onClose={() => {
-          setFirstLoginModalVisible(false);
-        }}
+        onClose={() => setFirstLoginModalVisible(false)}
         isMobile={isMobile}
       />
 

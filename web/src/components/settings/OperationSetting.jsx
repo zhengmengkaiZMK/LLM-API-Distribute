@@ -27,7 +27,6 @@ import SettingsLog from '../../pages/Setting/Operation/SettingsLog';
 import SettingsMonitoring from '../../pages/Setting/Operation/SettingsMonitoring';
 import SettingsCreditLimit from '../../pages/Setting/Operation/SettingsCreditLimit';
 import SettingsCheckin from '../../pages/Setting/Operation/SettingsCheckin';
-import SettingsPromoPopup from '../../pages/Setting/Operation/SettingsPromoPopup';
 import { API, showError, toBoolean } from '../../helpers';
 
 const OperationSetting = () => {
@@ -154,10 +153,6 @@ const OperationSetting = () => {
         {/* 签到设置 */}
         <Card style={{ marginTop: '10px' }}>
           <SettingsCheckin options={inputs} refresh={onRefresh} />
-        </Card>
-        {/* 弹窗充值设置 */}
-        <Card style={{ marginTop: '10px' }}>
-          <SettingsPromoPopup options={inputs} refresh={onRefresh} />
         </Card>
       </Spin>
     </>
