@@ -31,11 +31,13 @@ import FaqPanel from './FaqPanel';
 import UptimePanel from './UptimePanel';
 import SearchModal from './modals/SearchModal';
 import FirstLoginModal from '../layout/FirstLoginModal';
+import PopupRechargeModal from '../topup/modals/PopupRechargeModal';
 
 import { useDashboardData } from '../../hooks/dashboard/useDashboardData';
 import { useDashboardStats } from '../../hooks/dashboard/useDashboardStats';
 import { useDashboardCharts } from '../../hooks/dashboard/useDashboardCharts';
 import { useIsMobile } from '../../hooks/common/useIsMobile';
+import usePopupRecharge from '../../hooks/common/usePopupRecharge';
 
 import {
   CHART_CONFIG,
@@ -62,6 +64,9 @@ const Dashboard = () => {
 
   // ========== 首次登录弹窗状态 ==========
   const [firstLoginModalVisible, setFirstLoginModalVisible] = useState(false);
+
+  // ========== 弹窗充值状态 ==========
+  const popupRecharge = usePopupRecharge();
 
   // ========== 主要数据管理 ==========
   const dashboardData = useDashboardData(userState, userDispatch, statusState);
@@ -173,12 +178,53 @@ const Dashboard = () => {
     checkFirstLoginPopup();
   }, [checkFirstLoginPopup]);
 
+  // ========== 弹窗充值检查 ==========
+  // 策略：等首次登录弹窗关闭后（或确认不需要弹出后），再触发充值弹窗
+  // 使用 ref 避免重复触发
+  const promoCheckedRef = React.useRef(false);
+
+  // 当首次登录弹窗不显示时，延迟后触发充值弹窗检查
+  useEffect(() => {
+    // 首次登录弹窗正在显示 → 不做任何事，等 onClose 回调处理
+    if (firstLoginModalVisible) return;
+
+    // 已经检查过了 → 不重复
+    if (promoCheckedRef.current) return;
+
+    // 用户数据还没加载 → 不检查
+    if (!userState?.user?.id) return;
+
+    // 延迟 2s 执行，确保首次登录弹窗的 API 检查有足够时间完成
+    const timer = setTimeout(() => {
+      if (!promoCheckedRef.current) {
+        promoCheckedRef.current = true;
+        popupRecharge.checkAndShow();
+      }
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [firstLoginModalVisible, userState?.user?.id, popupRecharge]);
+
   return (
     <div className='h-full'>
       {/* 首次登录弹窗 */}
       <FirstLoginModal
         visible={firstLoginModalVisible}
-        onClose={() => setFirstLoginModalVisible(false)}
+        onClose={() => {
+          setFirstLoginModalVisible(false);
+          // 首次登录弹窗关闭后，检查弹窗充值
+          if (!promoCheckedRef.current) {
+            promoCheckedRef.current = true;
+            popupRecharge.checkAndShow();
+          }
+        }}
+        isMobile={isMobile}
+      />
+
+      {/* 弹窗充值 */}
+      <PopupRechargeModal
+        visible={popupRecharge.visible}
+        onClose={popupRecharge.close}
+        config={popupRecharge.config}
         isMobile={isMobile}
       />
 

@@ -27,6 +27,7 @@ import SettingsLog from '../../pages/Setting/Operation/SettingsLog';
 import SettingsMonitoring from '../../pages/Setting/Operation/SettingsMonitoring';
 import SettingsCreditLimit from '../../pages/Setting/Operation/SettingsCreditLimit';
 import SettingsCheckin from '../../pages/Setting/Operation/SettingsCheckin';
+import SettingsPopupRecharge from '../../pages/Setting/Operation/SettingsPopupRecharge';
 import { API, showError, toBoolean } from '../../helpers';
 
 const OperationSetting = () => {
@@ -81,6 +82,11 @@ const OperationSetting = () => {
 
     /* 令牌设置 */
     'token_setting.max_user_tokens': 1000,
+
+    /* 弹窗充值设置 */
+    'popup_recharge_setting.enabled': false,
+    'popup_recharge_setting.amount': 100,
+    'popup_recharge_setting.discount': 1.0,
   });
 
   let [loading, setLoading] = useState(false);
@@ -153,6 +159,10 @@ const OperationSetting = () => {
         {/* 签到设置 */}
         <Card style={{ marginTop: '10px' }}>
           <SettingsCheckin options={inputs} refresh={onRefresh} />
+        </Card>
+        {/* 弹窗充值设置 */}
+        <Card style={{ marginTop: '10px' }}>
+          <SettingsPopupRecharge options={inputs} refresh={onRefresh} />
         </Card>
       </Spin>
     </>

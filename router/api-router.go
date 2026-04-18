@@ -26,6 +26,7 @@ func SetApiRouter(router *gin.Engine) {
 		apiRouter.GET("/status/test", middleware.AdminAuth(), controller.TestStatus)
 		apiRouter.GET("/notice", controller.GetNotice)
 		apiRouter.GET("/first_login_popup", middleware.UserAuth(), controller.GetFirstLoginPopup)
+		// popup_recharge config 已移至 selfRoute
 		apiRouter.GET("/user-agreement", controller.GetUserAgreement)
 		apiRouter.GET("/privacy-policy", controller.GetPrivacyPolicy)
 		apiRouter.GET("/about", controller.GetAbout)
@@ -92,7 +93,11 @@ func SetApiRouter(router *gin.Engine) {
 				selfRoute.POST("/creem/pay", middleware.CriticalRateLimit(), controller.RequestCreemPay)
 				selfRoute.POST("/aff_transfer", controller.TransferAffQuota)
 				selfRoute.PUT("/setting", controller.UpdateUserSetting)
-			selfRoute.POST("/first_login_popup_shown", controller.MarkFirstLoginPopupShown)
+				selfRoute.POST("/first_login_popup_shown", controller.MarkFirstLoginPopupShown)
+
+				// Promo popup routes（弹窗充值，独立于原有充值管理）
+				selfRoute.GET("/promo_popup/config", controller.GetPopupRechargeConfig)
+				selfRoute.POST("/promo_pay", middleware.CriticalRateLimit(), controller.RequestPromoPay)
 
 				// 2FA routes
 				selfRoute.GET("/2fa/status", controller.Get2FAStatus)
