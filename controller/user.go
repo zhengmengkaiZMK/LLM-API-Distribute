@@ -867,6 +867,81 @@ type ManageRequest struct {
 	Action string `json:"action"`
 }
 
+type BatchManageRequest struct {
+	Ids    []int  `json:"ids"`
+	Action string `json:"action"`
+}
+
+// BatchManageUser allows admin users to batch manage (disable/enable) users
+func BatchManageUser(c *gin.Context) {
+	var req BatchManageRequest
+	err := json.NewDecoder(c.Request.Body).Decode(&req)
+	if err != nil || len(req.Ids) == 0 {
+		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
+		return
+	}
+	// Only support disable and enable actions for batch operations
+	if req.Action != "disable" && req.Action != "enable" {
+		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
+		return
+	}
+
+	myRole := c.GetInt("role")
+	successCount := 0
+	var errors []string
+
+	for _, userId := range req.Ids {
+		user := model.User{Id: userId}
+		model.DB.Unscoped().Where(&user).First(&user)
+		if user.Id == 0 {
+			errors = append(errors, fmt.Sprintf("user %d not found", userId))
+			continue
+		}
+		// Permission check: cannot manage users with same or higher role
+		if myRole <= user.Role && myRole != common.RoleRootUser {
+			errors = append(errors, fmt.Sprintf("user %d: no permission", userId))
+			continue
+		}
+		// Cannot disable root user
+		if req.Action == "disable" && user.Role == common.RoleRootUser {
+			errors = append(errors, fmt.Sprintf("user %d: cannot disable root user", userId))
+			continue
+		}
+
+		if req.Action == "disable" {
+			user.Status = common.UserStatusDisabled
+		} else {
+			user.Status = common.UserStatusEnabled
+		}
+
+		if err := user.Update(false); err != nil {
+			errors = append(errors, fmt.Sprintf("user %d: %s", userId, err.Error()))
+			continue
+		}
+		successCount++
+	}
+
+	if len(errors) > 0 {
+		c.JSON(http.StatusOK, gin.H{
+			"success": true,
+			"message": fmt.Sprintf("%d succeeded, %d failed", successCount, len(errors)),
+			"data": gin.H{
+				"success_count": successCount,
+				"errors":        errors,
+			},
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": "",
+		"data": gin.H{
+			"success_count": successCount,
+		},
+	})
+}
+
 // ManageUser Only admin user can do this
 func ManageUser(c *gin.Context) {
 	var req ManageRequest

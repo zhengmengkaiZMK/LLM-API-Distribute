@@ -43,6 +43,10 @@ export const useUsersData = () => {
     id: undefined,
   });
 
+  // Batch operation states
+  const [enableBatchOperation, setEnableBatchOperation] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+
   // Form initial values
   const formInitValues = {
     searchKeyword: '',
@@ -188,6 +192,38 @@ export const useUsersData = () => {
     }
   };
 
+  // Batch manage users (disable/enable)
+  const batchManageUsers = async (action) => {
+    if (selectedUsers.length === 0) {
+      showError(t('请先选择要操作的用户！'));
+      return;
+    }
+    setLoading(true);
+    const ids = selectedUsers.map((user) => user.id);
+    try {
+      const res = await API.post('/api/user/batch_manage', {
+        ids,
+        action,
+      });
+      const { success, message, data } = res.data;
+      if (success) {
+        showSuccess(
+          t('批量操作完成') +
+            (data?.success_count !== undefined
+              ? `，${t('成功')} ${data.success_count} ${t('个')}`
+              : ''),
+        );
+        setSelectedUsers([]);
+        await refresh();
+      } else {
+        showError(message);
+      }
+    } catch (error) {
+      showError(t('操作失败，请重试'));
+    }
+    setLoading(false);
+  };
+
   // Handle page change
   const handlePageChange = (page) => {
     setActivePage(page);
@@ -301,10 +337,17 @@ export const useUsersData = () => {
     compactMode,
     setCompactMode,
 
+    // Batch operation state
+    enableBatchOperation,
+    setEnableBatchOperation,
+    selectedUsers,
+    setSelectedUsers,
+
     // Actions
     loadUsers,
     searchUsers,
     manageUser,
+    batchManageUsers,
     resetUserPasskey,
     resetUserTwoFA,
     handlePageChange,

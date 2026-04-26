@@ -41,6 +41,9 @@ const UsersTable = (usersData) => {
     pageSize,
     userCount,
     compactMode,
+    enableBatchOperation,
+    selectedUsers,
+    setSelectedUsers,
     handlePageChange,
     handlePageSizeChange,
     handleRow,
@@ -168,12 +171,23 @@ const UsersTable = (usersData) => {
       : columns;
   }, [compactMode, columns]);
 
+  // Row selection config for batch operations
+  const rowSelection = enableBatchOperation
+    ? {
+        selectedRowKeys: selectedUsers.map((u) => u.key),
+        onChange: (selectedRowKeys, selectedRows) => {
+          setSelectedUsers(selectedRows);
+        },
+      }
+    : undefined;
+
   return (
     <>
       <CardTable
         columns={tableColumns}
         dataSource={users}
         scroll={compactMode ? undefined : { x: 'max-content' }}
+        rowSelection={rowSelection}
         pagination={{
           currentPage: activePage,
           pageSize: pageSize,

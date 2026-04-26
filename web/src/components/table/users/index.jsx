@@ -58,6 +58,12 @@ const UsersPage = () => {
     compactMode,
     setCompactMode,
 
+    // Batch operation state
+    enableBatchOperation,
+    setEnableBatchOperation,
+    selectedUsers,
+    batchManageUsers,
+
     // Translation
     t,
   } = usersData;
@@ -88,7 +94,14 @@ const UsersPage = () => {
         }
         actionsArea={
           <div className='flex flex-col md:flex-row justify-between items-center gap-2 w-full'>
-            <UsersActions setShowAddUser={setShowAddUser} t={t} />
+            <UsersActions
+              setShowAddUser={setShowAddUser}
+              enableBatchOperation={enableBatchOperation}
+              setEnableBatchOperation={setEnableBatchOperation}
+              selectedUsers={selectedUsers}
+              batchManageUsers={batchManageUsers}
+              t={t}
+            />
 
             <UsersFilters
               formInitValues={formInitValues}
