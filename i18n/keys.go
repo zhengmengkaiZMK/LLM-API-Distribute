@@ -100,6 +100,7 @@ const (
 	MsgUserTelegramIdEmpty           = "user.telegram_id_empty"
 	MsgUserTelegramNotBound          = "user.telegram_not_bound"
 	MsgUserLinuxDOIdEmpty            = "user.linux_do_id_empty"
+	MsgUserUsernameFormatInvalid     = "user.username_format_invalid"
 )
 
 // Quota related messages

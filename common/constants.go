@@ -173,6 +173,10 @@ var (
 	CriticalRateLimitNum            = 20
 	CriticalRateLimitDuration int64 = 20 * 60
 
+	// 注册接口专用限流（比 CriticalRateLimit 更严格）
+	RegisterRateLimitNum            = 5
+	RegisterRateLimitDuration int64 = 30 * 60
+
 	UploadRateLimitNum            = 10
 	UploadRateLimitDuration int64 = 60
 

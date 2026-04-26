@@ -108,6 +108,12 @@ func CriticalRateLimit() func(c *gin.Context) {
 	return defNext
 }
 
+// RegisterRateLimit 注册接口专用限流，比 CriticalRateLimit 更严格
+// 默认 5 次/30 分钟（按 IP）
+func RegisterRateLimit() func(c *gin.Context) {
+	return rateLimitFactory(common.RegisterRateLimitNum, common.RegisterRateLimitDuration, "RG")
+}
+
 func DownloadRateLimit() func(c *gin.Context) {
 	return rateLimitFactory(common.DownloadRateLimitNum, common.DownloadRateLimitDuration, "DW")
 }

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -23,6 +24,24 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
+
+// 用户名黑名单模式：拦截批量注册机器人的自动生成用户名
+var autoGenPatterns = []*regexp.Regexp{
+	regexp.MustCompile(`(?i)^[a-z]{2,5}_[0-9a-f]{6,}$`),                          // prefix_hexstring (如 prx_b7302fa1)
+	regexp.MustCompile(`(?i)^(bot|tmp|test|auto|prx|usr|reg|fake|spam)[_\-]`),     // 常见机器人前缀
+	regexp.MustCompile(`(?i)^user[0-9]{5,}$`),                                     // user12345678
+	regexp.MustCompile(`(?i)^[a-z]{1,3}[0-9]{8,}$`),                              // a12345678, ab12345678
+}
+
+// validateUsername 检查用户名是否为机器人自动生成的格式，返回 true 表示合规
+func validateUsername(username string) bool {
+	for _, pattern := range autoGenPatterns {
+		if pattern.MatchString(username) {
+			return false
+		}
+	}
+	return true
+}
 
 type LoginRequest struct {
 	Username string `json:"username"`
@@ -145,6 +164,11 @@ func Register(c *gin.Context) {
 	}
 	if err := common.Validate.Struct(&user); err != nil {
 		common.ApiErrorI18n(c, i18n.MsgUserInputInvalid, map[string]any{"Error": err.Error()})
+		return
+	}
+	// 用户名格式校验：防止批量注册
+	if !validateUsername(user.Username) {
+		common.ApiErrorI18n(c, i18n.MsgUserUsernameFormatInvalid)
 		return
 	}
 	if common.EmailVerificationEnabled {

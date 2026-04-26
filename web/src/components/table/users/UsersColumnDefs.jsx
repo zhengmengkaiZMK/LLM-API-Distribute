@@ -346,6 +346,15 @@ export const getUsersColumns = ({
       },
     },
     {
+      title: t('注册时间'),
+      dataIndex: 'created_at',
+      render: (text) => {
+        if (!text || text === 0) return '-';
+        const date = new Date(text * 1000);
+        return date.toLocaleString();
+      },
+    },
+    {
       title: t('邀请信息'),
       dataIndex: 'invite',
       render: (text, record, index) => renderInviteInfo(text, record, t),
