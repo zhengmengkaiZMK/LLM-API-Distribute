@@ -62,6 +62,8 @@ func InitOptionMap() {
 	common.OptionMap["SMTPAccount"] = ""
 	common.OptionMap["SMTPToken"] = ""
 	common.OptionMap["SMTPSSLEnabled"] = strconv.FormatBool(common.SMTPSSLEnabled)
+	common.OptionMap["EmailSendMethod"] = common.EmailSendMethod
+	common.OptionMap["ResendAPIKey"] = common.ResendAPIKey
 	common.OptionMap["Notice"] = ""
 	common.OptionMap["FirstLoginPopupEnabled"] = "false" // 新用户首次登录弹窗是否启用
 	common.OptionMap["FirstLoginPopup"] = ""             // 新用户首次登录弹窗内容
@@ -316,6 +318,10 @@ func updateOptionMap(key string, value string) (err error) {
 		common.SMTPFrom = value
 	case "SMTPToken":
 		common.SMTPToken = value
+	case "EmailSendMethod":
+		common.EmailSendMethod = value
+	case "ResendAPIKey":
+		common.ResendAPIKey = value
 	case "ServerAddress":
 		system_setting.ServerAddress = value
 	case "WorkerUrl":

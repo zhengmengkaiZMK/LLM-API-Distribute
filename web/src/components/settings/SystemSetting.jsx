@@ -69,6 +69,9 @@ const SystemSetting = () => {
     SMTPAccount: '',
     SMTPFrom: '',
     SMTPToken: '',
+    SMTPSSLEnabled: '',
+    EmailSendMethod: 'smtp',
+    ResendAPIKey: '',
     WorkerUrl: '',
     WorkerValidKey: '',
     WorkerAllowHttpImageRequestEnabled: '',
@@ -340,6 +343,15 @@ const SystemSetting = () => {
       inputs.SMTPToken !== ''
     ) {
       options.push({ key: 'SMTPToken', value: inputs.SMTPToken });
+    }
+    if (originInputs['EmailSendMethod'] !== inputs.EmailSendMethod) {
+      options.push({ key: 'EmailSendMethod', value: inputs.EmailSendMethod || 'smtp' });
+    }
+    if (
+      originInputs['ResendAPIKey'] !== inputs.ResendAPIKey &&
+      inputs.ResendAPIKey !== ''
+    ) {
+      options.push({ key: 'ResendAPIKey', value: inputs.ResendAPIKey });
     }
 
     if (options.length > 0) {
@@ -1289,55 +1301,145 @@ const SystemSetting = () => {
                 </Form.Section>
               </Card>
               <Card>
-                <Form.Section text={t('配置 SMTP')}>
+                <Form.Section text={t('配置邮件发送')}>
                   <Text>{t('用以支持系统的邮件发送')}</Text>
                   <Row
                     gutter={{ xs: 8, sm: 16, md: 24, lg: 24, xl: 24, xxl: 24 }}
+                    style={{ marginBottom: 16 }}
                   >
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                      <Form.Input
-                        field='SMTPServer'
-                        label={t('SMTP 服务器地址')}
+                      <Form.Select
+                        field='EmailSendMethod'
+                        label={t('邮件发送方式')}
+                        optionList={[
+                          { label: 'SMTP', value: 'smtp' },
+                          { label: 'Resend API (HTTP)', value: 'api' },
+                        ]}
+                        extraText={t(
+                          '如部署平台封锁了SMTP端口，可选择 Resend API 方式发送',
+                        )}
                       />
                     </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                      <Form.Input field='SMTPPort' label={t('SMTP 端口')} />
-                    </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                      <Form.Input field='SMTPAccount' label={t('SMTP 账户')} />
-                    </Col>
+                    {inputs.EmailSendMethod === 'api' && (
+                      <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Input
+                          field='ResendAPIKey'
+                          label='Resend API Key'
+                          type='password'
+                          placeholder={t('敏感信息不会发送到前端显示')}
+                          extraText={
+                            <span>
+                              {t('前往')}{' '}
+                              <a
+                                href='https://resend.com'
+                                target='_blank'
+                                rel='noreferrer'
+                              >
+                                resend.com
+                              </a>{' '}
+                              {t('获取 API Key')}
+                            </span>
+                          }
+                        />
+                      </Col>
+                    )}
                   </Row>
-                  <Row
-                    gutter={{ xs: 8, sm: 16, md: 24, lg: 24, xl: 24, xxl: 24 }}
-                    style={{ marginTop: 16 }}
-                  >
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                      <Form.Input
-                        field='SMTPFrom'
-                        label={t('SMTP 发送者邮箱')}
-                      />
-                    </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                      <Form.Input
-                        field='SMTPToken'
-                        label={t('SMTP 访问凭证')}
-                        type='password'
-                        placeholder='敏感信息不会发送到前端显示'
-                      />
-                    </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                      <Form.Checkbox
-                        field='SMTPSSLEnabled'
-                        noLabel
-                        onChange={(e) =>
-                          handleCheckboxChange('SMTPSSLEnabled', e)
-                        }
+                  {inputs.EmailSendMethod !== 'api' && (
+                    <>
+                      <Row
+                        gutter={{
+                          xs: 8,
+                          sm: 16,
+                          md: 24,
+                          lg: 24,
+                          xl: 24,
+                          xxl: 24,
+                        }}
                       >
-                        {t('启用SMTP SSL')}
-                      </Form.Checkbox>
-                    </Col>
-                  </Row>
-                  <Button onClick={submitSMTP}>{t('保存 SMTP 设置')}</Button>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                          <Form.Input
+                            field='SMTPServer'
+                            label={t('SMTP 服务器地址')}
+                          />
+                        </Col>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                          <Form.Input
+                            field='SMTPPort'
+                            label={t('SMTP 端口')}
+                          />
+                        </Col>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                          <Form.Input
+                            field='SMTPAccount'
+                            label={t('SMTP 账户')}
+                          />
+                        </Col>
+                      </Row>
+                      <Row
+                        gutter={{
+                          xs: 8,
+                          sm: 16,
+                          md: 24,
+                          lg: 24,
+                          xl: 24,
+                          xxl: 24,
+                        }}
+                        style={{ marginTop: 16 }}
+                      >
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                          <Form.Input
+                            field='SMTPFrom'
+                            label={t('SMTP 发送者邮箱')}
+                          />
+                        </Col>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                          <Form.Input
+                            field='SMTPToken'
+                            label={t('SMTP 访问凭证')}
+                            type='password'
+                            placeholder='敏感信息不会发送到前端显示'
+                          />
+                        </Col>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                          <Form.Checkbox
+                            field='SMTPSSLEnabled'
+                            noLabel
+                            onChange={(e) =>
+                              handleCheckboxChange('SMTPSSLEnabled', e)
+                            }
+                          >
+                            {t('启用SMTP SSL')}
+                          </Form.Checkbox>
+                        </Col>
+                      </Row>
+                    </>
+                  )}
+                  {inputs.EmailSendMethod === 'api' && (
+                    <Row
+                      gutter={{
+                        xs: 8,
+                        sm: 16,
+                        md: 24,
+                        lg: 24,
+                        xl: 24,
+                        xxl: 24,
+                      }}
+                    >
+                      <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Input
+                          field='SMTPFrom'
+                          label={t('发送者邮箱')}
+                          placeholder='onboarding@resend.dev'
+                          extraText={t(
+                            '填写 Resend 中配置的发送域名邮箱，测试可用 onboarding@resend.dev',
+                          )}
+                        />
+                      </Col>
+                    </Row>
+                  )}
+                  <Button onClick={submitSMTP} style={{ marginTop: 16 }}>
+                    {t('保存邮件发送设置')}
+                  </Button>
                 </Form.Section>
               </Card>
               <Card>

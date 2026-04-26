@@ -1,9 +1,12 @@
 package common
 
 import (
+	"bytes"
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
+	"io"
+	"net/http"
 	"net/smtp"
 	"slices"
 	"strings"
@@ -20,6 +23,11 @@ func generateMessageID() (string, error) {
 }
 
 func SendEmail(subject string, receiver string, content string) error {
+	// 如果配置了 API 方式，走 HTTP API 发送（绕过 SMTP 端口限制）
+	if EmailSendMethod == "api" {
+		return sendEmailViaResendAPI(subject, receiver, content)
+	}
+
 	if SMTPFrom == "" { // for compatibility
 		SMTPFrom = SMTPAccount
 	}
@@ -90,4 +98,52 @@ func SendEmail(subject string, receiver string, content string) error {
 		SysError(fmt.Sprintf("failed to send email to %s: %v", receiver, err))
 	}
 	return err
+}
+
+// sendEmailViaResendAPI 通过 Resend HTTP API 发送邮件
+// 走 HTTPS 443 端口，不受 SMTP 端口封锁限制
+func sendEmailViaResendAPI(subject, receiver, content string) error {
+	if ResendAPIKey == "" {
+		return fmt.Errorf("Resend API Key 未配置")
+	}
+	if SMTPFrom == "" {
+		SMTPFrom = SMTPAccount
+	}
+	from := SMTPFrom
+	if from == "" {
+		from = "onboarding@resend.dev"
+	}
+
+	// 构造 Resend API 请求体
+	reqData := map[string]interface{}{
+		"from":    from,
+		"to":      []string{receiver},
+		"subject": subject,
+		"html":    content,
+	}
+	reqBody, err := Marshal(reqData)
+	if err != nil {
+		return fmt.Errorf("构造 Resend API 请求体失败: %v", err)
+	}
+
+	req, err := http.NewRequest("POST", "https://api.resend.com/emails", bytes.NewBuffer(reqBody))
+	if err != nil {
+		return fmt.Errorf("创建 Resend API 请求失败: %v", err)
+	}
+	req.Header.Set("Authorization", "Bearer "+ResendAPIKey)
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{Timeout: 30 * time.Second}
+	resp, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("调用 Resend API 失败: %v", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
+		body, _ := io.ReadAll(resp.Body)
+		return fmt.Errorf("Resend API 返回错误 (HTTP %d): %s", resp.StatusCode, string(body))
+	}
+
+	return nil
 }

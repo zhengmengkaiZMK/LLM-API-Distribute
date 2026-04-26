@@ -84,6 +84,9 @@ var SMTPAccount = ""
 var SMTPFrom = ""
 var SMTPToken = ""
 
+var EmailSendMethod = "smtp" // 邮件发送方式: "smtp" 或 "api" (Resend HTTP API)
+var ResendAPIKey = ""        // Resend API Key
+
 var GitHubClientId = ""
 var GitHubClientSecret = ""
 var LinuxDOClientId = ""
