@@ -36,6 +36,11 @@ func PasskeyRegisterBegin(c *gin.Context) {
 		return
 	}
 
+	// 安全验证：如果用户已启用 2FA，注册 Passkey 前需先完成安全验证
+	if !requirePasskeyRegistrationVerification(c, user.Id) {
+		return
+	}
+
 	credential, err := model.GetPasskeyByUserID(user.Id)
 	if err != nil && !errors.Is(err, model.ErrPasskeyNotFound) {
 		common.ApiError(c, err)
@@ -96,6 +101,11 @@ func PasskeyRegisterFinish(c *gin.Context) {
 		return
 	}
 
+	// 安全验证：如果用户已启用 2FA，完成 Passkey 注册前需先完成安全验证
+	if !requirePasskeyRegistrationVerification(c, user.Id) {
+		return
+	}
+
 	wa, err := passkeysvc.BuildWebAuthn(c.Request)
 	if err != nil {
 		common.ApiError(c, err)
@@ -148,6 +158,11 @@ func PasskeyDelete(c *gin.Context) {
 			"success": false,
 			"message": err.Error(),
 		})
+		return
+	}
+
+	// 安全验证：删除 Passkey 前需先完成安全验证（2FA 或 Passkey 验证）
+	if !requirePasskeyDeleteVerification(c, user.Id) {
 		return
 	}
 
@@ -494,4 +509,87 @@ func getSessionUser(c *gin.Context) (*model.User, error) {
 		return nil, errors.New("该用户已被禁用")
 	}
 	return user, nil
+}
+
+// requirePasskeyRegistrationVerification 注册 Passkey 前的安全验证。
+// 如果用户已启用 2FA，则要求先通过安全验证（session 中有有效的 secure_verified_at）。
+// 如果用户没有启用 2FA，则直接放行。
+func requirePasskeyRegistrationVerification(c *gin.Context, userID int) bool {
+	twoFA, err := model.GetTwoFAByUserId(userID)
+	if err != nil {
+		common.ApiError(c, err)
+		return false
+	}
+	// 没有启用 2FA 时不需要额外验证
+	if twoFA == nil || !twoFA.IsEnabled {
+		return true
+	}
+	return checkSecureVerificationSession(c)
+}
+
+// requirePasskeyDeleteVerification 删除 Passkey 前的安全验证。
+// 优先要求 2FA 验证；如果没有 2FA 但有 Passkey，则要求 Passkey 验证。
+func requirePasskeyDeleteVerification(c *gin.Context, userID int) bool {
+	twoFA, err := model.GetTwoFAByUserId(userID)
+	if err != nil {
+		common.ApiError(c, err)
+		return false
+	}
+	// 有 2FA，要求安全验证
+	if twoFA != nil && twoFA.IsEnabled {
+		return checkSecureVerificationSession(c)
+	}
+	// 没有 2FA，检查是否有 Passkey 绑定
+	_, err = model.GetPasskeyByUserID(userID)
+	if err != nil {
+		if errors.Is(err, model.ErrPasskeyNotFound) {
+			c.JSON(http.StatusOK, gin.H{
+				"success": false,
+				"message": "该用户尚未绑定 Passkey",
+			})
+			return false
+		}
+		common.ApiError(c, err)
+		return false
+	}
+	// 有 Passkey 绑定，要求安全验证
+	return checkSecureVerificationSession(c)
+}
+
+// checkSecureVerificationSession 检查 session 中是否有有效的安全验证状态。
+// 复用已有的 SecureVerificationSessionKey / SecureVerificationTimeout 常量。
+func checkSecureVerificationSession(c *gin.Context) bool {
+	session := sessions.Default(c)
+	verifiedAtRaw := session.Get(SecureVerificationSessionKey)
+	if verifiedAtRaw == nil {
+		c.JSON(http.StatusForbidden, gin.H{
+			"success": false,
+			"message": "需要安全验证",
+			"code":    "VERIFICATION_REQUIRED",
+		})
+		return false
+	}
+	verifiedAt, ok := verifiedAtRaw.(int64)
+	if !ok {
+		session.Delete(SecureVerificationSessionKey)
+		_ = session.Save()
+		c.JSON(http.StatusForbidden, gin.H{
+			"success": false,
+			"message": "验证状态异常，请重新验证",
+			"code":    "VERIFICATION_INVALID",
+		})
+		return false
+	}
+	elapsed := time.Now().Unix() - verifiedAt
+	if elapsed >= SecureVerificationTimeout {
+		session.Delete(SecureVerificationSessionKey)
+		_ = session.Save()
+		c.JSON(http.StatusForbidden, gin.H{
+			"success": false,
+			"message": "验证已过期，请重新验证",
+			"code":    "VERIFICATION_EXPIRED",
+		})
+		return false
+	}
+	return true
 }
