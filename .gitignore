@@ -27,3 +27,8 @@ data/
 .gomodcache/
 .gocache-temp
 .gopath
+backup_railway_*.sql
+
+# Local-built Go binaries (do not commit)
+/main
+/new-api-server
