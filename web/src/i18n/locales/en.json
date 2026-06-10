@@ -3209,6 +3209,16 @@
     "默认折叠侧边栏": "Default collapse sidebar",
     "默认测试模型": "Default Test Model",
     "默认用户消息": "Default User Message",
-    "默认补全倍率": "Default completion ratio"
+    "默认补全倍率": "Default completion ratio",
+    "使用政策": "Usage Policy",
+    "支持的国家和地区": "Supported Countries & Regions",
+    "商业服务条款": "Commercial Terms of Service",
+    "返回注册页": "Back to Register",
+    "我已阅读相关注册要求：": "I have read the registration requirements:",
+    "《使用政策》": "Usage Policy",
+    "《支持的国家和地区》": "Supported Countries & Regions",
+    "《商业服务条款》": "Commercial Terms of Service",
+    "请先阅读并勾选「我已阅读相关注册要求」（使用政策、支持的国家和地区、商业服务条款）": "Please read and check \"I have read the registration requirements\" (Usage Policy, Supported Countries & Regions, Commercial Terms of Service) first",
+    "请先勾选「我已阅读相关注册要求」以启用 Telegram 注册": "Please check \"I have read the registration requirements\" to enable Telegram sign-up"
   }
 }

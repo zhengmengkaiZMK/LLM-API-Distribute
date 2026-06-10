@@ -56,6 +56,13 @@ const About = lazy(() => import('./pages/About'));
 const UserAgreement = lazy(() => import('./pages/UserAgreement'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Document = lazy(() => import('./pages/Document'));
+const LegalUsagePolicy = lazy(() => import('./pages/Legal/UsagePolicy'));
+const LegalSupportedRegions = lazy(() =>
+  import('./pages/Legal/SupportedRegions'),
+);
+const LegalCommercialTerms = lazy(() =>
+  import('./pages/Legal/CommercialTerms'),
+);
 
 function DynamicOAuth2Callback() {
   const { provider } = useParams();
@@ -364,6 +371,30 @@ function App() {
           element={
             <Suspense fallback={<Loading></Loading>} key={location.pathname}>
               <PrivacyPolicy />
+            </Suspense>
+          }
+        />
+        <Route
+          path='/legal/usage-policy'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <LegalUsagePolicy />
+            </Suspense>
+          }
+        />
+        <Route
+          path='/legal/supported-regions'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <LegalSupportedRegions />
+            </Suspense>
+          }
+        />
+        <Route
+          path='/legal/commercial-terms'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <LegalCommercialTerms />
             </Suspense>
           }
         />

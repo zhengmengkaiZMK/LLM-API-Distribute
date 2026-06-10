@@ -106,6 +106,8 @@ const RegisterForm = () => {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [hasUserAgreement, setHasUserAgreement] = useState(false);
   const [hasPrivacyPolicy, setHasPrivacyPolicy] = useState(false);
+  // 新增：注册前必读法律文档勾选项（始终强制）
+  const [agreedToLegal, setAgreedToLegal] = useState(false);
   const [githubButtonState, setGithubButtonState] = useState('idle');
   const [githubButtonDisabled, setGithubButtonDisabled] = useState(false);
   const githubTimeoutRef = useRef(null);
@@ -216,6 +218,14 @@ const RegisterForm = () => {
   }
 
   async function handleSubmit(e) {
+    if (!agreedToLegal) {
+      showInfo(
+        t(
+          '请先阅读并勾选「我已阅读相关注册要求」（使用政策、支持的国家和地区、商业服务条款）',
+        ),
+      );
+      return;
+    }
     if (password.length < 8) {
       showInfo('密码长度不得小于 8 位！');
       return;
@@ -391,6 +401,45 @@ const RegisterForm = () => {
     }
   };
 
+  const renderLegalAgreement = () => (
+    <div className='pt-2 pb-4'>
+      <Checkbox
+        checked={agreedToLegal}
+        onChange={(e) => setAgreedToLegal(e.target.checked)}
+      >
+        <Text size='small' className='text-gray-600'>
+          {t('我已阅读相关注册要求：')}
+          <Link
+            to='/legal/usage-policy'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-600 hover:text-blue-800 mx-1'
+          >
+            {t('《使用政策》')}
+          </Link>
+          、
+          <Link
+            to='/legal/supported-regions'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-600 hover:text-blue-800 mx-1'
+          >
+            {t('《支持的国家和地区》')}
+          </Link>
+          {t('和')}
+          <Link
+            to='/legal/commercial-terms'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-600 hover:text-blue-800 mx-1'
+          >
+            {t('《商业服务条款》')}
+          </Link>
+        </Text>
+      </Checkbox>
+    </div>
+  );
+
   const renderOAuthOptions = () => {
     return (
       <div className='flex flex-col items-center'>
@@ -409,6 +458,7 @@ const RegisterForm = () => {
               </Title>
             </div>
             <div className='px-2 py-8'>
+              {renderLegalAgreement()}
               <div className='space-y-3'>
                 {status.wechat_login && (
                   <Button
@@ -420,6 +470,7 @@ const RegisterForm = () => {
                     }
                     onClick={onWeChatLoginClicked}
                     loading={wechatLoading}
+                    disabled={!agreedToLegal || wechatLoading}
                   >
                     <span className='ml-3'>{t('使用 微信 继续')}</span>
                   </Button>
@@ -433,7 +484,7 @@ const RegisterForm = () => {
                     icon={<IconGithubLogo size='large' />}
                     onClick={handleGitHubClick}
                     loading={githubLoading}
-                    disabled={githubButtonDisabled}
+                    disabled={!agreedToLegal || githubButtonDisabled}
                   >
                     <span className='ml-3'>{githubButtonText}</span>
                   </Button>
@@ -455,6 +506,7 @@ const RegisterForm = () => {
                     }
                     onClick={handleDiscordClick}
                     loading={discordLoading}
+                    disabled={!agreedToLegal || discordLoading}
                   >
                     <span className='ml-3'>{t('使用 Discord 继续')}</span>
                   </Button>
@@ -468,6 +520,7 @@ const RegisterForm = () => {
                     icon={<OIDCIcon style={{ color: '#1877F2' }} />}
                     onClick={handleOIDCClick}
                     loading={oidcLoading}
+                    disabled={!agreedToLegal || oidcLoading}
                   >
                     <span className='ml-3'>{t('使用 OIDC 继续')}</span>
                   </Button>
@@ -489,6 +542,7 @@ const RegisterForm = () => {
                     }
                     onClick={handleLinuxDOClick}
                     loading={linuxdoLoading}
+                    disabled={!agreedToLegal || linuxdoLoading}
                   >
                     <span className='ml-3'>{t('使用 LinuxDO 继续')}</span>
                   </Button>
@@ -504,6 +558,9 @@ const RegisterForm = () => {
                       icon={getOAuthProviderIcon(provider.icon || '', 20)}
                       onClick={() => handleCustomOAuthClick(provider)}
                       loading={customOAuthLoading[provider.slug]}
+                      disabled={
+                        !agreedToLegal || customOAuthLoading[provider.slug]
+                      }
                     >
                       <span className='ml-3'>
                         {t('使用 {{name}} 继续', { name: provider.name })}
@@ -513,10 +570,20 @@ const RegisterForm = () => {
 
                 {status.telegram_oauth && (
                   <div className='flex justify-center my-2'>
-                    <TelegramLoginButton
-                      dataOnauth={onTelegramLoginClicked}
-                      botName={status.telegram_bot_name}
-                    />
+                    {agreedToLegal ? (
+                      <TelegramLoginButton
+                        dataOnauth={onTelegramLoginClicked}
+                        botName={status.telegram_bot_name}
+                      />
+                    ) : (
+                      <Text
+                        size='small'
+                        className='text-gray-400'
+                        type='tertiary'
+                      >
+                        {t('请先勾选「我已阅读相关注册要求」以启用 Telegram 注册')}
+                      </Text>
+                    )}
                   </div>
                 )}
 
@@ -531,6 +598,7 @@ const RegisterForm = () => {
                   icon={<IconMail size='large' />}
                   onClick={handleEmailRegisterClick}
                   loading={emailRegisterLoading}
+                  disabled={!agreedToLegal || emailRegisterLoading}
                 >
                   <span className='ml-3'>{t('使用 用户名 注册')}</span>
                 </Button>
@@ -675,6 +743,9 @@ const RegisterForm = () => {
                   </div>
                 )}
 
+                {/* 注册前必读法律文档勾选项（始终强制） */}
+                {renderLegalAgreement()}
+
                 <div className='space-y-2 pt-2'>
                   <Button
                     theme='solid'
@@ -684,7 +755,9 @@ const RegisterForm = () => {
                     onClick={handleSubmit}
                     loading={registerLoading}
                     disabled={
-                      (hasUserAgreement || hasPrivacyPolicy) && !agreedToTerms
+                      !agreedToLegal ||
+                      ((hasUserAgreement || hasPrivacyPolicy) &&
+                        !agreedToTerms)
                     }
                   >
                     {t('注册')}

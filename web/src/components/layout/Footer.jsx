@@ -18,6 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useEffect, useState, useMemo, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@douyinfe/semi-ui';
 import { getFooterHTML, getLogo, getSystemName } from '../../helpers';
@@ -193,6 +194,30 @@ const FooterBar = () => {
             <Typography.Text className='text-sm !text-semi-color-text-1'>
               © {currentYear} LingtrueAPI. {t('版权所有')}
             </Typography.Text>
+          </div>
+
+          {/* 法律条款入口（始终展示） */}
+          <div className='flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm'>
+            <Link
+              to='/legal/usage-policy'
+              className='!text-semi-color-text-1 hover:!text-semi-color-primary'
+            >
+              {t('使用政策')}
+            </Link>
+            <span className='!text-semi-color-text-2'>·</span>
+            <Link
+              to='/legal/supported-regions'
+              className='!text-semi-color-text-1 hover:!text-semi-color-primary'
+            >
+              {t('支持的国家和地区')}
+            </Link>
+            <span className='!text-semi-color-text-2'>·</span>
+            <Link
+              to='/legal/commercial-terms'
+              className='!text-semi-color-text-1 hover:!text-semi-color-primary'
+            >
+              {t('商业服务条款')}
+            </Link>
           </div>
 
           <div className='text-sm hidden'>
