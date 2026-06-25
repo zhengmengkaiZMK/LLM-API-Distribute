@@ -79,7 +79,7 @@ const Home = () => {
       }
     } else {
       showError(message);
-      setHomePageContent('加载首页内容失败...');
+      setHomePageContent(t('加载首页内容失败...'));
     }
     setHomePageContentLoaded(true);
   };
@@ -435,7 +435,7 @@ const Home = () => {
                     <p className='text-sm sm:text-base text-semi-color-text-1 mb-5'>
                       {t('追踪用量')}{' '}
                       <span className='text-semi-color-text-2'>{t('和')}</span>{' '}
-                      {t('实时查看成本')}。
+                      {t('实时查看成本')}{t('。')}
                     </p>
                     <div className='flex items-end justify-between'>
                       <div className='flex items-baseline gap-2'>
@@ -463,7 +463,7 @@ const Home = () => {
                       {t('接入顶级 AI 模型')}
                     </h3>
                     <p className='text-sm sm:text-base mb-4 leading-relaxed' style={{ color: '#ffffff' }}>
-                      连接 <span className='font-semibold'>Claude opus 4.6</span>、<span className='font-semibold'>GPT 5.4</span>、<span className='font-semibold'>Nano Banana Pro</span> 和其他全球领先的AI大模型 {t('统一网关')}。
+                      {t('连接 Claude opus 4.6、GPT 5.4、Nano Banana Pro 和其他全球领先的AI大模型统一网关。')}
                     </p>
                     <div className='rounded-xl bg-black/40 border border-gray-600 p-4 font-mono text-xs sm:text-sm mb-5 leading-relaxed' style={{ color: '#ffffff' }}>
                       <div>{`{ "model": "claude opus 4.6" }`}</div>
@@ -471,7 +471,7 @@ const Home = () => {
                       <div>{`{ "model": "nano-banana-pro" }`}</div>
                     </div>
                     <div className='flex items-baseline gap-2'>
-                      <span className='text-3xl sm:text-4xl font-bold' style={{ color: '#ffffff' }}>{t('前')} 5大</span>
+                      <span className='text-3xl sm:text-4xl font-bold' style={{ color: '#ffffff' }}>{t('前 5 大')}</span>
                       <span className='text-sm' style={{ color: 'rgba(255,255,255,0.7)' }}>{t('全球顶级 AI 模型')}</span>
                     </div>
                   </div>
@@ -483,7 +483,7 @@ const Home = () => {
                       {t('始终支付最合理价格')}
                     </h3>
                     <p className='text-sm sm:text-base text-semi-color-text-1 mb-5'>
-                      {t('智能路由')} 最高可节省 <span className='font-semibold'>70%</span> 费用.
+                      {t('智能路由最高可节省 70% 费用')}
                     </p>
                     <div className='rounded-xl bg-semi-color-bg-0/70 border border-semi-color-border p-4 font-mono text-xs sm:text-sm text-semi-color-text-2 mb-5 leading-relaxed'>
                       <div>Claude opus4.6: $0.030 <span className='text-red-500'>✗</span></div>
