@@ -48,6 +48,11 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    detection: {
+      // Browser language detection takes priority over localStorage cache
+      order: ['navigator', 'localStorage', 'cookie', 'htmlTag'],
+      caches: ['localStorage'],
+    },
   });
 
 export default i18n;
