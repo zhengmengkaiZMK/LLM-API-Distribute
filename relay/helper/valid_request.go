@@ -224,6 +224,12 @@ func GetAndValidOpenAIImageRequest(c *gin.Context, relayMode int) (*dto.ImageReq
 		}
 	}
 
+	// Security: cap maximum image count to prevent overflow in billing
+	const maxImageN uint = 10
+	if imageRequest.N != nil && *imageRequest.N > maxImageN {
+		return nil, fmt.Errorf("n must be between 1 and %d", maxImageN)
+	}
+
 	return imageRequest, nil
 }
 
@@ -263,6 +269,9 @@ func GetAndValidateTextRequest(c *gin.Context, relayMode int) (*dto.GeneralOpenA
 
 	if lo.FromPtrOr(textRequest.MaxTokens, uint(0)) > math.MaxInt32/2 {
 		return nil, errors.New("max_tokens is invalid")
+	}
+	if lo.FromPtrOr(textRequest.MaxCompletionTokens, uint(0)) > math.MaxInt32/2 {
+		return nil, errors.New("max_completion_tokens is invalid")
 	}
 	if textRequest.Model == "" {
 		return nil, errors.New("model is required")

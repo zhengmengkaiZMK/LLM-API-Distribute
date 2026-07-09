@@ -405,7 +405,7 @@ func postConsumeQuota(ctx *gin.Context, relayInfo *relaycommon.RelayInfo, usage 
 		}
 	}
 
-	quota := int(quotaCalculateDecimal.Round(0).IntPart())
+	quota := common.QuotaFromInt64(quotaCalculateDecimal.Round(0).IntPart())
 	totalTokens := promptTokens + completionTokens
 
 	//var logContent string

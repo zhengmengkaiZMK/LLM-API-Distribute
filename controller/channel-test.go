@@ -470,13 +470,13 @@ func testChannel(channel *model.Channel, testModel string, endpointType string, 
 
 	quota := 0
 	if !priceData.UsePrice {
-		quota = usage.PromptTokens + int(math.Round(float64(usage.CompletionTokens)*priceData.CompletionRatio))
-		quota = int(math.Round(float64(quota) * priceData.ModelRatio))
+		quota = usage.PromptTokens + common.QuotaFromFloat(math.Round(float64(usage.CompletionTokens)*priceData.CompletionRatio))
+		quota = common.QuotaFromFloat(math.Round(float64(quota) * priceData.ModelRatio))
 		if priceData.ModelRatio != 0 && quota <= 0 {
 			quota = 1
 		}
 	} else {
-		quota = int(priceData.ModelPrice * common.QuotaPerUnit)
+		quota = common.QuotaFromFloat(priceData.ModelPrice * common.QuotaPerUnit)
 	}
 	tok := time.Now()
 	milliseconds := tok.Sub(tik).Milliseconds()
