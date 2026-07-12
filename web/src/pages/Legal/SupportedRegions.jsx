@@ -21,14 +21,23 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import LegalDocLayout from './LegalDocLayout';
 import supportedRegionsMarkdown from './content/supportedRegions';
+import SEOHead from '../../components/common/SEOHead';
 
 const SupportedRegions = () => {
   const { t } = useTranslation();
   return (
-    <LegalDocLayout
-      title={t('支持的国家和地区')}
-      content={supportedRegionsMarkdown}
-    />
+    <>
+      <SEOHead
+        title="Supported Countries & Regions - Global AI API Access"
+        description="LINGTRUEAPI is available in 180+ countries. Check if our unified AI API gateway supports your region. Global coverage for GPT, Claude, and Gemini access."
+        keywords="AI API supported countries,global AI API access,API gateway regions,LINGTRUEAPI coverage"
+        canonicalPath="/legal/supported-regions"
+      />
+      <LegalDocLayout
+        title={t('支持的国家和地区')}
+        content={supportedRegionsMarkdown}
+      />
+    </>
   );
 };
 

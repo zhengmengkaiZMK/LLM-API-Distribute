@@ -39,6 +39,7 @@ import {
 } from '@douyinfe/semi-icons';
 import { Link } from 'react-router-dom';
 import NoticeModal from '../../components/layout/NoticeModal';
+import SEOHead from '../../components/common/SEOHead';
 
 const Home = () => {
   const { t, i18n } = useTranslation();
@@ -136,7 +137,7 @@ const Home = () => {
     {
       num: '03',
       question: t('把 LingTrue 集成到现有应用里需要多长时间？'),
-      answer: t('大多数开发者可以在 3 分钟内完成集成。只需将现有代码中的 Base URL 替换为 LingTrue 网关地址（https://www.lingtrue.com/v1），API Key 换成 LingTrue 令牌密钥即可，无需修改任何业务逻辑代码。完全兼容 OpenAI、Anthropic、Google 等主流 SDK 格式。'),
+      answer: t('大多数开发者可以在 3 分钟内完成集成。只需将现有代码中的 Base URL 替换为 LingTrue 网关地址（https://www.selfagent.ai/v1），API Key 换成 LingTrue 令牌密钥即可，无需修改任何业务逻辑代码。完全兼容 OpenAI、Anthropic、Google 等主流 SDK 格式。'),
     },
     {
       num: '04',
@@ -220,6 +221,13 @@ const Home = () => {
   ];
 
   return (
+    <>
+    <SEOHead
+      title="Unified AI API Gateway - Access GPT, Claude & Gemini via One API Key"
+      description="Access 35+ AI models (GPT, Claude, Gemini) through one unified API. Save up to 47% on costs with smart routing. Pay-per-token, no subscription. Free credits on signup. Integrate in 3 minutes!"
+      keywords="AI API gateway,unified AI API,GPT API proxy,Claude API access,Gemini API,AI model aggregator,cheap AI API,OpenAI alternative,API key,LingTrue"
+      canonicalPath="/"
+    />
     <div className='w-full overflow-x-hidden'>
       <NoticeModal
         visible={noticeVisible}
@@ -642,6 +650,7 @@ const Home = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

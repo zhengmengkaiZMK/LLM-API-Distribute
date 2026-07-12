@@ -12,6 +12,7 @@ import {
   IconSearch,
 } from '@douyinfe/semi-icons';
 import { useIsMobile } from '../../hooks/common/useIsMobile';
+import SEOHead from '../../components/common/SEOHead';
 
 import GettingStarted from './pages/GettingStarted';
 import BaseURL from './pages/BaseURL';
@@ -265,6 +266,13 @@ const Document = () => {
   }, [activeKey]);
 
   return (
+    <>
+    <SEOHead
+      title="API Documentation - Quick Start & SDK Integration Guide"
+      description="Complete API documentation for LINGTRUEAPI. Quick start guides, SDK integration for Python, Node.js, Java, Go. Compatible with OpenAI, Anthropic, and Gemini formats."
+      keywords="AI API documentation,OpenAI API guide,Claude API docs,SDK integration,API quick start,LINGTRUEAPI docs"
+      canonicalPath="/document"
+    />
     <div className="flex min-h-screen bg-semi-color-bg-0 mt-[60px]">
       {/* 移动端侧边栏切换按钮 */}
       {isMobile && (
@@ -353,6 +361,7 @@ const Document = () => {
         </div>
       </main>
     </div>
+    </>
   );
 };
 

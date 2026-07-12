@@ -50,4 +50,4 @@ Disallow: /console/
 Disallow: /setup
 Disallow: /oauth/
 
-Sitemap: https://www.lingtrue.com/sitemap.xml
+Sitemap: https://www.selfagent.ai/sitemap.xml

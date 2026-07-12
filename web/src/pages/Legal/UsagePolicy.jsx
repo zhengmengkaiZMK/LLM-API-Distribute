@@ -21,10 +21,21 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import LegalDocLayout from './LegalDocLayout';
 import usagePolicyMarkdown from './content/usagePolicy';
+import SEOHead from '../../components/common/SEOHead';
 
 const UsagePolicy = () => {
   const { t } = useTranslation();
-  return <LegalDocLayout title={t('使用政策')} content={usagePolicyMarkdown} />;
+  return (
+    <>
+      <SEOHead
+        title="Usage Policy - Acceptable Use Guidelines"
+        description="LINGTRUEAPI usage policy outlines acceptable use of our AI API gateway services. Learn about permitted activities, restrictions, and compliance requirements."
+        keywords="API usage policy,acceptable use policy,AI API terms,LINGTRUEAPI policy"
+        canonicalPath="/legal/usage-policy"
+      />
+      <LegalDocLayout title={t('使用政策')} content={usagePolicyMarkdown} />
+    </>
+  );
 };
 
 export default UsagePolicy;

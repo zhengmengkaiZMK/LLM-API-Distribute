@@ -26,6 +26,7 @@ import {
   IllustrationConstructionDark,
 } from '@douyinfe/semi-illustrations';
 import { useTranslation } from 'react-i18next';
+import SEOHead from '../../components/common/SEOHead';
 
 const About = () => {
   const { t } = useTranslation();
@@ -133,6 +134,13 @@ const About = () => {
   );
 
   return (
+    <>
+    <SEOHead
+      title="About LINGTRUEAPI - Global AI API Gateway Platform"
+      description="LINGTRUEAPI is a unified AI API gateway providing access to 35+ models including GPT, Claude, and Gemini. Smart routing saves up to 47% on costs with 99.8% SLA."
+      keywords="about LINGTRUEAPI,AI API gateway,unified AI platform,AI model aggregator"
+      canonicalPath="/about"
+    />
     <div className='mt-[60px] px-2'>
       {aboutLoaded && about === '' ? (
         <div className='flex justify-center items-center h-screen p-8'>
@@ -168,6 +176,7 @@ const About = () => {
         </>
       )}
     </div>
+    </>
   );
 };
 

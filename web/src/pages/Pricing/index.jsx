@@ -19,9 +19,16 @@ For commercial licensing, please contact support@quantumnous.com
 
 import React from 'react';
 import ModelPricingPage from '../../components/table/model-pricing/layout/PricingPage';
+import SEOHead from '../../components/common/SEOHead';
 
 const Pricing = () => (
   <>
+    <SEOHead
+      title="AI Model API Pricing - Pay-Per-Token for GPT, Claude & Gemini"
+      description="Transparent pay-per-token pricing for 35+ AI models. Access GPT, Claude, Gemini via one API. Save up to 47% vs official pricing. No subscription, no hidden fees."
+      keywords="AI API pricing,GPT API cost,Claude API price,Gemini API pricing,pay per token,AI model pricing comparison,cheap AI API"
+      canonicalPath="/pricing"
+    />
     <ModelPricingPage />
   </>
 );

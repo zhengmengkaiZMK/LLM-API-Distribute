@@ -326,7 +326,7 @@ const PricingCardView = ({
                             size='small'
                             onClick={(e) => {
                               e.stopPropagation();
-                              setModalImageUrl('/ratio.png');
+                              setModalImageUrl('/model-ratio-settings.webp');
                               setIsModalOpenurl(true);
                             }}
                           />

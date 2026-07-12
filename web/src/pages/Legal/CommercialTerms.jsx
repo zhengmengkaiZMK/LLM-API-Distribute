@@ -21,14 +21,23 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import LegalDocLayout from './LegalDocLayout';
 import commercialTermsMarkdown from './content/commercialTerms';
+import SEOHead from '../../components/common/SEOHead';
 
 const CommercialTerms = () => {
   const { t } = useTranslation();
   return (
-    <LegalDocLayout
-      title={t('商业服务条款')}
-      content={commercialTermsMarkdown}
-    />
+    <>
+      <SEOHead
+        title="Commercial Terms of Service - Enterprise AI API"
+        description="LINGTRUEAPI commercial terms of service for business and enterprise customers. SLA guarantees, billing terms, data handling, and support commitments."
+        keywords="AI API commercial terms,enterprise API service agreement,SLA guarantee,LINGTRUEAPI business terms"
+        canonicalPath="/legal/commercial-terms"
+      />
+      <LegalDocLayout
+        title={t('商业服务条款')}
+        content={commercialTermsMarkdown}
+      />
+    </>
   );
 };
 

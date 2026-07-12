@@ -130,7 +130,7 @@ const FooterBar = () => {
                   <a
                     href='https://github.com/songquanpeng/one-api'
                     target='_blank'
-                    rel='noopener noreferrer'
+                    rel='noopener noreferrer nofollow'
                     className='!text-semi-color-text-1'
                   >
                     One API
@@ -138,7 +138,7 @@ const FooterBar = () => {
                   <a
                     href='https://github.com/novicezk/midjourney-proxy'
                     target='_blank'
-                    rel='noopener noreferrer'
+                    rel='noopener noreferrer nofollow'
                     className='!text-semi-color-text-1'
                   >
                     Midjourney-Proxy
@@ -146,7 +146,7 @@ const FooterBar = () => {
                   <a
                     href='https://github.com/Calcium-Ion/neko-api-key-tool'
                     target='_blank'
-                    rel='noopener noreferrer'
+                    rel='noopener noreferrer nofollow'
                     className='!text-semi-color-text-1'
                   >
                     neko-api-key-tool
@@ -162,7 +162,7 @@ const FooterBar = () => {
                   <a
                     href='https://github.com/Calcium-Ion/new-api-horizon'
                     target='_blank'
-                    rel='noopener noreferrer'
+                    rel='noopener noreferrer nofollow'
                     className='!text-semi-color-text-1'
                   >
                     new-api-horizon
@@ -170,7 +170,7 @@ const FooterBar = () => {
                   <a
                     href='https://github.com/coaidev/coai'
                     target='_blank'
-                    rel='noopener noreferrer'
+                    rel='noopener noreferrer nofollow'
                     className='!text-semi-color-text-1'
                   >
                     CoAI
@@ -178,7 +178,7 @@ const FooterBar = () => {
                   <a
                     href='https://www.gpt-load.com/'
                     target='_blank'
-                    rel='noopener noreferrer'
+                    rel='noopener noreferrer nofollow'
                     className='!text-semi-color-text-1'
                   >
                     GPT-Load

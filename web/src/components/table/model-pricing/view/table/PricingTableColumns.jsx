@@ -196,7 +196,7 @@ export const getPricingTableColumns = ({
           <IconHelpCircle
             className='text-blue-500 cursor-pointer'
             onClick={() => {
-              setModalImageUrl('/ratio.png');
+              setModalImageUrl('/model-ratio-settings.webp');
               setIsModalOpenurl(true);
             }}
           />
