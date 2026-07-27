@@ -1,0 +1,75 @@
+<p>
+  欢迎使用 LINGTRUEAPI！本指南将带你从零开始，3 分钟内完成 AI API 网关的接入。
+</p>
+
+<h2>第一步：创建账号</h2>
+<p>
+  访问<a href="https://www.selfagent.ai/register" target="_blank">注册页面</a>创建免费账号。注册即送免费额度，可立即开始使用。
+</p>
+
+<h2>第二步：生成 API Key</h2>
+<p>
+  登录后，进入控制台的<a href="https://www.selfagent.ai/console/token">令牌管理</a>页面，点击"创建令牌"生成你的通用 API Key。
+</p>
+<p>
+  你的 API Key 适用于所有 35+ 种支持的模型——无需为不同提供商创建不同的密钥。
+</p>
+
+<h2>第三步：发起第一个 API 请求</h2>
+<p>
+  LINGTRUEAPI 完全兼容 OpenAI SDK 格式。只需替换 Base URL 和 API Key：
+</p>
+
+<pre><code>curl https://www.selfagent.ai/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4o",
+    "messages": [{"role": "user", "content": "你好！"}]
+  }'</code></pre>
+
+<h2>第四步：在常用 SDK 中使用</h2>
+
+<h3>Python（OpenAI SDK）</h3>
+<pre><code>from openai import OpenAI
+
+client = OpenAI(
+    api_key="YOUR_API_KEY",
+    base_url="https://www.selfagent.ai/v1"
+)
+
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[{"role": "user", "content": "你好！"}]
+)
+print(response.choices[0].message.content)</code></pre>
+
+<h3>Node.js</h3>
+<pre><code>import OpenAI from 'openai';
+
+const client = new OpenAI({
+  apiKey: 'YOUR_API_KEY',
+  baseURL: 'https://www.selfagent.ai/v1'
+});
+
+const response = await client.chat.completions.create({
+  model: 'claude-sonnet-4-20250514',
+  messages: [{ role: 'user', content: '你好！' }]
+});
+console.log(response.choices[0].message.content);</code></pre>
+
+<h2>智能路由</h2>
+<p>
+  LINGTRUEAPI 会根据价格、延迟和可用性自动将你的请求路由到最优提供商。你可以通过同一个接入点访问来自 OpenAI、Anthropic、Google 等多家提供商的模型。
+</p>
+
+<blockquote>
+  <strong>小贴士：</strong>查看<a href="https://www.selfagent.ai/pricing">模型定价页面</a>了解所有可用模型的实时价格，找到最适合你场景的高性价比方案。
+</blockquote>
+
+<h2>下一步</h2>
+<ul>
+  <li>阅读我们的<a href="/tech/model-selection-guide">模型选择指南</a>帮你选对模型</li>
+  <li>查看<a href="https://www.selfagent.ai/pricing">可用模型和定价</a></li>
+  <li>加入社区获取支持和最新动态</li>
+</ul>

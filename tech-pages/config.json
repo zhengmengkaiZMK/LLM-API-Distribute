@@ -4,51 +4,129 @@
     "baseUrl": "https://www.selfagent.ai",
     "logo": "/logo.png"
   },
+  "supportedLangs": ["en", "zh-CN"],
+  "defaultLang": "en",
   "list": {
-    "meta": {
-      "title": "Tech Blog - AI API Development Guides & Tutorials | LINGTRUEAPI",
-      "keywords": "AI API tutorial, API development guide, GPT integration, Claude API, AI technology blog, LINGTRUEAPI",
-      "description": "Explore AI API development guides, integration tutorials, and best practices. Learn how to build with GPT, Claude, Gemini and 35+ AI models through LINGTRUEAPI."
+    "en": {
+      "meta": {
+        "title": "Tech Blog - AI API Development Guides & Tutorials | LINGTRUEAPI",
+        "keywords": "AI API tutorial, API development guide, GPT integration, Claude API, AI technology blog, LINGTRUEAPI",
+        "description": "Explore AI API development guides, integration tutorials, and best practices. Learn how to build with GPT, Claude, Gemini and 35+ AI models through LINGTRUEAPI."
+      },
+      "heroTitle": "Tech Blog",
+      "heroSubtitle": "Explore AI technology frontiers, integration guides, and best practices"
+    },
+    "zh-CN": {
+      "meta": {
+        "title": "技术博客 - AI API 开发指南与教程 | LINGTRUEAPI",
+        "keywords": "AI API教程, API开发指南, GPT接入, Claude API, AI技术博客, LINGTRUEAPI, 中转站配置",
+        "description": "探索 AI API 开发指南、集成教程和最佳实践。学习如何通过 LINGTRUEAPI 使用 GPT、Claude、Gemini 等 35+ AI 模型。"
+      },
+      "heroTitle": "技术博客",
+      "heroSubtitle": "探索 AI 技术前沿，分享集成指南与最佳实践"
+    }
+  },
+  "ui": {
+    "en": {
+      "home": "Home",
+      "tech": "Tech",
+      "pricing": "Pricing",
+      "about": "About",
+      "readMore": "Read more",
+      "backToList": "Back to Tech Blog",
+      "comingSoon": "Coming Soon",
+      "comingSoonDesc": "We're working on some great content. Check back soon!",
+      "notFoundTitle": "404",
+      "notFoundDesc": "The article you're looking for doesn't exist.",
+      "browseAll": "Browse all articles",
+      "copyright": "All rights reserved."
+    },
+    "zh-CN": {
+      "home": "首页",
+      "tech": "技术",
+      "pricing": "模型广场",
+      "about": "关于",
+      "readMore": "阅读全文",
+      "backToList": "返回技术博客",
+      "comingSoon": "即将上线",
+      "comingSoonDesc": "精彩内容正在准备中，敬请期待！",
+      "notFoundTitle": "404",
+      "notFoundDesc": "您要找的文章不存在。",
+      "browseAll": "浏览所有文章",
+      "copyright": "保留所有权利。"
     }
   },
   "articles": [
     {
       "slug": "configure-api-proxy-in-aionui",
-      "title": "How to Configure an API Proxy (Relay Station) in AionUI",
-      "summary": "A complete step-by-step guide to configuring LINGTRUEAPI as your AI API proxy in AionUI. Access GPT, Claude, Gemini, and 35+ models through a single unified gateway with smart routing and cost optimization.",
       "coverImage": "/tech-assets/covers/aionui-config.svg",
       "author": "LINGTRUEAPI Team",
       "date": "2026-07-27",
-      "meta": {
-        "title": "How to Configure API Proxy in AionUI - Step by Step Guide | LINGTRUEAPI",
-        "keywords": "AionUI API configuration, AionUI custom LLM, API proxy setup, API relay station, AionUI LINGTRUEAPI, configure AI API gateway, AionUI Base URL, AionUI API Key",
-        "description": "Step-by-step tutorial on configuring an API proxy (relay station) in AionUI. Learn how to set up LINGTRUEAPI as your custom LLM provider to access GPT, Claude, Gemini and 35+ AI models."
+      "en": {
+        "title": "How to Configure an API Proxy (Relay Station) in AionUI",
+        "summary": "A complete step-by-step guide to configuring LINGTRUEAPI as your AI API proxy in AionUI. Access GPT, Claude, Gemini, and 35+ models through a single unified gateway.",
+        "meta": {
+          "title": "How to Configure API Proxy in AionUI - Step by Step Guide | LINGTRUEAPI",
+          "keywords": "AionUI API configuration, AionUI custom LLM, API proxy setup, API relay station, AionUI LINGTRUEAPI, configure AI API gateway",
+          "description": "Step-by-step tutorial on configuring an API proxy (relay station) in AionUI. Learn how to set up LINGTRUEAPI as your custom LLM provider to access 35+ AI models."
+        }
+      },
+      "zh-CN": {
+        "title": "如何在 AionUI 中配置 API 中转站",
+        "summary": "一篇完整的分步指南，教你在 AionUI 中配置 LINGTRUEAPI 作为 AI API 中转站，通过统一网关访问 GPT、Claude、Gemini 等 35+ 模型。",
+        "meta": {
+          "title": "如何在 AionUI 中配置 API 中转站 - 详细操作指南 | LINGTRUEAPI",
+          "keywords": "AionUI配置, AionUI中转站, API中转站设置, AionUI自定义LLM, LINGTRUEAPI配置教程, AI API网关配置",
+          "description": "手把手教你在 AionUI 中配置 API 中转站。详细介绍如何将 LINGTRUEAPI 设置为自定义 LLM 提供商，一站式接入 GPT、Claude、Gemini 等 35+ AI 模型。"
+        }
       }
     },
     {
       "slug": "getting-started-with-api",
-      "title": "Getting Started: Integrate AI API in 3 Minutes",
-      "summary": "A step-by-step guide to integrating LINGTRUEAPI into your application. Covers authentication, making your first API call, and best practices for production use.",
       "coverImage": "/tech-assets/covers/getting-started.svg",
       "author": "LINGTRUEAPI Team",
       "date": "2026-07-20",
-      "meta": {
-        "title": "Getting Started with AI API Integration in 3 Minutes | LINGTRUEAPI",
-        "keywords": "AI API integration, API quickstart, GPT API setup, Claude API tutorial, API authentication, LINGTRUEAPI guide",
-        "description": "Learn how to integrate LINGTRUEAPI AI API gateway in just 3 minutes. Step-by-step guide covering API key generation, authentication, and your first API call."
+      "en": {
+        "title": "Getting Started: Integrate AI API in 3 Minutes",
+        "summary": "A step-by-step guide to integrating LINGTRUEAPI into your application. Covers authentication, making your first API call, and best practices for production use.",
+        "meta": {
+          "title": "Getting Started with AI API Integration in 3 Minutes | LINGTRUEAPI",
+          "keywords": "AI API integration, API quickstart, GPT API setup, Claude API tutorial, API authentication, LINGTRUEAPI guide",
+          "description": "Learn how to integrate LINGTRUEAPI AI API gateway in just 3 minutes. Step-by-step guide covering API key generation, authentication, and your first API call."
+        }
+      },
+      "zh-CN": {
+        "title": "快速开始：3 分钟接入 AI API",
+        "summary": "一篇分步指南，教你将 LINGTRUEAPI 集成到你的应用程序中。涵盖身份认证、发起第一个 API 调用以及生产环境最佳实践。",
+        "meta": {
+          "title": "快速开始 - 3 分钟接入 AI API | LINGTRUEAPI",
+          "keywords": "AI API接入, API快速入门, GPT API配置, Claude API教程, API认证, LINGTRUEAPI指南",
+          "description": "学习如何在 3 分钟内接入 LINGTRUEAPI AI API 网关。分步指南涵盖 API Key 生成、身份认证和第一次 API 调用。"
+        }
       }
     },
     {
       "slug": "model-selection-guide",
-      "title": "AI Model Selection Guide: Choose the Right Model for Your Use Case",
-      "summary": "Different AI models excel at different tasks. This guide helps you pick the optimal model based on your specific requirements - from cost efficiency to output quality.",
       "coverImage": "/tech-assets/covers/model-selection.svg",
       "author": "LINGTRUEAPI Team",
       "date": "2026-07-15",
-      "meta": {
-        "title": "AI Model Selection Guide - GPT vs Claude vs Gemini Comparison | LINGTRUEAPI",
-        "keywords": "AI model comparison, GPT vs Claude, best AI model, model selection guide, AI API pricing, Gemini vs GPT",
-        "description": "Compare 35+ AI models and find the best fit for your use case. Detailed analysis of GPT, Claude, Gemini capabilities, pricing, and optimal scenarios."
+      "en": {
+        "title": "AI Model Selection Guide: Choose the Right Model for Your Use Case",
+        "summary": "Different AI models excel at different tasks. This guide helps you pick the optimal model based on your specific requirements - from cost efficiency to output quality.",
+        "meta": {
+          "title": "AI Model Selection Guide - GPT vs Claude vs Gemini Comparison | LINGTRUEAPI",
+          "keywords": "AI model comparison, GPT vs Claude, best AI model, model selection guide, AI API pricing, Gemini vs GPT",
+          "description": "Compare 35+ AI models and find the best fit for your use case. Detailed analysis of GPT, Claude, Gemini capabilities, pricing, and optimal scenarios."
+        }
+      },
+      "zh-CN": {
+        "title": "AI 模型选择指南：如何为你的场景选对模型",
+        "summary": "不同的 AI 模型各有优劣。本指南帮你根据实际需求选择最优模型——从成本效益到输出质量全面分析。",
+        "meta": {
+          "title": "AI 模型选择指南 - GPT vs Claude vs Gemini 对比 | LINGTRUEAPI",
+          "keywords": "AI模型对比, GPT对比Claude, 最佳AI模型, 模型选择指南, AI API定价, Gemini对比GPT",
+          "description": "对比 35+ AI 模型，找到最适合你场景的方案。详细分析 GPT、Claude、Gemini 的能力、定价和最佳使用场景。"
+        }
       }
     }
   ]

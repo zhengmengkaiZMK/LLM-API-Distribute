@@ -1,0 +1,248 @@
+<p>
+  <a href="https://github.com/iOfficeAI/AionUi" target="_blank" rel="noopener noreferrer">AionUI</a> 是一款强大的开源、跨平台 AI Agent 可视化管理桌面工具（GitHub 30k+ Star）。它提供了统一的图形界面来管理多个 AI 智能体和大语言模型。本文将手把手教你如何在 AionUI 中配置 API 中转站，通过 <strong>LINGTRUEAPI</strong> 统一网关访问 GPT、Claude、Gemini 等 AI 模型。
+</p>
+
+<blockquote>
+  <strong>什么是 API 中转站？</strong>API 中转站（也称 API 网关或转发站）是位于你的客户端应用和上游 AI 模型提供商之间的服务。它提供统一计费、智能路由、成本优化等功能，让你通过一个 API Key 即可访问 35+ 种模型。<a href="https://www.lingtrue.com">LINGTRUEAPI (www.lingtrue.com)</a> 就是这样的服务。
+</blockquote>
+
+<h2>前置准备</h2>
+
+<ul>
+  <li><strong>已安装 AionUI</strong> — 从 <a href="https://github.com/iOfficeAI/AionUi/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a> 下载安装（支持 Windows、macOS、Linux）</li>
+  <li><strong>拥有中转站的 API Key</strong> — 在 LINGTRUEAPI 控制台 <a href="https://www.lingtrue.com/console/token">创建令牌</a></li>
+</ul>
+
+<h2>第一步：从 LINGTRUEAPI 获取 API Key</h2>
+
+<ol>
+  <li>访问 <a href="https://www.lingtrue.com/register" target="_blank" rel="noopener noreferrer">www.lingtrue.com/register</a> 注册免费账号</li>
+  <li>登录进入<a href="https://www.lingtrue.com/console">控制台</a></li>
+  <li>进入 <strong>令牌管理</strong>，点击 <strong>"创建令牌"</strong></li>
+  <li>为令牌起一个描述性名称（如 "AionUI"）</li>
+  <li>点击 <strong>复制</strong> 按钮，将 API Key 复制到剪贴板</li>
+</ol>
+
+<p>
+  你的 API Key 格式类似：<code>sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code>
+</p>
+
+<blockquote>
+  <strong>提示：</strong>配置前可以先访问<a href="https://www.lingtrue.com/pricing">模型定价页面</a>，查看所有可用模型及其费用。
+</blockquote>
+
+<h2>第二步：打开 AionUI 的 LLM 配置</h2>
+
+<ol>
+  <li>启动 AionUI 应用</li>
+  <li>点击左侧或顶部菜单中的 <strong>设置</strong>（齿轮图标）</li>
+  <li>进入 <strong>LLM 配置</strong>（或"大模型设置"/"Model Settings"）</li>
+  <li>点击 <strong>"添加模型"</strong></li>
+</ol>
+
+<h2>第三步：配置自定义平台</h2>
+
+<p>
+  在"添加模型"对话框中，按以下步骤配置：
+</p>
+
+<h3>3.1 选择平台</h3>
+<p>
+  在平台下拉菜单中选择 <strong>"自定义"（Custom）</strong>。此选项支持任何 OpenAI 兼容的 API 接口，正是 LINGTRUEAPI 所提供的。
+</p>
+
+<h3>3.2 填写连接信息</h3>
+
+<table style="width:100%; border-collapse:collapse; margin: 16px 0;">
+  <thead>
+    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">配置项</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">填写内容</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;"><strong>API Key</strong></td>
+      <td style="padding: 12px 16px;"><code>sk-xxxx</code>（你复制的密钥）</td>
+      <td style="padding: 12px 16px;">粘贴第一步中获取的令牌</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;"><strong>API 请求地址（Base URL）</strong></td>
+      <td style="padding: 12px 16px;"><code>https://www.lingtrue.com</code></td>
+      <td style="padding: 12px 16px;">大多数模型<strong>不需要</strong>添加 <code>/v1</code> 后缀</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;"><strong>模型名称</strong></td>
+      <td style="padding: 12px 16px;">如 <code>gpt-4o</code></td>
+      <td style="padding: 12px 16px;">填写准确的模型标识符</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>3.3 重要提示：Base URL 格式</h3>
+
+<p>Base URL 的格式取决于你要配置的模型类型：</p>
+
+<ul>
+  <li><strong>大多数模型（GPT、Claude、Gemini、DeepSeek 等）：</strong><br>
+    使用：<code>https://www.lingtrue.com</code>（不带 <code>/v1</code>）
+  </li>
+  <li><strong>Codex 模型专用：</strong><br>
+    使用：<code>https://www.lingtrue.com/v1</code>（带 <code>/v1</code> 后缀）
+  </li>
+</ul>
+
+<blockquote>
+  <strong>为什么有区别？</strong>Codex 使用了略有不同的 API 路径结构。如果你不确定，先不加 <code>/v1</code> 试试——绝大多数模型都适用。
+</blockquote>
+
+<h2>第四步：选择模型</h2>
+
+<p>
+  LINGTRUEAPI 支持 35+ 种模型。以下是在 AionUI 中可配置的热门模型：
+</p>
+
+<h3>推荐模型</h3>
+
+<table style="width:100%; border-collapse:collapse; margin: 16px 0;">
+  <thead>
+    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">模型</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">适用场景</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">模型 ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">GPT-4o</td>
+      <td style="padding: 12px 16px;">通用场景，速度快、能力强</td>
+      <td style="padding: 12px 16px;"><code>gpt-4o</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">GPT-4o Mini</td>
+      <td style="padding: 12px 16px;">性价比高的日常任务</td>
+      <td style="padding: 12px 16px;"><code>gpt-4o-mini</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Claude Sonnet 4</td>
+      <td style="padding: 12px 16px;">编程、深度分析、写作</td>
+      <td style="padding: 12px 16px;"><code>claude-sonnet-4-20250514</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Claude Opus 4</td>
+      <td style="padding: 12px 16px;">最强推理能力模型</td>
+      <td style="padding: 12px 16px;"><code>claude-opus-4-20250514</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Gemini 2.5 Pro</td>
+      <td style="padding: 12px 16px;">超长上下文、多模态</td>
+      <td style="padding: 12px 16px;"><code>gemini-2.5-pro</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">DeepSeek V3</td>
+      <td style="padding: 12px 16px;">性价比极高的编程与推理</td>
+      <td style="padding: 12px 16px;"><code>deepseek-chat</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  查看完整模型列表和实时定价，请访问 <a href="https://www.lingtrue.com/pricing">LINGTRUEAPI 模型定价</a>页面。
+</p>
+
+<h2>第五步：保存并测试</h2>
+
+<ol>
+  <li>点击 <strong>"保存"</strong> 存储配置</li>
+  <li>返回 AionUI 主界面</li>
+  <li>在模型下拉菜单中选择刚刚配置的模型</li>
+  <li>发送一条测试消息（如"你好，能听到我吗？"）</li>
+  <li>如果收到回复，配置就成功了！</li>
+</ol>
+
+<h2>进阶：多 Key 轮换</h2>
+
+<p>
+  AionUI 支持 API Key 轮换以实现负载均衡和容错。配置方法：
+</p>
+
+<ol>
+  <li>在 API Key 输入框中，输入多个 Key，用逗号分隔：</li>
+</ol>
+
+<pre><code>sk-key1,sk-key2,sk-key3</code></pre>
+
+<p>
+  AionUI 会在遇到限流（429）或认证失败（401）时自动切换到下一个 Key，失败的 Key 会有 90 秒的冷却期。
+</p>
+
+<h2>进阶：配置多个模型</h2>
+
+<p>
+  你可以添加多个模型配置，通过同一个中转站访问不同的 AI 模型：
+</p>
+
+<ol>
+  <li>对每个要添加的模型重复第二到五步</li>
+  <li>使用<strong>相同的 API Key</strong> 和<strong>相同的 Base URL</strong></li>
+  <li>只需更改每次的<strong>模型名称</strong>即可</li>
+</ol>
+
+<p>
+  这样，你就可以在 AionUI 的模型选择器中直接切换 GPT-4o、Claude、Gemini 等不同模型——全部通过一个 LINGTRUEAPI 账号驱动。
+</p>
+
+<h2>常见问题排查</h2>
+
+<table style="width:100%; border-collapse:collapse; margin: 16px 0;">
+  <thead>
+    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">问题</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">解决方案</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">模型列表为空</td>
+      <td style="padding: 12px 16px;">检查 API Key 是否有效，Base URL 是否正确</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">认证失败（401）</td>
+      <td style="padding: 12px 16px;">确认 API Key 未过期；如需要可<a href="https://www.lingtrue.com/console/token">重新生成</a></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">连接超时</td>
+      <td style="padding: 12px 16px;">检查网络连接，确保能访问 <code>www.lingtrue.com</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">限流错误（429）</td>
+      <td style="padding: 12px 16px;">稍等片刻后重试，或配置多个 Key 进行轮换</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">模型无响应</td>
+      <td style="padding: 12px 16px;">确认模型名称正确（区分大小写）；检查账户余额</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Codex 模型不工作</td>
+      <td style="padding: 12px 16px;">确保使用 <code>https://www.lingtrue.com/v1</code>（带 <code>/v1</code>）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>总结</h2>
+
+<p>
+  在 AionUI 中配置 API 中转站非常简单：
+</p>
+
+<ol>
+  <li>从 <a href="https://www.lingtrue.com">www.lingtrue.com</a> <strong>获取 API Key</strong></li>
+  <li>在 AionUI 设置 → LLM 配置中<strong>添加自定义模型</strong></li>
+  <li><strong>填入</strong> API Key + Base URL（<code>https://www.lingtrue.com</code>）+ 模型名称</li>
+  <li><strong>保存并测试</strong></li>
+</ol>
+
+<p>
+  配置完成后，你就可以通过 AionUI 访问 35+ 种 AI 模型，享受智能路由、成本优化和统一计费体验。更多指南请访问我们的<a href="/tech">技术博客</a>，或前往<a href="https://www.lingtrue.com/about">关于页面</a>了解更多关于 LINGTRUEAPI 的信息。
+</p>
