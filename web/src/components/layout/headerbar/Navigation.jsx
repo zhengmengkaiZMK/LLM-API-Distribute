@@ -45,12 +45,12 @@ const Navigation = ({
       const linkContent = <span>{link.text}</span>;
 
       if (link.isExternal) {
+        const isExternalDomain = link.externalLink.startsWith('http');
         return (
           <a
             key={link.itemKey}
             href={link.externalLink}
-            target='_blank'
-            rel='noopener noreferrer'
+            {...(isExternalDomain ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             className={commonLinkClasses}
           >
             {linkContent}

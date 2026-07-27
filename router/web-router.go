@@ -17,6 +17,13 @@ func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.Use(middleware.GlobalWebRateLimit())
 	router.Use(middleware.Cache())
+
+	// Tech blog routes (static HTML, SEO-friendly, served before SPA fallback)
+	router.GET("/tech", controller.ServeTechList)
+	router.GET("/tech/:slug", controller.ServeTechArticle)
+	router.GET("/tech-assets/*filepath", controller.ServeTechAsset)
+	router.GET("/sitemap-tech.xml", controller.ServeTechSitemap)
+
 	router.Use(static.Serve("/", common.EmbedFolder(buildFS, "web/dist")))
 	router.NoRoute(func(c *gin.Context) {
 		c.Set(middleware.RouteTagKey, "web")

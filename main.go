@@ -40,6 +40,9 @@ var buildFS embed.FS
 //go:embed web/dist/index.html
 var indexPage []byte
 
+//go:embed tech-pages
+var techPagesFS embed.FS
+
 func main() {
 	startTime := time.Now()
 
@@ -181,6 +184,9 @@ func main() {
 
 	InjectUmamiAnalytics()
 	InjectGoogleAnalytics()
+
+	// Initialize tech blog pages
+	controller.InitTechPages(techPagesFS)
 
 	// 设置路由
 	router.SetRouter(server, buildFS, indexPage)

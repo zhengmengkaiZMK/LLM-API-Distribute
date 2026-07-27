@@ -1,0 +1,55 @@
+{
+  "site": {
+    "name": "LINGTRUEAPI",
+    "baseUrl": "https://www.selfagent.ai",
+    "logo": "/logo.png"
+  },
+  "list": {
+    "meta": {
+      "title": "Tech Blog - AI API Development Guides & Tutorials | LINGTRUEAPI",
+      "keywords": "AI API tutorial, API development guide, GPT integration, Claude API, AI technology blog, LINGTRUEAPI",
+      "description": "Explore AI API development guides, integration tutorials, and best practices. Learn how to build with GPT, Claude, Gemini and 35+ AI models through LINGTRUEAPI."
+    }
+  },
+  "articles": [
+    {
+      "slug": "configure-api-proxy-in-aionui",
+      "title": "How to Configure an API Proxy (Relay Station) in AionUI",
+      "summary": "A complete step-by-step guide to configuring LINGTRUEAPI as your AI API proxy in AionUI. Access GPT, Claude, Gemini, and 35+ models through a single unified gateway with smart routing and cost optimization.",
+      "coverImage": "/tech-assets/covers/aionui-config.svg",
+      "author": "LINGTRUEAPI Team",
+      "date": "2026-07-27",
+      "meta": {
+        "title": "How to Configure API Proxy in AionUI - Step by Step Guide | LINGTRUEAPI",
+        "keywords": "AionUI API configuration, AionUI custom LLM, API proxy setup, API relay station, AionUI LINGTRUEAPI, configure AI API gateway, AionUI Base URL, AionUI API Key",
+        "description": "Step-by-step tutorial on configuring an API proxy (relay station) in AionUI. Learn how to set up LINGTRUEAPI as your custom LLM provider to access GPT, Claude, Gemini and 35+ AI models."
+      }
+    },
+    {
+      "slug": "getting-started-with-api",
+      "title": "Getting Started: Integrate AI API in 3 Minutes",
+      "summary": "A step-by-step guide to integrating LINGTRUEAPI into your application. Covers authentication, making your first API call, and best practices for production use.",
+      "coverImage": "/tech-assets/covers/getting-started.svg",
+      "author": "LINGTRUEAPI Team",
+      "date": "2026-07-20",
+      "meta": {
+        "title": "Getting Started with AI API Integration in 3 Minutes | LINGTRUEAPI",
+        "keywords": "AI API integration, API quickstart, GPT API setup, Claude API tutorial, API authentication, LINGTRUEAPI guide",
+        "description": "Learn how to integrate LINGTRUEAPI AI API gateway in just 3 minutes. Step-by-step guide covering API key generation, authentication, and your first API call."
+      }
+    },
+    {
+      "slug": "model-selection-guide",
+      "title": "AI Model Selection Guide: Choose the Right Model for Your Use Case",
+      "summary": "Different AI models excel at different tasks. This guide helps you pick the optimal model based on your specific requirements - from cost efficiency to output quality.",
+      "coverImage": "/tech-assets/covers/model-selection.svg",
+      "author": "LINGTRUEAPI Team",
+      "date": "2026-07-15",
+      "meta": {
+        "title": "AI Model Selection Guide - GPT vs Claude vs Gemini Comparison | LINGTRUEAPI",
+        "keywords": "AI model comparison, GPT vs Claude, best AI model, model selection guide, AI API pricing, Gemini vs GPT",
+        "description": "Compare 35+ AI models and find the best fit for your use case. Detailed analysis of GPT, Claude, Gemini capabilities, pricing, and optimal scenarios."
+      }
+    }
+  ]
+}

@@ -26,6 +26,7 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
       home: true,
       console: true,
       pricing: true,
+      tech: true,
       docs: true,
       about: true,
     };
@@ -50,6 +51,12 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
         to: '/pricing',
       },
       {
+        text: t('技术'),
+        itemKey: 'tech',
+        isExternal: true,
+        externalLink: '/tech',
+      },
+      {
         text: t('文档'),
         itemKey: 'docs',
         isExternal: true,
@@ -72,6 +79,9 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
         return typeof modules.pricing === 'object'
           ? modules.pricing.enabled
           : modules.pricing;
+      }
+      if (link.itemKey === 'tech') {
+        return modules.tech !== false;
       }
       return modules[link.itemKey] === true;
     });

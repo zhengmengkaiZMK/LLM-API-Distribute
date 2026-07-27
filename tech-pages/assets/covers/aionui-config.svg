@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <rect width="800" height="450" fill="#F5F3FF"/>
+  <!-- AionUI icon representation -->
+  <rect x="180" y="130" width="180" height="180" rx="20" fill="#7C3AED" opacity="0.12"/>
+  <text x="270" y="230" text-anchor="middle" font-family="system-ui" font-size="24" font-weight="bold" fill="#7C3AED">AionUI</text>
+  <!-- Arrow -->
+  <path d="M380 220 L420 220" stroke="#6B7280" stroke-width="3" stroke-dasharray="6 4"/>
+  <polygon points="420,215 430,220 420,225" fill="#6B7280"/>
+  <!-- API Gateway representation -->
+  <rect x="440" y="130" width="180" height="180" rx="20" fill="#4F46E5" opacity="0.12"/>
+  <text x="530" y="215" text-anchor="middle" font-family="system-ui" font-size="16" font-weight="bold" fill="#4F46E5">API Gateway</text>
+  <text x="530" y="240" text-anchor="middle" font-family="system-ui" font-size="13" fill="#6366F1">www.lingtrue.com</text>
+  <!-- Title -->
+  <text x="400" y="380" text-anchor="middle" font-family="system-ui" font-size="18" fill="#4F46E5">Configure API Proxy in AionUI</text>
+  <!-- Subtitle -->
+  <text x="400" y="410" text-anchor="middle" font-family="system-ui" font-size="14" fill="#6B7280">Step-by-step configuration guide</text>
+</svg>

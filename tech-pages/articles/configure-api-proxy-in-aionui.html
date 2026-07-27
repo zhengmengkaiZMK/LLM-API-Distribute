@@ -1,0 +1,248 @@
+<p>
+  <a href="https://github.com/iOfficeAI/AionUi" target="_blank" rel="noopener noreferrer">AionUI</a> is a powerful open-source, cross-platform AI Agent management desktop tool (30k+ GitHub Stars). It provides a visual interface for managing multiple AI agents and LLM models. This guide shows you how to configure an API proxy (relay station) in AionUI to access AI models like GPT, Claude, and Gemini through a unified gateway like <strong>LINGTRUEAPI</strong>.
+</p>
+
+<blockquote>
+  <strong>What is an API Proxy/Relay Station?</strong> An API proxy (also called a relay station or API gateway) sits between your client application and the upstream AI model providers. It offers benefits like unified billing, smart routing, cost savings, and access to 35+ models through a single API key. <a href="https://www.lingtrue.com">LINGTRUEAPI (www.lingtrue.com)</a> is one such service.
+</blockquote>
+
+<h2>Prerequisites</h2>
+
+<ul>
+  <li><strong>AionUI installed</strong> — Download from <a href="https://github.com/iOfficeAI/AionUi/releases" target="_blank" rel="noopener noreferrer">GitHub Releases</a> (supports Windows, macOS, and Linux)</li>
+  <li><strong>An API Key from your relay station</strong> — <a href="https://www.lingtrue.com/console/token">Create a token</a> in your LINGTRUEAPI dashboard</li>
+</ul>
+
+<h2>Step 1: Get Your API Key from LINGTRUEAPI</h2>
+
+<ol>
+  <li>Visit <a href="https://www.lingtrue.com/register" target="_blank" rel="noopener noreferrer">www.lingtrue.com/register</a> and create a free account</li>
+  <li>Log into the <a href="https://www.lingtrue.com/console">console dashboard</a></li>
+  <li>Navigate to <strong>Token Management</strong> and click <strong>"Create Token"</strong></li>
+  <li>Give your token a descriptive name (e.g., "AionUI")</li>
+  <li>Click the <strong>Copy</strong> button to copy your API Key to clipboard</li>
+</ol>
+
+<p>
+  Your API Key will look like: <code>sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code>
+</p>
+
+<blockquote>
+  <strong>Tip:</strong> Visit the <a href="https://www.lingtrue.com/pricing">Model Pricing page</a> to see all available models and their costs before configuring.
+</blockquote>
+
+<h2>Step 2: Open AionUI LLM Configuration</h2>
+
+<ol>
+  <li>Launch AionUI on your computer</li>
+  <li>Click <strong>Settings</strong> (gear icon) in the left sidebar or top menu</li>
+  <li>Navigate to <strong>LLM Configuration</strong> (also labeled as "Model Settings" or "大模型设置")</li>
+  <li>Click <strong>"Add Model"</strong> (添加模型)</li>
+</ol>
+
+<h2>Step 3: Configure Custom Platform</h2>
+
+<p>
+  In the "Add Model" dialog, configure the following settings:
+</p>
+
+<h3>3.1 Select Platform</h3>
+<p>
+  Choose <strong>"Custom"</strong> (自定义) from the platform dropdown. This option supports any OpenAI-compatible API endpoint, which is exactly what LINGTRUEAPI provides.
+</p>
+
+<h3>3.2 Fill in Connection Details</h3>
+
+<table style="width:100%; border-collapse:collapse; margin: 16px 0;">
+  <thead>
+    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">Field</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">Value</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;"><strong>API Key</strong></td>
+      <td style="padding: 12px 16px;"><code>sk-xxxx</code> (your copied key)</td>
+      <td style="padding: 12px 16px;">Paste the token from Step 1</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;"><strong>API Base URL</strong></td>
+      <td style="padding: 12px 16px;"><code>https://www.lingtrue.com</code></td>
+      <td style="padding: 12px 16px;">Do NOT add <code>/v1</code> suffix for most models</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;"><strong>Model Name</strong></td>
+      <td style="padding: 12px 16px;">e.g., <code>gpt-4o</code></td>
+      <td style="padding: 12px 16px;">Enter the exact model identifier</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>3.3 Important: Base URL Format</h3>
+
+<p>The Base URL format depends on the model type you're configuring:</p>
+
+<ul>
+  <li><strong>For most models (GPT, Claude, Gemini, DeepSeek, etc.):</strong><br>
+    Use: <code>https://www.lingtrue.com</code> (without <code>/v1</code>)
+  </li>
+  <li><strong>For Codex models specifically:</strong><br>
+    Use: <code>https://www.lingtrue.com/v1</code> (with <code>/v1</code> suffix)
+  </li>
+</ul>
+
+<blockquote>
+  <strong>Why the difference?</strong> Codex uses a slightly different API path structure. If you're unsure, try without <code>/v1</code> first — it works for the vast majority of models.
+</blockquote>
+
+<h2>Step 4: Choose Your Model</h2>
+
+<p>
+  LINGTRUEAPI supports 35+ models. Here are the most popular ones you can configure in AionUI:
+</p>
+
+<h3>Recommended Models</h3>
+
+<table style="width:100%; border-collapse:collapse; margin: 16px 0;">
+  <thead>
+    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">Model</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">Best For</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">Model ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">GPT-4o</td>
+      <td style="padding: 12px 16px;">General purpose, fast and capable</td>
+      <td style="padding: 12px 16px;"><code>gpt-4o</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">GPT-4o Mini</td>
+      <td style="padding: 12px 16px;">Cost-efficient everyday tasks</td>
+      <td style="padding: 12px 16px;"><code>gpt-4o-mini</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Claude Sonnet 4</td>
+      <td style="padding: 12px 16px;">Coding, detailed analysis, writing</td>
+      <td style="padding: 12px 16px;"><code>claude-sonnet-4-20250514</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Claude Opus 4</td>
+      <td style="padding: 12px 16px;">Most capable reasoning model</td>
+      <td style="padding: 12px 16px;"><code>claude-opus-4-20250514</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Gemini 2.5 Pro</td>
+      <td style="padding: 12px 16px;">Long context, multimodal</td>
+      <td style="padding: 12px 16px;"><code>gemini-2.5-pro</code></td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">DeepSeek V3</td>
+      <td style="padding: 12px 16px;">Cost-effective coding & reasoning</td>
+      <td style="padding: 12px 16px;"><code>deepseek-chat</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  For a complete list with real-time pricing, visit the <a href="https://www.lingtrue.com/pricing">LINGTRUEAPI Model Pricing</a> page.
+</p>
+
+<h2>Step 5: Save and Test</h2>
+
+<ol>
+  <li>Click <strong>"Save"</strong> to store your configuration</li>
+  <li>Return to the main AionUI interface</li>
+  <li>Select the model you just configured from the model dropdown</li>
+  <li>Send a test message (e.g., "Hello, can you hear me?")</li>
+  <li>If you receive a response, the configuration is successful!</li>
+</ol>
+
+<h2>Advanced: Multi-Key Rotation</h2>
+
+<p>
+  AionUI supports API key rotation for load balancing and redundancy. To configure multiple keys:
+</p>
+
+<ol>
+  <li>In the API Key field, enter multiple keys separated by commas:</li>
+</ol>
+
+<pre><code>sk-key1,sk-key2,sk-key3</code></pre>
+
+<p>
+  AionUI will automatically rotate between keys when encountering rate limits (429) or auth errors (401), with a 90-second cooldown for failed keys.
+</p>
+
+<h2>Advanced: Configure Multiple Models</h2>
+
+<p>
+  You can add multiple model configurations to access different AI models through the same relay station:
+</p>
+
+<ol>
+  <li>Repeat Steps 2-5 for each model you want to add</li>
+  <li>Use the <strong>same API Key</strong> and <strong>same Base URL</strong></li>
+  <li>Only change the <strong>Model Name</strong> field for each entry</li>
+</ol>
+
+<p>
+  This way, you can switch between GPT-4o, Claude, Gemini, and other models directly from AionUI's model selector — all powered by a single LINGTRUEAPI account.
+</p>
+
+<h2>Troubleshooting</h2>
+
+<table style="width:100%; border-collapse:collapse; margin: 16px 0;">
+  <thead>
+    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">Problem</th>
+      <th style="padding: 12px 16px; text-align: left; font-weight: 600;">Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Model list is empty</td>
+      <td style="padding: 12px 16px;">Check that your API Key is valid and Base URL is correct</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Authentication error (401)</td>
+      <td style="padding: 12px 16px;">Verify your API Key hasn't expired; <a href="https://www.lingtrue.com/console/token">regenerate one</a> if needed</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Connection timeout</td>
+      <td style="padding: 12px 16px;">Check your network connection; ensure <code>www.lingtrue.com</code> is accessible</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Rate limit error (429)</td>
+      <td style="padding: 12px 16px;">Wait a moment and retry, or configure multiple keys for rotation</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Model not responding</td>
+      <td style="padding: 12px 16px;">Verify the model name is correct (case-sensitive); check account balance</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #dee2e6;">
+      <td style="padding: 12px 16px;">Codex models not working</td>
+      <td style="padding: 12px 16px;">Make sure to use <code>https://www.lingtrue.com/v1</code> (with <code>/v1</code>) for Codex</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Summary</h2>
+
+<p>
+  Configuring an API proxy in AionUI is straightforward:
+</p>
+
+<ol>
+  <li><strong>Get API Key</strong> from <a href="https://www.lingtrue.com">www.lingtrue.com</a></li>
+  <li><strong>Add Custom model</strong> in AionUI Settings &rarr; LLM Configuration</li>
+  <li><strong>Fill in</strong> API Key + Base URL (<code>https://www.lingtrue.com</code>) + Model name</li>
+  <li><strong>Save and test</strong></li>
+</ol>
+
+<p>
+  With this setup, you can access 35+ AI models through AionUI with smart routing, cost optimization, and a unified billing experience. For more guides, check out our <a href="/tech">Tech Blog</a> or visit the <a href="https://www.lingtrue.com/about">About page</a> to learn more about LINGTRUEAPI.
+</p>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <rect width="800" height="450" fill="#EEF2FF"/>
+  <rect x="200" y="120" width="400" height="210" rx="16" fill="#4F46E5" opacity="0.1"/>
+  <path d="M350 200 L400 170 L450 200 L450 260 L350 260 Z" fill="#4F46E5" opacity="0.6"/>
+  <circle cx="400" cy="230" r="40" fill="#4F46E5" opacity="0.2"/>
+  <text x="400" y="240" text-anchor="middle" font-family="system-ui" font-size="28" font-weight="bold" fill="#4F46E5">API</text>
+  <text x="400" y="350" text-anchor="middle" font-family="system-ui" font-size="18" fill="#6366F1">Getting Started Guide</text>
+</svg>
