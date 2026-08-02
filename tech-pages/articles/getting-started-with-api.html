@@ -4,12 +4,12 @@
 
 <h2>Step 1: Create Your Account</h2>
 <p>
-  Visit <a href="https://www.selfagent.ai/register" target="_blank">our registration page</a> to create a free account. You'll receive complimentary credits to get started immediately.
+  Visit <a href="https://www.lingtrue.com/register" target="_blank">our registration page</a> to create a free account. You'll receive complimentary credits to get started immediately.
 </p>
 
 <h2>Step 2: Generate an API Key</h2>
 <p>
-  After logging in, navigate to the <a href="https://www.selfagent.ai/console/token">Token Management</a> page in your dashboard. Click "Create Token" to generate your universal API key.
+  After logging in, navigate to the <a href="https://www.lingtrue.com/console/token">Token Management</a> page in your dashboard. Click "Create Token" to generate your universal API key.
 </p>
 <p>
   Your API key works with all 35+ supported models — no need to create separate keys for different providers.
@@ -20,7 +20,7 @@
   LINGTRUEAPI is fully compatible with the OpenAI SDK format. Simply replace the base URL and API key:
 </p>
 
-<pre><code>curl https://www.selfagent.ai/v1/chat/completions \
+<pre><code>curl https://www.lingtrue.com/v1/chat/completions \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -35,7 +35,7 @@
 
 client = OpenAI(
     api_key="YOUR_API_KEY",
-    base_url="https://www.selfagent.ai/v1"
+    base_url="https://www.lingtrue.com/v1"
 )
 
 response = client.chat.completions.create(
@@ -49,7 +49,7 @@ print(response.choices[0].message.content)</code></pre>
 
 const client = new OpenAI({
   apiKey: 'YOUR_API_KEY',
-  baseURL: 'https://www.selfagent.ai/v1'
+  baseURL: 'https://www.lingtrue.com/v1'
 });
 
 const response = await client.chat.completions.create({
@@ -64,12 +64,12 @@ console.log(response.choices[0].message.content);</code></pre>
 </p>
 
 <blockquote>
-  <strong>Pro tip:</strong> Check the <a href="https://www.selfagent.ai/pricing">Model Pricing page</a> to see real-time pricing for all available models and find the best value for your use case.
+  <strong>Pro tip:</strong> Check the <a href="https://www.lingtrue.com/pricing">Model Pricing page</a> to see real-time pricing for all available models and find the best value for your use case.
 </blockquote>
 
 <h2>What's Next?</h2>
 <ul>
   <li>Explore our <a href="/tech/model-selection-guide">Model Selection Guide</a> to choose the right model</li>
-  <li>Check <a href="https://www.selfagent.ai/pricing">available models and pricing</a></li>
+  <li>Check <a href="https://www.lingtrue.com/pricing">available models and pricing</a></li>
   <li>Join our community for support and updates</li>
 </ul>

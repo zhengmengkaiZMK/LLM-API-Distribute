@@ -1,10 +1,10 @@
 {
   "site": {
     "name": "LINGTRUEAPI",
-    "baseUrl": "https://www.selfagent.ai",
+    "baseUrl": "https://www.lingtrue.com",
     "logo": "/logo.png"
   },
-  "supportedLangs": ["en", "zh-CN"],
+  "supportedLangs": ["en", "zh-CN", "zh-TW", "fr", "ja", "ru", "vi"],
   "defaultLang": "en",
   "list": {
     "en": {
@@ -32,6 +32,7 @@
       "tech": "Tech",
       "pricing": "Pricing",
       "about": "About",
+      "login": "Login",
       "readMore": "Read more",
       "backToList": "Back to Tech Blog",
       "comingSoon": "Coming Soon",
@@ -46,6 +47,7 @@
       "tech": "技术",
       "pricing": "模型广场",
       "about": "关于",
+      "login": "登录",
       "readMore": "阅读全文",
       "backToList": "返回技术博客",
       "comingSoon": "即将上线",
@@ -54,6 +56,81 @@
       "notFoundDesc": "您要找的文章不存在。",
       "browseAll": "浏览所有文章",
       "copyright": "保留所有权利。"
+    },
+    "zh-TW": {
+      "home": "首頁",
+      "tech": "技術",
+      "pricing": "模型廣場",
+      "about": "關於",
+      "login": "登入",
+      "readMore": "閱讀全文",
+      "backToList": "返回技術部落格",
+      "comingSoon": "即將上線",
+      "comingSoonDesc": "精彩內容正在準備中，敬請期待！",
+      "notFoundTitle": "404",
+      "notFoundDesc": "您要找的文章不存在。",
+      "browseAll": "瀏覽所有文章",
+      "copyright": "保留所有權利。"
+    },
+    "fr": {
+      "home": "Accueil",
+      "tech": "Tech",
+      "pricing": "Tarifs",
+      "about": "À propos",
+      "login": "Connexion",
+      "readMore": "Lire la suite",
+      "backToList": "Retour au blog tech",
+      "comingSoon": "Bientôt disponible",
+      "comingSoonDesc": "Nous préparons du contenu de qualité. Revenez bientôt !",
+      "notFoundTitle": "404",
+      "notFoundDesc": "L'article que vous recherchez n'existe pas.",
+      "browseAll": "Parcourir tous les articles",
+      "copyright": "Tous droits réservés."
+    },
+    "ja": {
+      "home": "ホーム",
+      "tech": "テック",
+      "pricing": "料金",
+      "about": "概要",
+      "login": "ログイン",
+      "readMore": "続きを読む",
+      "backToList": "テックブログに戻る",
+      "comingSoon": "近日公開",
+      "comingSoonDesc": "素晴らしいコンテンツを準備中です。もうしばらくお待ちください！",
+      "notFoundTitle": "404",
+      "notFoundDesc": "お探しの記事は存在しません。",
+      "browseAll": "すべての記事を見る",
+      "copyright": "All rights reserved."
+    },
+    "ru": {
+      "home": "Главная",
+      "tech": "Технологии",
+      "pricing": "Цены",
+      "about": "О нас",
+      "login": "Войти",
+      "readMore": "Читать далее",
+      "backToList": "Назад к блогу",
+      "comingSoon": "Скоро",
+      "comingSoonDesc": "Мы готовим отличный контент. Заходите позже!",
+      "notFoundTitle": "404",
+      "notFoundDesc": "Запрашиваемая статья не найдена.",
+      "browseAll": "Все статьи",
+      "copyright": "Все права защищены."
+    },
+    "vi": {
+      "home": "Trang chủ",
+      "tech": "Công nghệ",
+      "pricing": "Bảng giá",
+      "about": "Giới thiệu",
+      "login": "Đăng nhập",
+      "readMore": "Đọc thêm",
+      "backToList": "Quay lại blog",
+      "comingSoon": "Sắp ra mắt",
+      "comingSoonDesc": "Chúng tôi đang chuẩn bị nội dung tuyệt vời. Hãy quay lại sau!",
+      "notFoundTitle": "404",
+      "notFoundDesc": "Bài viết bạn tìm không tồn tại.",
+      "browseAll": "Xem tất cả bài viết",
+      "copyright": "Bảo lưu mọi quyền."
     }
   },
   "articles": [

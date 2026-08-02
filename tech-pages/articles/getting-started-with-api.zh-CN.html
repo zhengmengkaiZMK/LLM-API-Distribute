@@ -4,12 +4,12 @@
 
 <h2>第一步：创建账号</h2>
 <p>
-  访问<a href="https://www.selfagent.ai/register" target="_blank">注册页面</a>创建免费账号。注册即送免费额度，可立即开始使用。
+  访问<a href="https://www.lingtrue.com/register" target="_blank">注册页面</a>创建免费账号。注册即送免费额度，可立即开始使用。
 </p>
 
 <h2>第二步：生成 API Key</h2>
 <p>
-  登录后，进入控制台的<a href="https://www.selfagent.ai/console/token">令牌管理</a>页面，点击"创建令牌"生成你的通用 API Key。
+  登录后，进入控制台的<a href="https://www.lingtrue.com/console/token">令牌管理</a>页面，点击"创建令牌"生成你的通用 API Key。
 </p>
 <p>
   你的 API Key 适用于所有 35+ 种支持的模型——无需为不同提供商创建不同的密钥。
@@ -20,7 +20,7 @@
   LINGTRUEAPI 完全兼容 OpenAI SDK 格式。只需替换 Base URL 和 API Key：
 </p>
 
-<pre><code>curl https://www.selfagent.ai/v1/chat/completions \
+<pre><code>curl https://www.lingtrue.com/v1/chat/completions \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -35,7 +35,7 @@
 
 client = OpenAI(
     api_key="YOUR_API_KEY",
-    base_url="https://www.selfagent.ai/v1"
+    base_url="https://www.lingtrue.com/v1"
 )
 
 response = client.chat.completions.create(
@@ -49,7 +49,7 @@ print(response.choices[0].message.content)</code></pre>
 
 const client = new OpenAI({
   apiKey: 'YOUR_API_KEY',
-  baseURL: 'https://www.selfagent.ai/v1'
+  baseURL: 'https://www.lingtrue.com/v1'
 });
 
 const response = await client.chat.completions.create({
@@ -64,12 +64,12 @@ console.log(response.choices[0].message.content);</code></pre>
 </p>
 
 <blockquote>
-  <strong>小贴士：</strong>查看<a href="https://www.selfagent.ai/pricing">模型定价页面</a>了解所有可用模型的实时价格，找到最适合你场景的高性价比方案。
+  <strong>小贴士：</strong>查看<a href="https://www.lingtrue.com/pricing">模型定价页面</a>了解所有可用模型的实时价格，找到最适合你场景的高性价比方案。
 </blockquote>
 
 <h2>下一步</h2>
 <ul>
   <li>阅读我们的<a href="/tech/model-selection-guide">模型选择指南</a>帮你选对模型</li>
-  <li>查看<a href="https://www.selfagent.ai/pricing">可用模型和定价</a></li>
+  <li>查看<a href="https://www.lingtrue.com/pricing">可用模型和定价</a></li>
   <li>加入社区获取支持和最新动态</li>
 </ul>
