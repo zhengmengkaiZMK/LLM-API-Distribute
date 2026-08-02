@@ -28,9 +28,9 @@ const CommercialTerms = () => {
   return (
     <>
       <SEOHead
-        title="Commercial Terms of Service - Enterprise AI API"
-        description="LINGTRUEAPI commercial terms of service for business and enterprise customers. SLA guarantees, billing terms, data handling, and support commitments."
-        keywords="AI API commercial terms,enterprise API service agreement,SLA guarantee,LINGTRUEAPI business terms"
+        title="AI API Commercial Terms - Enterprise AI API Service Agreement | LingTrue"
+        description="LingTrue AI API commercial terms of service for enterprise customers. SLA guarantees, AI API billing terms, data handling policies for our unified AI API gateway."
+        keywords="AI API commercial terms,enterprise AI API,AI API SLA,AI API service agreement,LingTrue business terms"
         canonicalPath="/legal/commercial-terms"
       />
       <LegalDocLayout

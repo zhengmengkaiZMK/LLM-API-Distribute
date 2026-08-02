@@ -15,9 +15,9 @@ const SEOHead = ({
   canonicalPath = '/',
   ogType = 'website',
 }) => {
-  const baseUrl = 'https://www.selfagent.ai';
-  const brandName = 'LINGTRUEAPI';
-  const fullTitle = title ? `${title} | ${brandName}` : `${brandName} - Unified AI API Gateway for GPT, Claude & Gemini`;
+  const baseUrl = 'https://www.lingtrue.com';
+  const brandName = 'LingTrue';
+  const fullTitle = title ? `${title} | ${brandName}` : `${brandName} - AI API Gateway for GPT, Claude & Gemini`;
   const canonicalUrl = `${baseUrl}${canonicalPath}`;
   const ogImage = `${baseUrl}/cover-4.webp`;
 

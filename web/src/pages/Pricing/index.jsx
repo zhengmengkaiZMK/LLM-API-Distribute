@@ -24,11 +24,12 @@ import SEOHead from '../../components/common/SEOHead';
 const Pricing = () => (
   <>
     <SEOHead
-      title="AI Model API Pricing - Pay-Per-Token for GPT, Claude & Gemini"
-      description="Transparent pay-per-token pricing for 35+ AI models. Access GPT, Claude, Gemini via one API. Save up to 47% vs official pricing. No subscription, no hidden fees."
-      keywords="AI API pricing,GPT API cost,Claude API price,Gemini API pricing,pay per token,AI model pricing comparison,cheap AI API"
+      title="AI API Pricing - Compare GPT, Claude, Gemini API Cost Per Token | LingTrue"
+      description="Compare AI API pricing for 35+ models. GPT API, Claude API, Gemini API cost per token side by side. Save 47% on AI API costs with LingTrue unified AI API gateway. No subscription."
+      keywords="AI API pricing,AI API cost,GPT API price,Claude API pricing,Gemini API cost,AI API pay per token,cheap AI API,AI API price comparison,LingTrue pricing"
       canonicalPath="/pricing"
     />
+    <h1 className="sr-only">AI API Pricing - Compare AI Model API Costs</h1>
     <ModelPricingPage />
   </>
 );

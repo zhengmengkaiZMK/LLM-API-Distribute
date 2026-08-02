@@ -28,9 +28,9 @@ const UsagePolicy = () => {
   return (
     <>
       <SEOHead
-        title="Usage Policy - Acceptable Use Guidelines"
-        description="LINGTRUEAPI usage policy outlines acceptable use of our AI API gateway services. Learn about permitted activities, restrictions, and compliance requirements."
-        keywords="API usage policy,acceptable use policy,AI API terms,LINGTRUEAPI policy"
+        title="AI API Usage Policy - LingTrue Acceptable Use Guidelines"
+        description="LingTrue AI API usage policy. Learn the acceptable use guidelines, permitted activities, and compliance requirements for our unified AI API gateway service."
+        keywords="AI API usage policy,LingTrue policy,AI API acceptable use,AI API terms of use,AI API guidelines"
         canonicalPath="/legal/usage-policy"
       />
       <LegalDocLayout title={t('使用政策')} content={usagePolicyMarkdown} />

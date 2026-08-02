@@ -5,10 +5,10 @@
 LingTrue 完全兼容 OpenAI、Anthropic、Google 等主流 SDK 格式，开发者只需替换 Base URL 和 API Key 即可接入，无需修改业务逻辑代码。平台采用按量付费模式，无月费、无隐藏费用，充值余额永不过期。
 
 ## 核心页面
-- [首页](https://www.selfagent.ai/): LingTrue 平台介绍、核心优势、集成步骤和常见问题解答
-- [模型定价](https://www.selfagent.ai/pricing): 所有支持的 AI 模型实时定价表，包含 GPT/Claude/Gemini 等 35+ 模型的输入输出 Token 价格
-- [接入文档](https://www.selfagent.ai/document): API 使用说明、SDK 指南（Python/Node/Java/Go/PHP）、OpenAI/Anthropic/Gemini 接口文档
-- [关于我们](https://www.selfagent.ai/about): 平台背景与团队信息
+- [首页](https://www.lingtrue.com/): LingTrue 平台介绍、核心优势、集成步骤和常见问题解答
+- [模型定价](https://www.lingtrue.com/pricing): 所有支持的 AI 模型实时定价表，包含 GPT/Claude/Gemini 等 35+ 模型的输入输出 Token 价格
+- [接入文档](https://www.lingtrue.com/document): API 使用说明、SDK 指南（Python/Node/Java/Go/PHP）、OpenAI/Anthropic/Gemini 接口文档
+- [关于我们](https://www.lingtrue.com/about): 平台背景与团队信息
 
 ## 核心能力
 - 统一 API 网关: 一个 Base URL 接入 35+ AI 模型，兼容 OpenAI/Anthropic/Google SDK
@@ -27,6 +27,6 @@ GPT-5.4, GPT-4o, Claude opus 4.6, Claude Sonnet, Gemini 3.1 Pro, Gemini Flash, D
 - 支持哪些模型？35+ 主流 AI 模型，涵盖 GPT/Claude/Gemini 等，持续接入最新模型
 
 ## Optional
-- [用户协议](https://www.selfagent.ai/user-agreement): 服务条款
-- [隐私政策](https://www.selfagent.ai/privacy-policy): 隐私保护声明
-- [注册](https://www.selfagent.ai/register): 免费注册，赠送初始额度
+- [用户协议](https://www.lingtrue.com/user-agreement): 服务条款
+- [隐私政策](https://www.lingtrue.com/privacy-policy): 隐私保护声明
+- [注册](https://www.lingtrue.com/register): 免费注册，赠送初始额度

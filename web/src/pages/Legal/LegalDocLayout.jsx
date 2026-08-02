@@ -50,6 +50,12 @@ const LegalDocLayout = ({ title, content }) => {
     { path: '/legal/commercial-terms', label: t('商业服务条款') },
   ];
 
+  const relatedPages = [
+    { path: '/', label: t('AI API Gateway Home') },
+    { path: '/pricing', label: t('AI API Pricing') },
+    { path: '/document', label: t('AI API Documentation') },
+  ];
+
   return (
     <div className='min-h-screen bg-gray-50'>
       <div className='max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8'>
@@ -80,7 +86,7 @@ const LegalDocLayout = ({ title, content }) => {
 
         {/* 正文卡片 */}
         <div className='bg-white rounded-lg shadow-sm p-6 sm:p-10'>
-          <Title heading={2} className='text-center mb-8'>
+          <Title heading={1} className='text-center mb-8'>
             {title}
           </Title>
           <div className='prose prose-lg max-w-none'>
@@ -98,6 +104,22 @@ const LegalDocLayout = ({ title, content }) => {
           >
             {t('返回注册页')}
           </Button>
+        </div>
+
+        {/* 相关页面内链 */}
+        <div className='mt-8 pt-6 border-t border-gray-200'>
+          <p className='text-sm text-gray-500 mb-3'>{t('相关页面')}</p>
+          <div className='flex flex-wrap gap-3'>
+            {relatedPages.map((p) => (
+              <Link
+                key={p.path}
+                to={p.path}
+                className='text-sm text-blue-600 hover:text-blue-800 hover:underline'
+              >
+                {p.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

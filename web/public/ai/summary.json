@@ -1,7 +1,7 @@
 {
   "name": "LingTrue",
   "description": "国内领先的AI大模型API中转站与聚合平台，提供35+主流AI模型的统一接口服务",
-  "url": "https://www.selfagent.ai",
+  "url": "https://www.lingtrue.com",
   "category": "Developer Tools / AI API Gateway",
   "features": [
     "统一API网关：一个Base URL接入35+AI模型",

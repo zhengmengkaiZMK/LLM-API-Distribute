@@ -136,9 +136,9 @@ const About = () => {
   return (
     <>
     <SEOHead
-      title="About LINGTRUEAPI - Global AI API Gateway Platform"
-      description="LINGTRUEAPI is a unified AI API gateway providing access to 35+ models including GPT, Claude, and Gemini. Smart routing saves up to 47% on costs with 99.8% SLA."
-      keywords="about LINGTRUEAPI,AI API gateway,unified AI platform,AI model aggregator"
+      title="About LingTrue - Unified AI API Gateway for Developers"
+      description="LingTrue is a unified AI API gateway connecting developers to 35+ AI APIs including GPT, Claude, Gemini. Our AI API platform offers smart routing, 99.8% SLA, and 47% cost savings."
+      keywords="LingTrue,AI API gateway,AI API platform,about LingTrue,unified AI API provider,AI API service"
       canonicalPath="/about"
     />
     <div className='mt-[60px] px-2'>

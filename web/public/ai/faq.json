@@ -11,7 +11,7 @@
     },
     {
       "question": "集成LingTrue需要多长时间？",
-      "answer": "大多数开发者可在3分钟内完成集成。只需将现有代码中的Base URL替换为LingTrue网关地址（https://www.selfagent.ai/v1），API Key换成LingTrue令牌即可，完全兼容OpenAI、Anthropic、Google等主流SDK，无需修改任何业务逻辑代码。"
+      "answer": "大多数开发者可在3分钟内完成集成。只需将现有代码中的Base URL替换为LingTrue网关地址（https://www.lingtrue.com/v1），API Key换成LingTrue令牌即可，完全兼容OpenAI、Anthropic、Google等主流SDK，无需修改任何业务逻辑代码。"
     },
     {
       "question": "LingTrue支持哪些AI模型？",

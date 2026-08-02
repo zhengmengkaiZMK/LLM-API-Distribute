@@ -28,9 +28,9 @@ const SupportedRegions = () => {
   return (
     <>
       <SEOHead
-        title="Supported Countries & Regions - Global AI API Access"
-        description="LINGTRUEAPI is available in 180+ countries. Check if our unified AI API gateway supports your region. Global coverage for GPT, Claude, and Gemini access."
-        keywords="AI API supported countries,global AI API access,API gateway regions,LINGTRUEAPI coverage"
+        title="AI API Supported Countries & Regions - Global AI API Coverage | LingTrue"
+        description="LingTrue AI API gateway is available in 180+ countries. Check supported regions for our unified AI API service providing GPT, Claude, Gemini API access worldwide."
+        keywords="AI API supported countries,AI API global access,AI API regions,LingTrue coverage,AI API availability"
         canonicalPath="/legal/supported-regions"
       />
       <LegalDocLayout
