@@ -265,6 +265,19 @@ func getArticleLocale(art *TechArticleConfig, lang string) TechArticleLocale {
 	return TechArticleLocale{}
 }
 
+// getSite returns the site config with dynamic name/logo from system settings
+func getSite() TechSite {
+	site := techConfig.Site
+	// Use dynamic system name and logo (same as main site)
+	if common.SystemName != "" {
+		site.Name = common.SystemName
+	}
+	if common.Logo != "" {
+		site.Logo = common.Logo
+	}
+	return site
+}
+
 // ServeTechList handles GET /tech
 func ServeTechList(c *gin.Context) {
 	if techConfig == nil || techTmpl == nil {
@@ -292,7 +305,7 @@ func ServeTechList(c *gin.Context) {
 	}
 
 	data := TechListPageData{
-		Site:     techConfig.Site,
+		Site:     getSite(),
 		Meta:     listLocale.Meta,
 		UI:       ui,
 		Lang:     lang,
@@ -334,7 +347,7 @@ func ServeTechArticle(c *gin.Context) {
 		c.Header("Content-Type", "text/html; charset=utf-8")
 		c.Status(http.StatusNotFound)
 		_ = techTmpl.ExecuteTemplate(c.Writer, "notfound", TechNotFoundPageData{
-			Site: techConfig.Site,
+			Site: getSite(),
 			UI:   ui,
 			Lang: lang,
 		})
@@ -350,7 +363,7 @@ func ServeTechArticle(c *gin.Context) {
 			c.Header("Content-Type", "text/html; charset=utf-8")
 			c.Status(http.StatusNotFound)
 			_ = techTmpl.ExecuteTemplate(c.Writer, "notfound", TechNotFoundPageData{
-				Site: techConfig.Site,
+				Site: getSite(),
 				UI:   ui,
 				Lang: lang,
 			})
@@ -369,7 +382,7 @@ func ServeTechArticle(c *gin.Context) {
 	}
 
 	data := TechArticlePageData{
-		Site:    techConfig.Site,
+		Site:    getSite(),
 		Meta:    locale.Meta,
 		UI:      ui,
 		Lang:    lang,
@@ -522,20 +535,6 @@ func generateListTemplate() string {
                 </ul>
             </nav>
             <div class="tech-header-actions">
-                <div class="tech-lang-switcher">
-                    <button class="tech-lang-btn" aria-label="Switch language">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    </button>
-                    <div class="tech-lang-dropdown">
-                        <a href="?lang=zh-CN" class="tech-lang-option{{if eq .Lang "zh-CN"}} active{{end}}">简体中文</a>
-                        <a href="?lang=zh-TW" class="tech-lang-option{{if eq .Lang "zh-TW"}} active{{end}}">繁體中文</a>
-                        <a href="?lang=en" class="tech-lang-option{{if eq .Lang "en"}} active{{end}}">English</a>
-                        <a href="?lang=fr" class="tech-lang-option{{if eq .Lang "fr"}} active{{end}}">Français</a>
-                        <a href="?lang=ja" class="tech-lang-option{{if eq .Lang "ja"}} active{{end}}">日本語</a>
-                        <a href="?lang=ru" class="tech-lang-option{{if eq .Lang "ru"}} active{{end}}">Русский</a>
-                        <a href="?lang=vi" class="tech-lang-option{{if eq .Lang "vi"}} active{{end}}">Tiếng Việt</a>
-                    </div>
-                </div>
                 <a href="/login" class="tech-login-btn">{{.UI.Login}}</a>
             </div>
         </div>
@@ -661,20 +660,6 @@ func generateArticleTemplate() string {
                 </ul>
             </nav>
             <div class="tech-header-actions">
-                <div class="tech-lang-switcher">
-                    <button class="tech-lang-btn" aria-label="Switch language">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    </button>
-                    <div class="tech-lang-dropdown">
-                        <a href="?lang=zh-CN" class="tech-lang-option{{if eq .Lang "zh-CN"}} active{{end}}">简体中文</a>
-                        <a href="?lang=zh-TW" class="tech-lang-option{{if eq .Lang "zh-TW"}} active{{end}}">繁體中文</a>
-                        <a href="?lang=en" class="tech-lang-option{{if eq .Lang "en"}} active{{end}}">English</a>
-                        <a href="?lang=fr" class="tech-lang-option{{if eq .Lang "fr"}} active{{end}}">Français</a>
-                        <a href="?lang=ja" class="tech-lang-option{{if eq .Lang "ja"}} active{{end}}">日本語</a>
-                        <a href="?lang=ru" class="tech-lang-option{{if eq .Lang "ru"}} active{{end}}">Русский</a>
-                        <a href="?lang=vi" class="tech-lang-option{{if eq .Lang "vi"}} active{{end}}">Tiếng Việt</a>
-                    </div>
-                </div>
                 <a href="/login" class="tech-login-btn">{{.UI.Login}}</a>
             </div>
         </div>
@@ -732,20 +717,6 @@ func generateNotFoundTemplate() string {
                 </ul>
             </nav>
             <div class="tech-header-actions">
-                <div class="tech-lang-switcher">
-                    <button class="tech-lang-btn" aria-label="Switch language">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    </button>
-                    <div class="tech-lang-dropdown">
-                        <a href="?lang=zh-CN" class="tech-lang-option{{if eq .Lang "zh-CN"}} active{{end}}">简体中文</a>
-                        <a href="?lang=zh-TW" class="tech-lang-option{{if eq .Lang "zh-TW"}} active{{end}}">繁體中文</a>
-                        <a href="?lang=en" class="tech-lang-option{{if eq .Lang "en"}} active{{end}}">English</a>
-                        <a href="?lang=fr" class="tech-lang-option{{if eq .Lang "fr"}} active{{end}}">Français</a>
-                        <a href="?lang=ja" class="tech-lang-option{{if eq .Lang "ja"}} active{{end}}">日本語</a>
-                        <a href="?lang=ru" class="tech-lang-option{{if eq .Lang "ru"}} active{{end}}">Русский</a>
-                        <a href="?lang=vi" class="tech-lang-option{{if eq .Lang "vi"}} active{{end}}">Tiếng Việt</a>
-                    </div>
-                </div>
                 <a href="/login" class="tech-login-btn">{{.UI.Login}}</a>
             </div>
         </div>
