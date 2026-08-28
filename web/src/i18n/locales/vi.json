@@ -1,5 +1,8 @@
 {
   "translation": {
+    "额度已经用完": "Hạn mức của bạn đã hết",
+    "立即充值": "Nạp tiền ngay",
+    "您的额度已经用完，请充值后继续使用服务。": "Hạn mức của bạn đã hết. Vui lòng nạp tiền để tiếp tục sử dụng dịch vụ.",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_one": " + Tìm kiếm Web {{count}} lần / 1K lần * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_other": " + Tìm kiếm Web {{count}} lần / 1K lần * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
     " + 图片生成调用 {{symbol}}{{price}} / 1次 * {{ratioType}} {{ratio}}": " + Gọi tạo hình ảnh {{symbol}}{{price}} / 1 lần * {{ratioType}} {{ratio}}",

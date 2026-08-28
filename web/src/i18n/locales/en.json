@@ -1,5 +1,8 @@
 {
   "translation": {
+    "额度已经用完": "Your quota has run out",
+    "立即充值": "Top up now",
+    "您的额度已经用完，请充值后继续使用服务。": "Your quota has run out. Please top up to continue using the service.",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_one": " + Web search {{count}} time / 1K times * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_other": " + Web search {{count}} times / 1K times * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
     " + 图片生成调用 {{symbol}}{{price}} / 1次 * {{ratioType}} {{ratio}}": " + Image generation call {{symbol}}{{price}} / 1 time * {{ratioType}} {{ratio}}",

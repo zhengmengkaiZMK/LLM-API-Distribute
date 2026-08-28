@@ -26,6 +26,9 @@ import {
 import axios from 'axios';
 import { MESSAGE_ROLES } from '../constants/playground.constants';
 
+const QUOTA_EXHAUSTED_EVENT = 'quota-exhausted';
+const INSUFFICIENT_USER_QUOTA_CODE = 'insufficient_user_quota';
+
 export let API = axios.create({
   baseURL: import.meta.env.VITE_REACT_APP_SERVER_URL
     ? import.meta.env.VITE_REACT_APP_SERVER_URL
@@ -64,7 +67,33 @@ function patchAPIInstance(instance) {
   };
 }
 
+function dispatchQuotaExhaustedEvent(error) {
+  const data = error?.response?.data;
+  const errorCode = data?.error?.code || data?.error_code || data?.code;
+
+  if (errorCode === INSUFFICIENT_USER_QUOTA_CODE) {
+    window.dispatchEvent(new CustomEvent(QUOTA_EXHAUSTED_EVENT));
+  }
+}
+
+function attachResponseInterceptor(instance) {
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      dispatchQuotaExhaustedEvent(error);
+
+      // 如果请求配置中显式要求跳过全局错误处理，则不弹出默认错误提示
+      if (error.config && error.config.skipErrorHandler) {
+        return Promise.reject(error);
+      }
+      showError(error);
+      return Promise.reject(error);
+    },
+  );
+}
+
 patchAPIInstance(API);
+attachResponseInterceptor(API);
 
 export function updateAPI() {
   API = axios.create({
@@ -78,19 +107,8 @@ export function updateAPI() {
   });
 
   patchAPIInstance(API);
+  attachResponseInterceptor(API);
 }
-
-API.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    // 如果请求配置中显式要求跳过全局错误处理，则不弹出默认错误提示
-    if (error.config && error.config.skipErrorHandler) {
-      return Promise.reject(error);
-    }
-    showError(error);
-    return Promise.reject(error);
-  },
-);
 
 // playground
 
@@ -307,28 +325,38 @@ export async function onLinuxDOOAuthClicked(
 export async function onCustomOAuthClicked(provider, options = {}) {
   const state = await prepareOAuthState(options);
   if (!state) return;
-  
+
   try {
     const redirect_uri = `${window.location.origin}/oauth/${provider.slug}`;
-    
+
     // Check if authorization_endpoint is a full URL or relative path
     let authUrl;
-    if (provider.authorization_endpoint.startsWith('http://') || 
-        provider.authorization_endpoint.startsWith('https://')) {
+    if (
+      provider.authorization_endpoint.startsWith('http://') ||
+      provider.authorization_endpoint.startsWith('https://')
+    ) {
       authUrl = new URL(provider.authorization_endpoint);
     } else {
       // Relative path - this is a configuration error, show error message
-      console.error('Custom OAuth authorization_endpoint must be a full URL:', provider.authorization_endpoint);
-      showError('OAuth 配置错误：授权端点必须是完整的 URL（以 http:// 或 https:// 开头）');
+      console.error(
+        'Custom OAuth authorization_endpoint must be a full URL:',
+        provider.authorization_endpoint,
+      );
+      showError(
+        'OAuth 配置错误：授权端点必须是完整的 URL（以 http:// 或 https:// 开头）',
+      );
       return;
     }
-    
+
     authUrl.searchParams.set('client_id', provider.client_id);
     authUrl.searchParams.set('redirect_uri', redirect_uri);
     authUrl.searchParams.set('response_type', 'code');
-    authUrl.searchParams.set('scope', provider.scopes || 'openid profile email');
+    authUrl.searchParams.set(
+      'scope',
+      provider.scopes || 'openid profile email',
+    );
     authUrl.searchParams.set('state', state);
-    
+
     window.open(authUrl.toString());
   } catch (error) {
     console.error('Failed to initiate custom OAuth:', error);

@@ -22,6 +22,7 @@ import { Layout } from '@douyinfe/semi-ui';
 import SiderBar from './SiderBar';
 import App from '../../App';
 import FooterBar from './Footer';
+import QuotaExhaustedModal from './QuotaExhaustedModal';
 import { ToastContainer } from 'react-toastify';
 import React, { useContext, useEffect, useState } from 'react';
 import { useIsMobile } from '../../hooks/common/useIsMobile';
@@ -206,6 +207,7 @@ const PageLayout = () => {
           )}
         </Layout>
       </Layout>
+      <QuotaExhaustedModal />
       <ToastContainer />
     </Layout>
   );

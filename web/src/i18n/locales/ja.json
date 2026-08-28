@@ -1,5 +1,8 @@
 {
   "translation": {
+    "额度已经用完": "クォータを使い切りました",
+    "立即充值": "今すぐチャージ",
+    "您的额度已经用完，请充值后继续使用服务。": "クォータを使い切りました。サービスを続けて利用するにはチャージしてください。",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_one": " + Web検索 {{count}}回 / 1K回 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_one",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_other": " + Web検索 {{count}}回 / 1K回 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_other",
     " + 图片生成调用 {{symbol}}{{price}} / 1次 * {{ratioType}} {{ratio}}": " + 画像生成APIコール {{symbol}}{{price}} / 1回 * {{ratioType}} {{ratio}}",

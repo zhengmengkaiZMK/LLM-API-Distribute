@@ -1,5 +1,8 @@
 {
   "translation": {
+    "额度已经用完": "Ваш лимит исчерпан",
+    "立即充值": "Пополнить сейчас",
+    "您的额度已经用完，请充值后继续使用服务。": "Ваш лимит исчерпан. Пополните баланс, чтобы продолжить пользоваться сервисом.",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_one": " + Web-поиск {{count}} раз / 1K раз * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_few": " + Web-поиск {{count}} раза / 1K раз * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_many": " + Web-поиск {{count}} раз / 1K раз * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",

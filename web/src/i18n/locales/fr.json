@@ -1,5 +1,8 @@
 {
   "translation": {
+    "额度已经用完": "Votre quota est épuisé",
+    "立即充值": "Recharger maintenant",
+    "您的额度已经用完，请充值后继续使用服务。": "Votre quota est épuisé. Veuillez recharger pour continuer à utiliser le service.",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_one": " + Recherche Web {{count}} fois / 1K fois * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_many": " + Recherche Web {{count}} fois / 1K fois * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
     " + Web搜索 {{count}}次 / 1K 次 * {{symbol}}{{price}} * {{ratioType}} {{ratio}}_other": " + Recherche Web {{count}} fois / 1K fois * {{symbol}}{{price}} * {{ratioType}} {{ratio}}",
