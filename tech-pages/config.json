@@ -19,8 +19,8 @@
     "zh-CN": {
       "meta": {
         "title": "技术博客 - AI API 开发指南与教程 | LingTrue",
-        "keywords": "AI API教程, API开发指南, GPT接入, Claude API, AI技术博客, LingTrue, 中转站配置",
-        "description": "探索 AI API 开发指南、集成教程和最佳实践。学习如何通过 LingTrue 使用 GPT、Claude、Gemini 等 35+ AI 模型。"
+        "keywords": "AI API教程, AI API 中转, OpenAI 兼容, Claude API, 大模型网关, Base URL, LingTrue, GPT接入",
+        "description": "探索 AI API 中转、OpenAI 兼容网关配置和模型选型。学习如何通过 LingTrue 使用 GPT、Claude、Gemini 等 35+ AI 模型。"
       },
       "heroTitle": "技术博客",
       "heroSubtitle": "探索 AI 技术前沿，分享集成指南与最佳实践"
@@ -134,6 +134,54 @@
     }
   },
   "articles": [
+    {
+      "slug": "configure-lingtrue-in-cherry-studio",
+      "coverImage": "/tech-assets/covers/cherry-studio-config.svg",
+      "author": "LingTrue Team",
+      "date": "2026-10-31",
+      "en": {
+        "title": "Configure LingTrue in Cherry Studio: OpenAI-Compatible Claude and GPT",
+        "summary": "Set LingTrue as an OpenAI-compatible gateway in Cherry Studio. Copy the Base URL, API key, and model IDs to call Claude and GPT with one token.",
+        "meta": {
+          "title": "Configure LingTrue in Cherry Studio | OpenAI-Compatible Gateway",
+          "keywords": "Cherry Studio setup, AI API gateway, OpenAI compatible, Claude API, Base URL, LLM gateway, LingTrue, GPT API",
+          "description": "Configure LingTrue in Cherry Studio. Use https://www.lingtrue.com as the API host and one token to call GPT and Claude through an OpenAI-compatible gateway."
+        }
+      },
+      "zh-CN": {
+        "title": "在 Cherry Studio 配置 LingTrue：Claude 与 GPT 的 OpenAI 兼容接入",
+        "summary": "在 Cherry Studio 中把 LingTrue 配成 OpenAI 兼容大模型网关。可复制 Base URL、API Key 和模型名，同一令牌调用 Claude API 与 GPT。",
+        "meta": {
+          "title": "在 Cherry Studio 配置 LingTrue API 中转 | OpenAI 兼容网关",
+          "keywords": "Cherry Studio 配置, AI API 中转, OpenAI 兼容, Claude API, Base URL, 大模型网关, LingTrue, GPT 接入",
+          "description": "在 Cherry Studio 配置 LingTrue：API 地址填 https://www.lingtrue.com，一把令牌用 OpenAI 兼容接口调用 GPT 与 Claude。含步骤、模型名示例与 FAQ。"
+        }
+      }
+    },
+    {
+      "slug": "choose-ai-api-gateway",
+      "coverImage": "/tech-assets/covers/choose-api-gateway.svg",
+      "author": "LingTrue Team",
+      "date": "2026-10-31",
+      "en": {
+        "title": "How to Choose an AI API Gateway: Compatibility, Models, and Cost",
+        "summary": "A decision guide for picking an OpenAI-compatible LLM gateway and a model. Compare direct vendor APIs with one Base URL for GPT, Claude, and Gemini. Live prices stay on the pricing page.",
+        "meta": {
+          "title": "How to Choose an AI API Gateway | OpenAI-Compatible Models and Cost",
+          "keywords": "AI API gateway, OpenAI compatible, Claude API, LLM gateway, model selection, Base URL, LingTrue, GPT Claude Gemini",
+          "description": "How to choose an AI API gateway: OpenAI compatibility, Claude API access, and model cost. Quotable facts, comparison tables, and FAQ. Prices follow the live LingTrue pricing page."
+        }
+      },
+      "zh-CN": {
+        "title": "AI API 中转怎么选：模型、兼容协议与成本",
+        "summary": "从 OpenAI 兼容、Claude API 和统一接入 GPT、Claude、Gemini 三个角度，说明怎么选大模型网关，以及如何按任务选模型。单价以定价页实时为准。",
+        "meta": {
+          "title": "AI API 中转怎么选 - OpenAI 兼容网关与模型成本 | LingTrue",
+          "keywords": "AI API 中转, OpenAI 兼容, Claude API, 大模型网关, 模型选型, Base URL, LingTrue, GPT Claude Gemini",
+          "description": "怎么选 AI API 中转和大模型网关：对比官方直连与 OpenAI 兼容接入，给出模型选型表、可引用事实和 FAQ。具体单价以 LingTrue 定价页为准。"
+        }
+      }
+    },
     {
       "slug": "configure-api-proxy-in-aionui",
       "coverImage": "/tech-assets/covers/aionui-config.svg",

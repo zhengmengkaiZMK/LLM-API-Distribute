@@ -1,0 +1,250 @@
+<p>
+  An AI API gateway sits between a desktop client and the model vendors. In Cherry Studio, point LingTrue at the root host <code>https://www.lingtrue.com</code>, paste a LingTrue token as the API key, and set the vendor model ID. One OpenAI-compatible setup then calls GPT and Claude API models with the same key, without a separate account at each vendor.
+</p>
+
+<blockquote>
+  <strong>Copy-paste values:</strong> Cherry Studio API host is <code>https://www.lingtrue.com</code> (no <code>/v1</code>). The OpenAI SDK <code>base_url</code> is <code>https://www.lingtrue.com/v1</code>. Example model IDs: <code>gpt-4o-mini</code>, <code>gpt-4o</code>, <code>claude-sonnet-4-5-20251022</code>. Live prices are on the <a href="https://www.lingtrue.com/pricing">pricing page</a>.
+</blockquote>
+
+<h2 id="before-you-start">What you need</h2>
+<ul>
+  <li><strong>Cherry Studio</strong> for desktop. The path is Settings, then Model Provider.</li>
+  <li>A <strong>LingTrue token</strong>. <a href="https://www.lingtrue.com/register">Register</a>, then create one under <a href="https://www.lingtrue.com/console/token">token management</a>. The key starts with <code>sk-</code>.</li>
+  <li>If you already followed the <a href="/tech/configure-api-proxy-in-aionui">AionUI guide</a>, reuse that token. You do not need another account.</li>
+</ul>
+
+<h2 id="steps">Steps</h2>
+
+<h3>1. Create a LingTrue token</h3>
+<ol>
+  <li>Open <a href="https://www.lingtrue.com/register">https://www.lingtrue.com/register</a> and create an account.</li>
+  <li>Go to <a href="https://www.lingtrue.com/console/token">Console, then Tokens</a>, and create a token.</li>
+  <li>Name it <code>Cherry Studio</code> and copy the full key immediately.</li>
+</ol>
+<p>
+  If the token page shows a Cherry Studio shortcut, it writes the same root host and key into the client. Without that button, use the manual steps below.
+</p>
+
+<h3>2. Open Model Provider in Cherry Studio</h3>
+<ol>
+  <li>Launch Cherry Studio and open <strong>Settings</strong>.</li>
+  <li>Open <strong>Model Provider</strong>.</li>
+  <li>Prefer the built-in <strong>New API</strong> entry. That template connects an OpenAI-compatible gateway. The account and host are LingTrue; you can rename the provider to LingTrue.</li>
+  <li>If that entry is missing, add a <strong>custom provider</strong>, choose the OpenAI-compatible protocol, and name it LingTrue.</li>
+</ol>
+
+<h3>3. Paste the connection values</h3>
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>API key</td>
+      <td>The full token starting with <code>sk-</code></td>
+      <td>Use the LingTrue token, not an OpenAI or Anthropic dashboard key</td>
+    </tr>
+    <tr>
+      <td>API host / Base URL</td>
+      <td><code>https://www.lingtrue.com</code></td>
+      <td>Root host. Cherry Studio appends <code>/v1</code> or <code>/v1beta</code> by protocol</td>
+    </tr>
+    <tr>
+      <td>Do not enter</td>
+      <td><code>/chat/completions</code> or a trailing <code>#</code></td>
+      <td>The client appends the path. A trailing <code>#</code> disables that, which LingTrue does not need</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<pre><code>Provider: New API, or a custom OpenAI-compatible provider
+Name: LingTrue
+API key: sk-your-lingtrue-token
+API host: https://www.lingtrue.com</code></pre>
+
+<p>
+  After saving, check the request preview. It should target <code>https://www.lingtrue.com/v1/chat/completions</code>. A path of <code>/v1/v1/chat/completions</code> means the host already included <code>/v1</code>. Change it back to the root.
+</p>
+
+<h3>4. Add models and test</h3>
+<ol>
+  <li>Fetch the model list. If it is empty, add model IDs by hand. IDs are case-sensitive and must match the gateway.</li>
+  <li>Turn on the provider switch.</li>
+  <li>Run Check on a chat model, then send a short message from the chat window.</li>
+</ol>
+
+<h2 id="models">Model IDs for GPT and Claude on one gateway</h2>
+<p>
+  LingTrue exposes an OpenAI-compatible LLM gateway. In Cherry Studio, switching models only changes the model ID. Keep the Base URL and API key. Confirm the IDs on the <a href="https://www.lingtrue.com/pricing">pricing page</a> or with <code>GET /v1/models</code> before you rely on them.
+</p>
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>Use</th>
+      <th>Model ID</th>
+      <th>How to call it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Everyday chat and batch work</td>
+      <td><code>gpt-4o-mini</code></td>
+      <td>OpenAI-compatible chat</td>
+    </tr>
+    <tr>
+      <td>Higher-quality GPT</td>
+      <td><code>gpt-4o</code></td>
+      <td>Same provider, different model ID</td>
+    </tr>
+    <tr>
+      <td>Code, long writing, detailed instructions</td>
+      <td><code>claude-sonnet-4-5-20251022</code></td>
+      <td>Same provider, Claude model ID</td>
+    </tr>
+    <tr>
+      <td>Stronger Claude</td>
+      <td><code>claude-opus-4-5-20251101</code></td>
+      <td>Same provider</td>
+    </tr>
+    <tr>
+      <td>Lower-latency Gemini</td>
+      <td><code>gemini-2.5-flash</code></td>
+      <td>Same provider</td>
+    </tr>
+    <tr>
+      <td>Long-context Gemini</td>
+      <td><code>gemini-2.5-pro</code></td>
+      <td>Same provider</td>
+    </tr>
+    <tr>
+      <td>Code-focused candidate</td>
+      <td><code>deepseek-chat</code></td>
+      <td>Same provider. Compare the live price before treating it as cheaper</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="sdk">Do not mix this host with the SDK Base URL</h2>
+<p>
+  Clients and SDKs split the Base URL differently. Cherry Studio wants the root. The official OpenAI SDK wants <code>/v1</code>. This snippet calls GPT and Claude with one LingTrue token. It checks the gateway; it does not replace the Cherry Studio form.
+</p>
+<pre><code>from openai import OpenAI
+
+client = OpenAI(
+    api_key="sk-your-lingtrue-token",
+    base_url="https://www.lingtrue.com/v1",
+)
+
+gpt = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "user", "content": "Introduce yourself in one sentence"}],
+)
+
+claude = client.chat.completions.create(
+    model="claude-sonnet-4-5-20251022",
+    messages=[{"role": "user", "content": "Introduce yourself in one sentence"}],
+)</code></pre>
+<p>
+  For the official Anthropic SDK, set <code>base_url</code> to <code>https://www.lingtrue.com</code> so the SDK calls <code>/v1/messages</code>. See the <a href="https://www.lingtrue.com/document">API docs</a> and the <a href="/tech/getting-started-with-api">3-minute quickstart</a>.
+</p>
+
+<h2 id="cost">What “cheaper access” means here</h2>
+<p>
+  Cheaper access means one LingTrue token, billed by usage, for both Claude and GPT, with fewer vendor dashboards to keep. It does not mean every model is below the vendor list price. Input and output rates change. Use only the numbers on <a href="https://www.lingtrue.com/pricing">https://www.lingtrue.com/pricing</a>. For the gateway-versus-model decision, read <a href="/tech/choose-ai-api-gateway">How to choose an AI API gateway</a>.
+</p>
+
+<h2 id="faq">FAQ</h2>
+
+<h3>Should the Cherry Studio Base URL include /v1?</h3>
+<p>
+  No. In the New API provider or a custom OpenAI-compatible provider, set the API host to <code>https://www.lingtrue.com</code>. Do not add <code>/v1</code> or <code>/chat/completions</code>. The client appends <code>/v1</code> or <code>/v1beta</code>. In the official OpenAI SDK, <code>base_url</code> is <code>https://www.lingtrue.com/v1</code>.
+</p>
+
+<h3>Can one LingTrue token call both Claude and GPT?</h3>
+<p>
+  Yes. LingTrue is an OpenAI-compatible LLM gateway. Chat requests share one Base URL and select the model with <code>model</code>, for example <code>gpt-4o-mini</code> or <code>claude-sonnet-4-5-20251022</code>. Claude can also use the native Anthropic <code>/v1/messages</code> route; that SDK <code>base_url</code> is <code>https://www.lingtrue.com</code>.
+</p>
+
+<h3>Is Claude API access cheaper this way?</h3>
+<p>
+  That depends on the model and the route. This page does not list unit prices. Compare the <a href="https://www.lingtrue.com/pricing">pricing page</a> with the vendor list price. Those figures change; the pricing page is the source of truth.
+</p>
+
+<h3>The model list failed to load. What now?</h3>
+<p>
+  Confirm the API key is the full console token (it starts with <code>sk-</code>) and the host is <code>https://www.lingtrue.com</code>. If the list is still empty, add model IDs manually. A failed check can also mean an empty balance or a wrong model name while the key itself is valid.
+</p>
+
+<h3>I already configured LingTrue in AionUI. Do I need a new key?</h3>
+<p>
+  No. The same LingTrue token works in Cherry Studio and AionUI. Both use the root host <code>https://www.lingtrue.com</code>. Only the settings screens differ. The AionUI clicks are in the <a href="/tech/configure-api-proxy-in-aionui">AionUI guide</a>.
+</p>
+
+<div class="tech-cta">
+  <p><strong>Next step</strong></p>
+  <p>
+    <a href="https://www.lingtrue.com/register">Create a LingTrue account</a>,
+    then paste the token into Cherry Studio.
+    Check <a href="https://www.lingtrue.com/pricing">model pricing</a>
+    and the <a href="https://www.lingtrue.com/document">API docs</a> before you send traffic.
+  </p>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "url": "https://www.lingtrue.com/tech/configure-lingtrue-in-cherry-studio?lang=en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Should the Cherry Studio Base URL include /v1?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. In the New API provider or a custom OpenAI-compatible provider, set the API host to https://www.lingtrue.com. Do not add /v1 or /chat/completions. The client appends /v1 or /v1beta. In the official OpenAI SDK, base_url is https://www.lingtrue.com/v1."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can one LingTrue token call both Claude and GPT?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. LingTrue is an OpenAI-compatible LLM gateway. Chat requests share one Base URL and select the model with the model field, for example gpt-4o-mini or claude-sonnet-4-5-20251022. Claude can also use the native Anthropic /v1/messages route; that SDK base_url is https://www.lingtrue.com."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Claude API access cheaper this way?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That depends on the model and the route. This page does not list unit prices. Compare the pricing page at https://www.lingtrue.com/pricing with the vendor list price. Those figures change; the pricing page is the source of truth."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "The model list failed to load. What now?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Confirm the API key is the full console token (it starts with sk-) and the host is https://www.lingtrue.com. If the list is still empty, add model IDs manually. A failed check can also mean an empty balance or a wrong model name while the key itself is valid."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I already configured LingTrue in AionUI. Do I need a new key?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The same LingTrue token works in Cherry Studio and AionUI. Both use the root host https://www.lingtrue.com. Only the settings screens differ."
+      }
+    }
+  ]
+}
+</script>

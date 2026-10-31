@@ -9,6 +9,8 @@ LingTrue 完全兼容 OpenAI、Anthropic、Google 等主流 SDK 格式，开发�
 - [模型定价](https://www.lingtrue.com/pricing): 所有支持的 AI 模型实时定价表，包含 GPT/Claude/Gemini 等 35+ 模型的输入输出 Token 价格
 - [接入文档](https://www.lingtrue.com/document): API 使用说明、SDK 指南（Python/Node/Java/Go/PHP）、OpenAI/Anthropic/Gemini 接口文档
 - [技术博客](https://www.lingtrue.com/tech): 中文为主的接入教程。英文版使用 ?lang=en
+- [在 Cherry Studio 配置 LingTrue](https://www.lingtrue.com/tech/configure-lingtrue-in-cherry-studio?lang=zh-CN): Cherry Studio 的 Base URL、令牌和 Claude/GPT 模型名
+- [AI API 中转怎么选](https://www.lingtrue.com/tech/choose-ai-api-gateway?lang=zh-CN): OpenAI 兼容网关、Claude API 与模型成本的选型说明
 - [在 AionUI 中配置 API 中转站](https://www.lingtrue.com/tech/configure-api-proxy-in-aionui?lang=zh-CN): AionUI 自定义 LLM 配置步骤
 - [3 分钟接入 AI API](https://www.lingtrue.com/tech/getting-started-with-api?lang=zh-CN): 替换 Base URL 与 API Key 的入门指南
 - [模型选择指南](https://www.lingtrue.com/tech/model-selection-guide?lang=zh-CN): GPT、Claude、Gemini 的场景与成本对比

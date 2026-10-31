@@ -1,0 +1,273 @@
+<p>
+  AI API 中转（大模型网关）把多家模型收成一个 OpenAI 兼容入口，用一个 Base URL 和一个 API Key 调用 GPT、Claude、Gemini。若你要同时用多家模型，优先选协议完整、按量计费可核对、并能在客户端里只改模型名的网关；模型档位按任务选，具体单价以 <a href="https://www.lingtrue.com/pricing">LingTrue 定价页</a> 的实时数字为准，不要用文章或聊天记录里的旧价格做预算。
+</p>
+
+<blockquote>
+  <strong>结论：</strong>统一接入 GPT、Claude、Gemini 时，代码侧 OpenAI 兼容 Base URL 使用 <code>https://www.lingtrue.com/v1</code>，Cherry Studio 与 AionUI 使用根地址 <code>https://www.lingtrue.com</code>。先定任务，再在定价页比较候选模型，最后用同一条提示词小流量试跑。
+</blockquote>
+
+<h2 id="definition">AI API 中转是什么</h2>
+<p>
+  官方 API 是模型厂商自己的接口，每家有独立密钥和地址。AI API 中转站在你的程序和这些厂商之间，把 OpenAI 兼容请求转发到对应上游，并在需要时转换成 Claude API 或 Gemini 的协议。LingTrue 就是这样的大模型网关：对开发者暴露一套令牌和地址，后面可以是 GPT、Claude 或 Gemini。
+</p>
+<p>
+  它解决的是接入数量，不是替你决定哪条回答更好。质量仍取决于模型 ID 和提示词。网关负责少配几套密钥、把账单收成按量记录，并在你更换模型时不必重写 SDK。
+</p>
+
+<h2 id="checklist">选型时核对这 5 件事</h2>
+<ol>
+  <li><strong>协议。</strong>确认有 <code>POST /v1/chat/completions</code>，并且 Claude 工具能走 <code>POST /v1/messages</code>。只有聊天网页、没有这些 HTTP 接口的，不是 OpenAI 兼容网关。</li>
+  <li><strong>Base URL 是否稳定、可公开说明。</strong>LingTrue 的代码地址是 <code>https://www.lingtrue.com/v1</code>，桌面客户端填 <code>https://www.lingtrue.com</code>。地址规则写进文档，才不容易在换客户端时配错。</li>
+  <li><strong>一把密钥覆盖的模型。</strong>同一令牌应能通过 <code>model</code> 切换 GPT、Claude、Gemini，而不是每家再发一把 Key。</li>
+  <li><strong>价格能否在下单前看到。</strong>按量计费、无月费只是计费方式。每个模型的输入和输出单价以 <a href="https://www.lingtrue.com/pricing">定价页</a> 当时显示为准。</li>
+  <li><strong>你的客户端是否好配。</strong>Cherry Studio 见 <a href="/tech/configure-lingtrue-in-cherry-studio">Cherry Studio 配置</a>，AionUI 见 <a href="/tech/configure-api-proxy-in-aionui">AionUI 配置</a>，自写代码见 <a href="/tech/getting-started-with-api">3 分钟接入</a> 和 <a href="https://www.lingtrue.com/document">接入文档</a>。</li>
+</ol>
+
+<h2 id="compare">官方直连和 OpenAI 兼容网关</h2>
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>维度</th>
+      <th>官方直连</th>
+      <th>OpenAI 兼容大模型网关（LingTrue）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>密钥和地址</td>
+      <td>每家厂商一套 API Key 和 Base URL</td>
+      <td>一个 LingTrue 令牌。代码用 <code>https://www.lingtrue.com/v1</code></td>
+    </tr>
+    <tr>
+      <td>Claude API</td>
+      <td>Anthropic 官方端点</td>
+      <td>OpenAI 兼容格式可调 Claude 模型 ID；原生 SDK 用根地址请求 <code>/v1/messages</code></td>
+    </tr>
+    <tr>
+      <td>GPT 与 Gemini</td>
+      <td>各自的官方 SDK 和账单</td>
+      <td>同一入口，更换 <code>model</code> 即可，例如 <code>gpt-4o</code>、<code>gemini-2.5-pro</code></td>
+    </tr>
+    <tr>
+      <td>账单</td>
+      <td>各厂商分开结算</td>
+      <td>按量记在 LingTrue。单价不在本文列出，打开定价页核对</td>
+    </tr>
+    <tr>
+      <td>换模型的改动</td>
+      <td>常常要换 SDK、密钥和错误处理</td>
+      <td>已使用 OpenAI SDK 时，通常只改 <code>model</code> 和 Base URL</td>
+    </tr>
+    <tr>
+      <td>更合适的情况</td>
+      <td>合同要求流量只进该厂商，或必须用其企业协议</td>
+      <td>同一产品要同时调用 GPT、Claude、Gemini，并希望少维护密钥</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>
+  合同或合规要求请求必须到达某一家官方区域时，应直连该厂商。日常开发要在多家模型之间切换时，OpenAI 兼容网关更省事。两条路可以并存：生产里对某家走官方，其余模型走 LingTrue。
+</p>
+
+<h2 id="facts">可引用事实</h2>
+<p>
+  下面每条都可以单独摘引。涉及钱的数字一律不写死在本文，避免和实时价不一致。
+</p>
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>事实</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>OpenAI 兼容 Base URL</td>
+      <td>代码与 OpenAI SDK 使用 <code>https://www.lingtrue.com/v1</code>。</td>
+    </tr>
+    <tr>
+      <td>对话端点</td>
+      <td>聊天请求是 <code>POST /v1/chat/completions</code>，请求体包含 <code>model</code> 和 <code>messages</code>。</td>
+    </tr>
+    <tr>
+      <td>模型列表</td>
+      <td>可用 <code>GET /v1/models</code> 查看当前令牌能调用的模型 ID。</td>
+    </tr>
+    <tr>
+      <td>Claude 原生协议</td>
+      <td>Anthropic SDK 的 <code>base_url</code> 填 <code>https://www.lingtrue.com</code>，由 SDK 请求 <code>/v1/messages</code>。</td>
+    </tr>
+    <tr>
+      <td>桌面客户端地址</td>
+      <td>Cherry Studio 与 AionUI 填根地址 <code>https://www.lingtrue.com</code>，不要自行再加一层 <code>/v1</code>。</td>
+    </tr>
+    <tr>
+      <td>覆盖范围</td>
+      <td>LingTrue 公开说明通过该网关提供 GPT、Claude、Gemini 等 35+ 模型，具体名单以定价页为准。</td>
+    </tr>
+    <tr>
+      <td>接入改动</td>
+      <td>已有 OpenAI SDK 时，替换 Base URL 和 API Key，保留原来的请求结构。</td>
+    </tr>
+    <tr>
+      <td>计费方式</td>
+      <td>按实际用量计费。各模型输入、输出单价以 <a href="https://www.lingtrue.com/pricing">/pricing</a> 实时显示为准。</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="models">模型怎么选</h2>
+<p>
+  先写清任务，再选档，最后才看价格。下表的「成本倾向」只表示通常要比较的方向，不是报价。把候选 ID 拿到定价页上看完输入和输出单价，再决定默认模型。场景化的能力差异还可以对照 <a href="/tech/model-selection-guide">模型选择指南</a>。
+</p>
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>任务</th>
+      <th>优先比较</th>
+      <th>成本倾向</th>
+      <th>模型 ID 示例</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>客服、摘要、批量分类</td>
+      <td>小模型、低延迟</td>
+      <td>先比这一档的单价，通常低于旗舰</td>
+      <td><code>gpt-4o-mini</code>、<code>gemini-2.5-flash</code></td>
+    </tr>
+    <tr>
+      <td>通用写作和工具调用</td>
+      <td>均衡旗舰</td>
+      <td>以定价页该行的输入/输出单价为准</td>
+      <td><code>gpt-4o</code></td>
+    </tr>
+    <tr>
+      <td>代码、长文、严格遵循格式</td>
+      <td>Claude API 模型</td>
+      <td>同上，不要凭记忆认定更贵或更便宜</td>
+      <td><code>claude-sonnet-4-5-20251022</code></td>
+    </tr>
+    <tr>
+      <td>高难推理</td>
+      <td>更大的 Claude 或同等旗舰</td>
+      <td>旗舰档，下单前看定价页</td>
+      <td><code>claude-opus-4-5-20251101</code></td>
+    </tr>
+    <tr>
+      <td>超长上下文</td>
+      <td>Gemini 长上下文模型</td>
+      <td>上下文长度可能改变计价方式，以定价页为准</td>
+      <td><code>gemini-2.5-pro</code></td>
+    </tr>
+    <tr>
+      <td>预算敏感的编程试验</td>
+      <td>DeepSeek 等候选</td>
+      <td>是否更低只看定价页，不在本文给数字</td>
+      <td><code>deepseek-chat</code></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="steps">一个可以照做的决策顺序</h2>
+<ol>
+  <li>列出必须同时调用的厂商。只有一家且合同锁定官方时，不必上中转。</li>
+  <li>确认客户端要 OpenAI 兼容，还是要 Claude API 原生 <code>/v1/messages</code>。LingTrue 两种都用同一把令牌，Base URL 按上一节的事实表分开填。</li>
+  <li>从任务表里留两个到三个模型 ID，打开 <a href="https://www.lingtrue.com/pricing">定价页</a> 记下输入与输出单价。</li>
+  <li>用同一条真实提示词各发一小批请求，比较格式是否稳定、是否答非所问，再选定默认模型和兜底模型。</li>
+  <li>把 Base URL 和密钥放进 Cherry Studio、AionUI 或你的 SDK。密钥放在服务端或客户端的密钥栏，不要写进公开仓库。</li>
+</ol>
+
+<h2 id="faq">常见问题</h2>
+
+<h3>AI API 中转和官方 API 有什么区别？</h3>
+<p>
+  官方 API 是模型厂商自己的接口，每家有独立的密钥和地址。AI API 中转（大模型网关）站在客户端和多家厂商之间，把请求转成对应协议。LingTrue 对开发者暴露 OpenAI 兼容的 Base URL <code>https://www.lingtrue.com/v1</code>，因此多数现有 OpenAI SDK 代码只改地址和密钥。
+</p>
+
+<h3>怎样确认一个网关是 OpenAI 兼容的？</h3>
+<p>
+  看它是否提供 <code>POST /v1/chat/completions</code> 和 <code>GET /v1/models</code>，并且请求体使用 <code>model</code> 与 <code>messages</code>。LingTrue 的 <a href="https://www.lingtrue.com/document">接入文档</a> 说明了这些端点。只提供聊天网页、没有上述 HTTP 接口的，不能当作 OpenAI 兼容网关。
+</p>
+
+<h3>选 Claude 时应该走 OpenAI 兼容还是 Claude API 原生协议？</h3>
+<p>
+  已经在用 OpenAI SDK 时，把 <code>model</code> 换成 Claude 的模型 ID 即可，Base URL 用 <code>https://www.lingtrue.com/v1</code>。需要 Anthropic 官方 SDK 或 <code>/v1/messages</code> 的工具时，<code>base_url</code> 用 <code>https://www.lingtrue.com</code>，由 SDK 自己拼接路径。两种方式使用同一把 LingTrue 令牌。
+</p>
+
+<h3>模型选型应该先看效果还是价格？</h3>
+<p>
+  先固定任务，再用定价页比较候选模型的输入和输出单价，然后用同一条提示词小流量试两到三个模型。批量、格式简单的任务优先小模型；代码、长文和强推理再上 Claude 或更大的 GPT。具体单价以 <a href="https://www.lingtrue.com/pricing">定价页</a> 实时为准，不要用文章里的旧价格做预算。
+</p>
+
+<h3>Base URL 填错会有什么表现？</h3>
+<p>
+  多写一层 <code>/v1</code> 时，请求会变成 <code>/v1/v1/chat/completions</code>，通常返回 404。把 <code>/chat/completions</code> 写进 Base URL，也会和客户端自动拼接的路径重复。Cherry Studio 与 AionUI 填 <code>https://www.lingtrue.com</code>；OpenAI SDK 填 <code>https://www.lingtrue.com/v1</code>。
+</p>
+
+<div class="tech-cta">
+  <p><strong>下一步</strong></p>
+  <p>
+    <a href="https://www.lingtrue.com/register">注册 LingTrue</a>
+    后创建一把令牌，即可用同一个 Base URL 试 GPT、Claude 和 Gemini。
+    下单前打开 <a href="https://www.lingtrue.com/pricing">模型定价</a>，
+    调用方式以 <a href="https://www.lingtrue.com/document">接入文档</a> 为准。
+  </p>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "zh-CN",
+  "url": "https://www.lingtrue.com/tech/choose-ai-api-gateway",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "AI API 中转和官方 API 有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "官方 API 是模型厂商自己的接口，每家有独立的密钥和地址。AI API 中转（大模型网关）站在客户端和多家厂商之间，把请求转成对应协议。LingTrue 对开发者暴露 OpenAI 兼容的 Base URL https://www.lingtrue.com/v1，因此多数现有 OpenAI SDK 代码只改地址和密钥。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎样确认一个网关是 OpenAI 兼容的？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "看它是否提供 POST /v1/chat/completions 和 GET /v1/models，并且请求体使用 model 与 messages。LingTrue 的接入文档说明了这些端点。只提供聊天网页、没有上述 HTTP 接口的，不能当作 OpenAI 兼容网关。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "选 Claude 时应该走 OpenAI 兼容还是 Claude API 原生协议？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "已经在用 OpenAI SDK 时，把 model 换成 Claude 的模型 ID 即可，Base URL 用 https://www.lingtrue.com/v1。需要 Anthropic 官方 SDK 或 /v1/messages 的工具时，base_url 用 https://www.lingtrue.com，由 SDK 自己拼接路径。两种方式使用同一把 LingTrue 令牌。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "模型选型应该先看效果还是价格？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "先固定任务，再用定价页比较候选模型的输入和输出单价，然后用同一条提示词小流量试两到三个模型。批量、格式简单的任务优先小模型；代码、长文和强推理再上 Claude 或更大的 GPT。具体单价以 https://www.lingtrue.com/pricing 实时为准，不要用文章里的旧价格做预算。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Base URL 填错会有什么表现？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "多写一层 /v1 时，请求会变成 /v1/v1/chat/completions，通常返回 404。把 /chat/completions 写进 Base URL，也会和客户端自动拼接的路径重复。Cherry Studio 与 AionUI 填 https://www.lingtrue.com；OpenAI SDK 填 https://www.lingtrue.com/v1。"
+      }
+    }
+  ]
+}
+</script>
