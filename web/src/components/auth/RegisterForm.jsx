@@ -64,6 +64,7 @@ import { UserContext } from '../../context/User';
 import { StatusContext } from '../../context/Status';
 import { useTranslation } from 'react-i18next';
 import { SiDiscord } from 'react-icons/si';
+import SEOHead from '../common/SEOHead';
 
 const RegisterForm = () => {
   let navigate = useNavigate();
@@ -843,6 +844,13 @@ const RegisterForm = () => {
   };
 
   return (
+    <>
+    <SEOHead
+      title="注册 LingTrue - 获取 AI API 额度"
+      description="注册 LingTrue 账户并创建 API Key，按量调用 GPT、Claude、Gemini 等模型。兼容主流 SDK，大约 3 分钟完成接入。"
+      keywords="LingTrue注册,AI API注册,API Key,免费额度"
+      canonicalPath="/register"
+    />
     <div className='relative overflow-hidden bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
       {/* 背景模糊晕染球 */}
       <div
@@ -872,6 +880,7 @@ const RegisterForm = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

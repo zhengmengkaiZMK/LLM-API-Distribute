@@ -223,9 +223,9 @@ const Home = () => {
   return (
     <>
     <SEOHead
-      title="AI API Gateway - Unified AI API Access for GPT, Claude, Gemini | LingTrue"
-      description="LingTrue AI API gateway unifies 35+ AI APIs into one endpoint. Access GPT, Claude, Gemini AI API at up to 47% lower cost. One AI API key, pay-per-token, integrate in 3 minutes."
-      keywords="AI API,AI API gateway,unified AI API,AI API access,GPT API,Claude API,Gemini API,AI API proxy,cheap AI API,OpenAI API alternative,multi-model AI API,LingTrue API"
+      title="AI 大模型 API 中转站 - 统一接入 GPT、Claude、Gemini"
+      description="LingTrue 是面向中文开发者的 AI API 网关，一个接口接入 GPT、Claude、Gemini 等 35+ 模型。按量计费、智能路由，调用成本最高可省约 47%，大约 3 分钟即可接入。"
+      keywords="AI API,大模型API,API中转站,API网关,GPT API,Claude API,Gemini API,LingTrue"
       canonicalPath="/"
     />
     <div className='w-full overflow-x-hidden'>

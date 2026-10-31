@@ -1,4 +1,10 @@
 # https://www.robotstxt.org/robotstxt.html
+# LingTrue 允许主流搜索引擎与 AI 检索爬虫抓取公开页面。
+# 若域名接入 Cloudflare，Bot Fight Mode、AI Crawl Control 或 Managed robots.txt
+# 可能在边缘覆盖本文件。需要在 Cloudflare 面板把 GPTBot、ClaudeBot、
+# Google-Extended、PerplexityBot、ChatGPT-User、Anthropic-AI 等设为 Allow。
+# 本文件不对这些爬虫写 Disallow: /，避免和「允许抓取」的意图冲突。
+
 User-agent: *
 Allow: /
 Disallow: /console/
@@ -51,3 +57,4 @@ Disallow: /setup
 Disallow: /oauth/
 
 Sitemap: https://www.lingtrue.com/sitemap.xml
+Sitemap: https://www.lingtrue.com/sitemap-tech.xml

@@ -13,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
+func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte, aiTxt []byte) {
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.Use(middleware.GlobalWebRateLimit())
 	router.Use(middleware.Cache())
@@ -23,6 +23,9 @@ func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 	router.GET("/tech/:slug", controller.ServeTechArticle)
 	router.GET("/tech-assets/*filepath", controller.ServeTechAsset)
 	router.GET("/sitemap-tech.xml", controller.ServeTechSitemap)
+	// Registered before static.Serve and NoRoute. Must not depend on the
+	// embedded dist copy of .well-known, which Go embed omits.
+	router.GET("/.well-known/ai.txt", controller.ServeAITxt(aiTxt))
 
 	router.Use(static.Serve("/", common.EmbedFolder(buildFS, "web/dist")))
 	router.NoRoute(func(c *gin.Context) {
@@ -32,6 +35,7 @@ func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 			return
 		}
 		c.Header("Cache-Control", "no-cache")
-		c.Data(http.StatusOK, "text/html; charset=utf-8", indexPage)
+		page := ApplyPublicSEOShell(indexPage, c.Request.URL.Path)
+		c.Data(http.StatusOK, "text/html; charset=utf-8", page)
 	})
 }

@@ -268,12 +268,12 @@ const Document = () => {
   return (
     <>
     <SEOHead
-      title="AI API Documentation - Integration Guide for GPT, Claude, Gemini API | LingTrue"
-      description="Complete AI API documentation and integration guide. Connect to GPT API, Claude API, Gemini API using Python, Node.js, Java, Go SDKs. LingTrue AI API gateway quick start in 3 minutes."
-      keywords="AI API documentation,AI API integration guide,GPT API docs,Claude API guide,Gemini API tutorial,AI API SDK,LingTrue API docs"
+      title="AI API 接入文档 - GPT、Claude、Gemini 接口说明"
+      description="LingTrue 接入文档，兼容 OpenAI、Anthropic、Google SDK。提供 Python、Node.js、Java、Go 示例，替换 Base URL 即可开始调用。"
+      keywords="AI API文档,API接入,GPT API文档,Claude API教程,Gemini API,LingTrue"
       canonicalPath="/document"
     />
-    <h1 className="sr-only">AI API Documentation - Integration Guide for GPT, Claude, Gemini</h1>
+    <h1 className="sr-only">AI API 接入文档 - GPT、Claude、Gemini 接口说明</h1>
     <div className="flex min-h-screen bg-semi-color-bg-0 mt-[60px]">
       {/* 移动端侧边栏切换按钮 */}
       {isMobile && (
