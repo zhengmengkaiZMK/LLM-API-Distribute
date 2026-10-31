@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"embed"
 	"html/template"
+	"io/fs"
 	"net/http"
 	"strings"
 
@@ -103,20 +103,20 @@ type TechNotFoundPageData struct {
 }
 
 var (
-	techFS     embed.FS
+	techFS     fs.FS
 	techConfig *TechConfig
 	techTmpl   *template.Template
 )
 
-// InitTechPages initializes the tech blog with the embedded filesystem
-func InitTechPages(fs embed.FS) {
-	techFS = fs
+// InitTechPages initializes the tech blog with the embedded filesystem.
+func InitTechPages(fsys fs.FS) {
+	techFS = fsys
 	loadTechConfig()
 	loadTechTemplates()
 }
 
 func loadTechConfig() {
-	data, err := techFS.ReadFile("tech-pages/config.json")
+	data, err := fs.ReadFile(techFS, "tech-pages/config.json")
 	if err != nil {
 		common.SysLog("failed to read tech config: " + err.Error())
 		techConfig = &TechConfig{DefaultLang: "en"}
@@ -349,10 +349,10 @@ func ServeTechArticle(c *gin.Context) {
 	}
 
 	// Try to read localized article content, fallback to default
-	contentBytes, err := techFS.ReadFile("tech-pages/articles/" + slug + "." + lang + ".html")
+	contentBytes, err := fs.ReadFile(techFS, "tech-pages/articles/"+slug+"."+lang+".html")
 	if err != nil {
 		// Fallback to default (no lang suffix = English)
-		contentBytes, err = techFS.ReadFile("tech-pages/articles/" + slug + ".html")
+		contentBytes, err = fs.ReadFile(techFS, "tech-pages/articles/"+slug+".html")
 		if err != nil {
 			c.Header("Content-Type", "text/html; charset=utf-8")
 			c.Status(http.StatusNotFound)
@@ -396,7 +396,7 @@ func ServeTechArticle(c *gin.Context) {
 // ServeTechAsset handles GET /tech-assets/*filepath
 func ServeTechAsset(c *gin.Context) {
 	filepath := c.Param("filepath")
-	data, err := techFS.ReadFile("tech-pages/assets" + filepath)
+	data, err := fs.ReadFile(techFS, "tech-pages/assets"+filepath)
 	if err != nil {
 		c.Status(http.StatusNotFound)
 		return

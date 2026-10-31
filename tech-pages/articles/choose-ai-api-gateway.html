@@ -1,0 +1,273 @@
+<p>
+  An AI API gateway collects several model vendors behind one OpenAI-compatible entrance, so one Base URL and one API key can call GPT, Claude, and Gemini. If you need more than one vendor, prefer a gateway with complete protocols, usage-based prices you can check before you spend, and a client setup that switches models by name. Pick the model tier for the task. Live unit prices are only the numbers on the <a href="https://www.lingtrue.com/pricing">LingTrue pricing page</a>, not figures remembered from an article or a chat.
+</p>
+
+<blockquote>
+  <strong>Decision:</strong> for one integration across GPT, Claude, and Gemini, code uses the OpenAI-compatible Base URL <code>https://www.lingtrue.com/v1</code>. Cherry Studio and AionUI use the root host <code>https://www.lingtrue.com</code>. Define the task, compare candidates on the pricing page, then send the same prompt in a small batch.
+</blockquote>
+
+<h2 id="definition">What an AI API gateway is</h2>
+<p>
+  A vendor API is that vendor’s own interface, with its own key and host. An AI API relay sits between your program and those vendors, forwards an OpenAI-compatible request, and converts it to the Claude API or Gemini protocol when needed. LingTrue is that kind of LLM gateway: one token and one host in front of GPT, Claude, or Gemini.
+</p>
+<p>
+  The gateway reduces the number of integrations. It does not decide which answer is better. Quality still depends on the model ID and the prompt. The gateway keeps fewer keys, records usage in one place, and lets an existing SDK change models without a rewrite.
+</p>
+
+<h2 id="checklist">Five checks before you pick a gateway</h2>
+<ol>
+  <li><strong>Protocol.</strong> Confirm <code>POST /v1/chat/completions</code>, and <code>POST /v1/messages</code> if a tool speaks the Claude API. A chat website with neither HTTP API is not an OpenAI-compatible gateway.</li>
+  <li><strong>A Base URL you can document.</strong> LingTrue’s code host is <code>https://www.lingtrue.com/v1</code>. Desktop clients use <code>https://www.lingtrue.com</code>. Written rules prevent a broken path when you change clients.</li>
+  <li><strong>One key, many models.</strong> The same token should switch GPT, Claude, and Gemini with the <code>model</code> field.</li>
+  <li><strong>Prices visible before you call.</strong> Usage billing with no monthly fee describes the meter, not the rate. Each model’s input and output price is whatever the <a href="https://www.lingtrue.com/pricing">pricing page</a> shows at that moment.</li>
+  <li><strong>A client you can actually configure.</strong> Cherry Studio: <a href="/tech/configure-lingtrue-in-cherry-studio">Cherry Studio setup</a>. AionUI: <a href="/tech/configure-api-proxy-in-aionui">AionUI setup</a>. Your own code: the <a href="/tech/getting-started-with-api">3-minute quickstart</a> and the <a href="https://www.lingtrue.com/document">API docs</a>.</li>
+</ol>
+
+<h2 id="compare">Vendor APIs and an OpenAI-compatible gateway</h2>
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>Dimension</th>
+      <th>Direct vendor API</th>
+      <th>OpenAI-compatible gateway (LingTrue)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Keys and hosts</td>
+      <td>One API key and Base URL per vendor</td>
+      <td>One LingTrue token. Code uses <code>https://www.lingtrue.com/v1</code></td>
+    </tr>
+    <tr>
+      <td>Claude API</td>
+      <td>Anthropic’s own endpoint</td>
+      <td>OpenAI-compatible calls can use a Claude model ID. The native SDK uses the root host and <code>/v1/messages</code></td>
+    </tr>
+    <tr>
+      <td>GPT and Gemini</td>
+      <td>Separate SDKs and invoices</td>
+      <td>Same entrance. Change <code>model</code>, for example <code>gpt-4o</code> or <code>gemini-2.5-pro</code></td>
+    </tr>
+    <tr>
+      <td>Billing</td>
+      <td>A bill from each vendor</td>
+      <td>Usage on LingTrue. This article does not list unit prices; check the pricing page</td>
+    </tr>
+    <tr>
+      <td>Changing models</td>
+      <td>Often a new SDK, key, and error path</td>
+      <td>With the OpenAI SDK, usually the <code>model</code> and the Base URL</td>
+    </tr>
+    <tr>
+      <td>Better fit</td>
+      <td>A contract that requires that vendor’s region or enterprise terms</td>
+      <td>One product calling GPT, Claude, and Gemini with fewer keys to manage</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p>
+  If a contract says traffic must land in one vendor’s official region, call that vendor directly. For day-to-day switching, an OpenAI-compatible gateway is the smaller setup. Both can coexist: one vendor on its official API, the rest through LingTrue.
+</p>
+
+<h2 id="facts">Facts you can quote</h2>
+<p>
+  Each row stands on its own. Money figures are intentionally absent so this page cannot drift from live rates.
+</p>
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>Fact</th>
+      <th>Statement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>OpenAI-compatible Base URL</td>
+      <td>Code and the OpenAI SDK use <code>https://www.lingtrue.com/v1</code>.</td>
+    </tr>
+    <tr>
+      <td>Chat endpoint</td>
+      <td>Chat is <code>POST /v1/chat/completions</code> with <code>model</code> and <code>messages</code>.</td>
+    </tr>
+    <tr>
+      <td>Model list</td>
+      <td><code>GET /v1/models</code> returns the model IDs the current token can call.</td>
+    </tr>
+    <tr>
+      <td>Native Claude protocol</td>
+      <td>The Anthropic SDK <code>base_url</code> is <code>https://www.lingtrue.com</code>. The SDK requests <code>/v1/messages</code>.</td>
+    </tr>
+    <tr>
+      <td>Desktop client host</td>
+      <td>Cherry Studio and AionUI use the root <code>https://www.lingtrue.com</code>. Do not add another <code>/v1</code>.</td>
+    </tr>
+    <tr>
+      <td>Coverage</td>
+      <td>LingTrue states that this gateway offers GPT, Claude, Gemini, and 35+ models. The live list is the pricing page.</td>
+    </tr>
+    <tr>
+      <td>Integration change</td>
+      <td>An existing OpenAI SDK keeps its request shape and replaces the Base URL and API key.</td>
+    </tr>
+    <tr>
+      <td>Billing</td>
+      <td>You pay for usage. Input and output prices are the live figures on <a href="https://www.lingtrue.com/pricing">/pricing</a>.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="models">How to choose a model</h2>
+<p>
+  Write the task, pick a tier, then look at price. The cost column is a comparison direction, not a quote. Read input and output prices for the candidate IDs on the pricing page before you choose a default. For capability notes, also see the <a href="/tech/model-selection-guide">model selection guide</a>.
+</p>
+<div class="table-scroll">
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Compare first</th>
+      <th>Cost direction</th>
+      <th>Example model ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Support, summaries, bulk labels</td>
+      <td>Small, low-latency models</td>
+      <td>Compare this tier first; it is often below flagship rates</td>
+      <td><code>gpt-4o-mini</code>, <code>gemini-2.5-flash</code></td>
+    </tr>
+    <tr>
+      <td>General writing and tool calls</td>
+      <td>A balanced flagship</td>
+      <td>Use that row’s input and output prices</td>
+      <td><code>gpt-4o</code></td>
+    </tr>
+    <tr>
+      <td>Code, long writing, strict formats</td>
+      <td>A Claude API model</td>
+      <td>Do not assume it is higher or lower from memory</td>
+      <td><code>claude-sonnet-4-5-20251022</code></td>
+    </tr>
+    <tr>
+      <td>Hard reasoning</td>
+      <td>A larger Claude or peer flagship</td>
+      <td>Flagship tier; read the pricing page first</td>
+      <td><code>claude-opus-4-5-20251101</code></td>
+    </tr>
+    <tr>
+      <td>Very long context</td>
+      <td>A long-context Gemini model</td>
+      <td>Context length can change the meter; check pricing</td>
+      <td><code>gemini-2.5-pro</code></td>
+    </tr>
+    <tr>
+      <td>Budget-sensitive coding trials</td>
+      <td>DeepSeek and similar candidates</td>
+      <td>Whether it is lower is only what the pricing page says</td>
+      <td><code>deepseek-chat</code></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="steps">A decision sequence</h2>
+<ol>
+  <li>List the vendors you must call. If there is one vendor and the contract locks you to its official API, skip the gateway.</li>
+  <li>Decide whether the client needs OpenAI compatibility or the native Claude API <code>/v1/messages</code> path. LingTrue uses one token for both. Split the Base URL as in the fact table.</li>
+  <li>Keep two or three model IDs from the task table and write down their input and output prices from the <a href="https://www.lingtrue.com/pricing">pricing page</a>.</li>
+  <li>Send one real prompt in a small batch to each. Keep the model that follows the format, and keep a fallback.</li>
+  <li>Put the Base URL and key in Cherry Studio, AionUI, or your SDK. Store the key in a server or the client’s key field, not in a public repository.</li>
+</ol>
+
+<h2 id="faq">FAQ</h2>
+
+<h3>How is an AI API gateway different from a vendor API?</h3>
+<p>
+  A vendor API is that vendor’s own interface, with its own key and host. An AI API gateway sits between the client and several vendors and translates the request. LingTrue exposes the OpenAI-compatible Base URL <code>https://www.lingtrue.com/v1</code>, so most existing OpenAI SDK code changes the host and the key.
+</p>
+
+<h3>How do I tell that a gateway is OpenAI compatible?</h3>
+<p>
+  It should offer <code>POST /v1/chat/completions</code> and <code>GET /v1/models</code>, with <code>model</code> and <code>messages</code> in the body. LingTrue’s <a href="https://www.lingtrue.com/document">API docs</a> describe those endpoints. A chat website without those HTTP APIs is not an OpenAI-compatible gateway.
+</p>
+
+<h3>For Claude, should I use the OpenAI-compatible API or the native Claude API?</h3>
+<p>
+  If you already use the OpenAI SDK, change <code>model</code> to a Claude model ID and set the Base URL to <code>https://www.lingtrue.com/v1</code>. If you need the official Anthropic SDK or <code>/v1/messages</code>, set <code>base_url</code> to <code>https://www.lingtrue.com</code> and let the SDK append the path. Both use the same LingTrue token.
+</p>
+
+<h3>Should I choose a model for quality or for price first?</h3>
+<p>
+  Fix the task, compare input and output prices on the pricing page, then run the same prompt through two or three models at low volume. Simple bulk work starts with a small model. Code, long writing, and hard reasoning move up to Claude or a larger GPT. Unit prices are live on the <a href="https://www.lingtrue.com/pricing">pricing page</a>. Do not budget from an old article.
+</p>
+
+<h3>What happens if the Base URL is wrong?</h3>
+<p>
+  An extra <code>/v1</code> becomes <code>/v1/v1/chat/completions</code> and usually returns 404. Putting <code>/chat/completions</code> in the Base URL also duplicates the path the client appends. Cherry Studio and AionUI use <code>https://www.lingtrue.com</code>. The OpenAI SDK uses <code>https://www.lingtrue.com/v1</code>.
+</p>
+
+<div class="tech-cta">
+  <p><strong>Next step</strong></p>
+  <p>
+    <a href="https://www.lingtrue.com/register">Create a LingTrue account</a>
+    and one token, then try GPT, Claude, and Gemini on the same Base URL.
+    Read <a href="https://www.lingtrue.com/pricing">model pricing</a> before you spend,
+    and follow the <a href="https://www.lingtrue.com/document">API docs</a> for the call shape.
+  </p>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "url": "https://www.lingtrue.com/tech/choose-ai-api-gateway?lang=en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How is an AI API gateway different from a vendor API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A vendor API is that vendor’s own interface, with its own key and host. An AI API gateway sits between the client and several vendors and translates the request. LingTrue exposes the OpenAI-compatible Base URL https://www.lingtrue.com/v1, so most existing OpenAI SDK code changes the host and the key."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I tell that a gateway is OpenAI compatible?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It should offer POST /v1/chat/completions and GET /v1/models, with model and messages in the body. LingTrue’s API docs describe those endpoints. A chat website without those HTTP APIs is not an OpenAI-compatible gateway."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "For Claude, should I use the OpenAI-compatible API or the native Claude API?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you already use the OpenAI SDK, change model to a Claude model ID and set the Base URL to https://www.lingtrue.com/v1. If you need the official Anthropic SDK or /v1/messages, set base_url to https://www.lingtrue.com and let the SDK append the path. Both use the same LingTrue token."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I choose a model for quality or for price first?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fix the task, compare input and output prices on the pricing page, then run the same prompt through two or three models at low volume. Simple bulk work starts with a small model. Code, long writing, and hard reasoning move up to Claude or a larger GPT. Unit prices are live on https://www.lingtrue.com/pricing. Do not budget from an old article."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if the Base URL is wrong?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An extra /v1 becomes /v1/v1/chat/completions and usually returns 404. Putting /chat/completions in the Base URL also duplicates the path the client appends. Cherry Studio and AionUI use https://www.lingtrue.com. The OpenAI SDK uses https://www.lingtrue.com/v1."
+      }
+    }
+  ]
+}
+</script>
