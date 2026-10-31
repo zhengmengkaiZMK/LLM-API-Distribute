@@ -40,6 +40,14 @@ var buildFS embed.FS
 //go:embed web/dist/index.html
 var indexPage []byte
 
+// ai.txt sits in a dot-directory. //go:embed of web/dist skips names that
+// start with ".", so the Vite copy at web/dist/.well-known/ai.txt never
+// enters the binary. Embed the public source explicitly and serve it from
+// a route registered before the SPA fallback.
+//
+//go:embed web/public/.well-known/ai.txt
+var aiTxt []byte
+
 //go:embed tech-pages
 var techPagesFS embed.FS
 
@@ -189,7 +197,7 @@ func main() {
 	controller.InitTechPages(techPagesFS)
 
 	// 设置路由
-	router.SetRouter(server, buildFS, indexPage)
+	router.SetRouter(server, buildFS, indexPage, aiTxt)
 	var port = os.Getenv("PORT")
 	if port == "" {
 		port = strconv.Itoa(*common.Port)

@@ -20,17 +20,26 @@ For commercial licensing, please contact support@quantumnous.com
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import DocumentRenderer from '../../components/common/DocumentRenderer';
+import SEOHead from '../../components/common/SEOHead';
 
 const UserAgreement = () => {
   const { t } = useTranslation();
 
   return (
-    <DocumentRenderer
-      apiEndpoint='/api/user-agreement'
-      title={t('用户协议')}
-      cacheKey='user_agreement'
-      emptyMessage={t('加载用户协议内容失败...')}
-    />
+    <>
+      <SEOHead
+        title="用户协议"
+        description="LingTrue 用户协议说明注册与使用本 AI API 网关服务时的权利与义务。"
+        keywords="LingTrue,用户协议,服务条款"
+        canonicalPath="/user-agreement"
+      />
+      <DocumentRenderer
+        apiEndpoint='/api/user-agreement'
+        title={t('用户协议')}
+        cacheKey='user_agreement'
+        emptyMessage={t('加载用户协议内容失败...')}
+      />
+    </>
   );
 };
 

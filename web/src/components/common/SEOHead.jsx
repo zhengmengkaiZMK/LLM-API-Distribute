@@ -23,6 +23,7 @@ const SEOHead = ({
 
   return (
     <Helmet>
+      <html lang="zh-CN" />
       <title>{fullTitle}</title>
       {description && <meta name="description" content={description} />}
       {keywords && <meta name="keywords" content={keywords} />}
@@ -30,6 +31,7 @@ const SEOHead = ({
 
       {/* Open Graph */}
       <meta property="og:type" content={ogType} />
+      <meta property="og:locale" content="zh_CN" />
       <meta property="og:title" content={fullTitle} />
       {description && <meta property="og:description" content={description} />}
       <meta property="og:url" content={canonicalUrl} />

@@ -20,17 +20,26 @@ For commercial licensing, please contact support@quantumnous.com
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import DocumentRenderer from '../../components/common/DocumentRenderer';
+import SEOHead from '../../components/common/SEOHead';
 
 const PrivacyPolicy = () => {
   const { t } = useTranslation();
 
   return (
-    <DocumentRenderer
-      apiEndpoint='/api/privacy-policy'
-      title={t('隐私政策')}
-      cacheKey='privacy_policy'
-      emptyMessage={t('加载隐私政策内容失败...')}
-    />
+    <>
+      <SEOHead
+        title="隐私政策"
+        description="LingTrue 隐私政策说明我们如何收集、使用与保护账户信息、调用日志和支付相关数据。"
+        keywords="LingTrue,隐私政策,个人信息保护"
+        canonicalPath="/privacy-policy"
+      />
+      <DocumentRenderer
+        apiEndpoint='/api/privacy-policy'
+        title={t('隐私政策')}
+        cacheKey='privacy_policy'
+        emptyMessage={t('加载隐私政策内容失败...')}
+      />
+    </>
   );
 };
 

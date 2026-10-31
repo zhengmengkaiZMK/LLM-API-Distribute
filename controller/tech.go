@@ -12,12 +12,12 @@ import (
 
 // TechConfig represents the tech blog configuration with i18n support
 type TechConfig struct {
-	Site           TechSite                     `json:"site"`
-	SupportedLangs []string                    `json:"supportedLangs"`
-	DefaultLang    string                      `json:"defaultLang"`
-	List           map[string]TechListLocale   `json:"list"`
-	UI             map[string]TechUIStrings    `json:"ui"`
-	Articles       []TechArticleConfig         `json:"articles"`
+	Site           TechSite                  `json:"site"`
+	SupportedLangs []string                  `json:"supportedLangs"`
+	DefaultLang    string                    `json:"defaultLang"`
+	List           map[string]TechListLocale `json:"list"`
+	UI             map[string]TechUIStrings  `json:"ui"`
+	Articles       []TechArticleConfig       `json:"articles"`
 }
 
 type TechSite struct {
@@ -197,9 +197,12 @@ func loadTechTemplates() {
 	}
 }
 
-// detectTechLang detects user language from Accept-Language header or query param
+// detectTechLang resolves the tech blog language.
+// /tech and /tech/:slug without ?lang= always use defaultLang (zh-CN) so the
+// canonical URL is a stable Chinese page. English and other locales stay on
+// the explicit ?lang= URLs listed in the sitemap. Accept-Language is not
+// used here: it made the same URL return different languages to crawlers.
 func detectTechLang(c *gin.Context) string {
-	// 1. Check ?lang= query parameter
 	if lang := c.Query("lang"); lang != "" {
 		for _, supported := range techConfig.SupportedLangs {
 			if lang == supported {
@@ -207,32 +210,10 @@ func detectTechLang(c *gin.Context) string {
 			}
 		}
 	}
-
-	// 2. Check Accept-Language header
-	acceptLang := c.GetHeader("Accept-Language")
-	if acceptLang != "" {
-		// Parse first language tag
-		parts := strings.Split(acceptLang, ",")
-		for _, part := range parts {
-			lang := strings.TrimSpace(strings.Split(part, ";")[0])
-			// Normalize
-			langLower := strings.ToLower(lang)
-			if strings.HasPrefix(langLower, "zh") {
-				return "zh-CN"
-			}
-			if strings.HasPrefix(langLower, "en") {
-				return "en"
-			}
-			// Check exact match
-			for _, supported := range techConfig.SupportedLangs {
-				if strings.EqualFold(lang, supported) {
-					return supported
-				}
-			}
-		}
+	if techConfig.DefaultLang != "" {
+		return techConfig.DefaultLang
 	}
-
-	return techConfig.DefaultLang
+	return "zh-CN"
 }
 
 func getUIStrings(lang string) TechUIStrings {
@@ -265,6 +246,18 @@ func getArticleLocale(art *TechArticleConfig, lang string) TechArticleLocale {
 	return TechArticleLocale{}
 }
 
+// normalizePublicBrand keeps the public tech pages on the LingTrue name.
+// A custom system name set in the admin console is preserved. The upstream
+// default ("New API") and the mixed "LINGTRUEAPI" spelling are not.
+func normalizePublicBrand(name string) string {
+	switch strings.TrimSpace(name) {
+	case "", "New API", "LINGTRUEAPI", "LingTrueAPI", "LINGTRUE":
+		return "LingTrue"
+	default:
+		return name
+	}
+}
+
 // getSite returns the site config with dynamic name/logo from system settings
 func getSite() TechSite {
 	site := techConfig.Site
@@ -272,6 +265,7 @@ func getSite() TechSite {
 	if common.SystemName != "" {
 		site.Name = common.SystemName
 	}
+	site.Name = normalizePublicBrand(site.Name)
 	if common.Logo != "" {
 		site.Logo = common.Logo
 	}
@@ -444,8 +438,9 @@ func ServeTechSitemap(c *gin.Context) {
     <loc>` + baseUrl + `/tech</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="` + baseUrl + `/tech?lang=zh-CN"/>
     <xhtml:link rel="alternate" hreflang="en" href="` + baseUrl + `/tech?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="` + baseUrl + `/tech?lang=zh-CN"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="` + baseUrl + `/tech?lang=zh-CN"/>
   </url>`
 
 	for _, a := range techConfig.Articles {
@@ -455,8 +450,9 @@ func ServeTechSitemap(c *gin.Context) {
     <lastmod>` + a.Date + `</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="` + baseUrl + `/tech/` + a.Slug + `?lang=zh-CN"/>
     <xhtml:link rel="alternate" hreflang="en" href="` + baseUrl + `/tech/` + a.Slug + `?lang=en"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="` + baseUrl + `/tech/` + a.Slug + `?lang=zh-CN"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="` + baseUrl + `/tech/` + a.Slug + `?lang=zh-CN"/>
   </url>`
 	}
 
@@ -480,9 +476,9 @@ func generateListTemplate() string {
     <meta name="keywords" content="{{.Meta.Keywords}}">
     <link rel="canonical" href="{{.Site.BaseUrl}}/tech">
     <link rel="icon" href="{{.Site.Logo}}">
+    <link rel="alternate" hreflang="zh-CN" href="{{.Site.BaseUrl}}/tech?lang=zh-CN">
     <link rel="alternate" hreflang="en" href="{{.Site.BaseUrl}}/tech?lang=en">
-    <link rel="alternate" hreflang="zh" href="{{.Site.BaseUrl}}/tech?lang=zh-CN">
-    <link rel="alternate" hreflang="x-default" href="{{.Site.BaseUrl}}/tech">
+    <link rel="alternate" hreflang="x-default" href="{{.Site.BaseUrl}}/tech?lang=zh-CN">
 
     <!-- Open Graph -->
     <meta property="og:type" content="blog">
@@ -590,9 +586,9 @@ func generateArticleTemplate() string {
     <meta name="keywords" content="{{.Meta.Keywords}}">
     <link rel="canonical" href="{{.Site.BaseUrl}}/tech/{{.Article.Slug}}">
     <link rel="icon" href="{{.Site.Logo}}">
+    <link rel="alternate" hreflang="zh-CN" href="{{.Site.BaseUrl}}/tech/{{.Article.Slug}}?lang=zh-CN">
     <link rel="alternate" hreflang="en" href="{{.Site.BaseUrl}}/tech/{{.Article.Slug}}?lang=en">
-    <link rel="alternate" hreflang="zh" href="{{.Site.BaseUrl}}/tech/{{.Article.Slug}}?lang=zh-CN">
-    <link rel="alternate" hreflang="x-default" href="{{.Site.BaseUrl}}/tech/{{.Article.Slug}}">
+    <link rel="alternate" hreflang="x-default" href="{{.Site.BaseUrl}}/tech/{{.Article.Slug}}?lang=zh-CN">
 
     <!-- Open Graph -->
     <meta property="og:type" content="article">
